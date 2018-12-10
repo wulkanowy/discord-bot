@@ -3,11 +3,15 @@ exports.run = (client, message, args) => {
     message.channel.send("Nie masz permisji!")
     return;
   }
+
   if(!args || args.size < 1) return message.reply("Podaj nazwe komendy!");
+
   const commandName = args[0];
+
   if(!client.commands.has(commandName)) {
     return message.reply("Ta komenda nie istnieje!");
   }
+  
   delete require.cache[require.resolve(`./${commandName}.js`)];
   client.commands.delete(commandName);
   const props = require(`./${commandName}.js`);
