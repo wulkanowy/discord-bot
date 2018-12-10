@@ -1,0 +1,21 @@
+{
+  "name": "wulkanowy-discord-bot",
+  "version": "1.0.0",
+  "description": "Support bot for Wulkanowy Discord server",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "author": "Dominik Korsa <dominik.korsa@gmail.com> (https://github.com/dominik-korsa)",
+  "contributors": [
+    "doteq <doteeqq@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "enmap": "^4.5.0",
+    "jjg-ping": "^1.0.1",
+    "ping": "^0.2.2"
+  }
+}
