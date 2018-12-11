@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
           let role = message.guild.roles.find(r => r.name === roles[i]);
 
           if(!role) {
-            message.channel.send("Błąd:\n```\nNie znaleziono roli na serwerze\n```");
+            message.channel.send("Błąd: `Nie znaleziono roli na serwerze`");
             return;
           }
 
@@ -39,7 +39,7 @@ exports.run = (client, message, args) => {
           let role = message.guild.roles.find(r => r.name === roles[i]);
 
           if(!role) {
-            message.channel.send("Błąd:\n```\nNie znaleziono roli na serwerze\n```");
+            message.channel.send("Błąd: `Nie znaleziono roli na serwerze`");
             return;
           }
 
