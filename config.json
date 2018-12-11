@@ -1,10 +1,11 @@
 {
-    "prefix": "!",
-    "roles": [
-      "eszkola.opolskie.pl",
-      "vulcan.net.pl",
-      "edu.gdansk.pl",
-      "umt.tarnow.pl",
-      "resman.pl"
-    ]
+  "channel": "bot",
+  "prefix": "!",
+  "roles": [
+    "eszkola.opolskie.pl",
+    "vulcan.net.pl",
+    "edu.gdansk.pl",
+    "umt.tarnow.pl",
+    "resman.pl"
+  ]
 }
