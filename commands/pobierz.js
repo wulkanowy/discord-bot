@@ -1,8 +1,11 @@
 exports.run = (client, message, args) => {
-  message.channel.send({
-    embed: {
-      color: 3447003, 
-      description: "Najnowszą wersję aplikacji zainstalujesz z: https://wulkanowy.github.io"
-    }
-  });
+  const embed = new discord.RichEmbed()
+      .setAuthor("Pobierz Wulkanowy!", "https://doteq.pinglimited.me/515xf8.png")
+      .setColor("F44336")
+      .addField("Google Play:",
+          "https://play.google.com/store/apps/details?id=io.github.wulkanowy")
+      .addField("Wersję beta/dev pobierzesz na:",
+          "https://wulkanowy.github.io/")
+      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+  message.channel.send({embed});
 }
