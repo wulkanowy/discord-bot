@@ -1,3 +1,4 @@
+var Discord = require("discord.js");
 exports.run = (client, message, args) => {
   const embed = new client.RichEmbed()
       .setAuthor("Pobierz Wulkanowy!", "https://doteq.pinglimited.me/515xf8.png")
