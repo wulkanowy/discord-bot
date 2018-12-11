@@ -1,6 +1,6 @@
 var Discord = require("discord.js");
 exports.run = (client, message, args) => {
-  const embed = new client.RichEmbed()
+  const embed = new Discord.RichEmbed()
       .setAuthor("Pobierz Wulkanowy!", "https://doteq.pinglimited.me/515xf8.png")
       .setColor("F44336")
       .addField("Google Play:",
