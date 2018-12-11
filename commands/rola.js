@@ -8,6 +8,12 @@ exports.run = (client, message, args) => {
         if(roles[i] === args[1].toLowerCase()) {
           found = true;
           let role = message.guild.roles.find(r => r.name === roles[i]);
+
+          if(!role) {
+            message.channel.send("Błąd:\n```\nNie znaleziono roli na serwerze\n```");
+            return;
+          }
+          
           message.member.addRole(role)
           .then(() => {
             message.channel.send(`Nadano rolę ${role.name}`);
@@ -31,6 +37,12 @@ exports.run = (client, message, args) => {
         if(roles[i] === args[1].toLowerCase()) {
           found = true;
           let role = message.guild.roles.find(r => r.name === roles[i]);
+
+          if(!role) {
+            message.channel.send("Błąd:\n```\nNie znaleziono roli na serwerze\n```");
+            return;
+          }
+
           message.member.removeRole(role)
           .then(() => {
             message.channel.send(`Odebrano rolę ${role.name}`);
