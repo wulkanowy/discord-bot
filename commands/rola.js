@@ -4,7 +4,6 @@ exports.run = (client, message, args) => {
       var found = false;
       var roles = client.config.roles;
       for(i = 0; i < roles.length && !found; i++) {
-        console.log(roles[i]);
         if(roles[i] === args[1].toLowerCase()) {
           found = true;
           let role = message.guild.roles.find(r => r.name === roles[i]);
