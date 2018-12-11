@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-  const embed = new discord.RichEmbed()
+  const embed = new client.RichEmbed()
       .setAuthor("Pobierz Wulkanowy!", "https://doteq.pinglimited.me/515xf8.png")
       .setColor("F44336")
       .addField("Google Play:",
