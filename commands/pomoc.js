@@ -35,6 +35,10 @@ exports.run = (client, message, args) => {
       text: "Usuwa rolę użytkownikowi."
     },
     {
+      command: "rola lista",
+      text: "Wyświetla dostępne role."
+    },
+    {
       command: "pobierz",
       text: "Daje link do pobrania aplikacji."
     }
