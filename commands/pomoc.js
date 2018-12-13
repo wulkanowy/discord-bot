@@ -41,6 +41,10 @@ exports.run = (client, message, args) => {
     {
       command: "pobierz",
       text: "Daje link do pobrania aplikacji."
+    },
+    {
+      command: "status",
+      text: "Sprawdza działalność dziennika (Nowy uczeń na vulcan.net.pl)"
     }
   ]
   displayHelp(message.channel);
