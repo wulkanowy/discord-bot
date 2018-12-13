@@ -3,9 +3,9 @@ var Discord = require("discord.js");
 module.exports = (client) => {
   client.guilds.forEach(guild => {
     console.log(`Dostępny na ${guild.name}`);
-    const channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
+    var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
     if (!channel) return;
-    const embed = new Discord.RichEmbed()
+    var embed = new Discord.RichEmbed()
       .setAuthor("Witam, jestem!", "https://doteq.pinglimited.me/515xf8.png")
       .setColor("F44336");
     channel.send({embed})
@@ -21,11 +21,20 @@ module.exports = (client) => {
   setInterval(function() {
     getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title) {
       if (title === "Przerwa techniczna" && laststatus == true) {
-        client.channels.get("522119365265588224").send(`Dzienniczek Vulcan przeszedł na "przerwę techniczną", czyli tak naprawdę ma awarię. Więc aplikacja też.`);
+        client.guilds.forEach(guild => {
+          var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
+          if (!channel) return;
+          channel.send(`Dzienniczek Vulcan przeszedł na "przerwę techniczną", czyli tak naprawdę ma awarię. Więc aplikacja też.`);
+        });
         laststatus = false;
       }
       else if(laststatus == false) {
-        client.channels.get("522119365265588224").send("Dzienniczek działa poprawnie.");
+        client.guilds.forEach(guild => {
+          var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
+          channel.send("Dziennik działa poprawnie", {
+            files: ['https://i.imgur.com/FcPd2Nf.png']
+          });
+        });
         laststatus = true;
       }
       else return;
