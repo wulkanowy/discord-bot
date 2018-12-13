@@ -7,20 +7,6 @@ exports.run = (client, message, args) => {
     channel.send(helpString);
   }
 
-  function parseCommand(message) {
-    var messageMatch = message.trim(message).match(/^!\w{1,}.{0,}/g);
-    if(messageMatch) {
-      var messageArray = messageMatch[0].split(" ");
-      return {
-        command: messageArray[0].substring(1).toLowerCase(),
-        args: messageArray.slice(1)
-      };
-    }
-    else {
-      return null;
-    }
-  }
-
   var help = [
     {
       command: "pomoc",
