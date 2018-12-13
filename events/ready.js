@@ -8,7 +8,12 @@ module.exports = (client) => {
     const embed = new Discord.RichEmbed()
       .setAuthor("Witam, jestem!", "https://doteq.pinglimited.me/515xf8.png")
       .setColor("F44336");
-    channel.send({embed});
+    channel.send({embed})
+    .then((message) => {
+      setTimeout(() => {
+        message.delete();
+      }, 30000);
+    });
   });
 
   var laststatus = true;
