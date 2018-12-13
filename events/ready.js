@@ -10,20 +10,21 @@ module.exports = (client) => {
       .setColor("F44336");
     channel.send({embed});
   });
+
   var laststatus = true;
   var minutes = 1, interval = minutes * 60 * 1000;
   setInterval(function() {
-        getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title){
-          if (title === "Przerwa techniczna" && laststatus == true){
-client.channels.get("522119365265588224").send(`Dzienniczek Vulcan przeszedł na "przerwę techniczną", czyli tak naprawdę ma awarię. Więc aplikacja też.`);
-laststatus = false;
-          }
-          else if(laststatus == false){
-			  client.channels.get("522119365265588224").send("Dzienniczek działa poprawnie.");
-			  laststatus = true;
-		  }
-		  else return;
-}, interval)});
-  console.log(`Uruchomiono bota :)`);
+    getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title) {
+      if (title === "Przerwa techniczna" && laststatus == true) {
+        client.channels.get("522119365265588224").send(`Dzienniczek Vulcan przeszedł na "przerwę techniczną", czyli tak naprawdę ma awarię. Więc aplikacja też.`);
+        laststatus = false;
+      }
+      else if(laststatus == false) {
+        client.channels.get("522119365265588224").send("Dzienniczek działa poprawnie.");
+        laststatus = true;
+      }
+      else return;
+  }, interval)});
   
+  console.log(`Uruchomiono bota :)`);
 }
