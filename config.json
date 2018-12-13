@@ -1,6 +1,7 @@
 {
   "channels": {
-    "bot": "bot"
+    "bot": "bot",
+    "greetings": "powitania"
   },
   "prefix": "!",
   "roles": [
