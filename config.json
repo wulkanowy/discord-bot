@@ -1,5 +1,7 @@
 {
-  "channel": "bot",
+  "channels": {
+    "bot": "bot"
+  },
   "prefix": "!",
   "roles": [
     "eszkola.opolskie.pl",
