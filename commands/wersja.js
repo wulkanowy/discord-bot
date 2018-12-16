@@ -2,12 +2,16 @@ const Discord = require("discord.js");
 const appVersion = require("../utils/appVersion");
 
 exports.run = async (client, message, args) => {
+  message.channel.startTyping();
+
   try {
     var beta = await appVersion.getBetaBuild();
     var dev = await appVersion.getDevBuild();
   }
   catch (error) {
     message.channel.send(`Błąd: \`${error.message}\``);
+    message.channel.stopTyping();
+    return;
   }
   
   var embed = new Discord.RichEmbed()
@@ -22,4 +26,5 @@ exports.run = async (client, message, args) => {
       hour12: false
     })}** `)
   message.channel.send({embed});
+  message.channel.stopTyping();
 }
