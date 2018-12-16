@@ -18,7 +18,7 @@ module.exports.getBetaBuild = function () {
         return;
       }
 
-      res.on('data', function(chunk){
+      res.on('data', function(chunk) {
         body += chunk;
       });
       
@@ -38,7 +38,7 @@ module.exports.getBetaBuild = function () {
           return;
         }
       });
-    }).on('error', function(error){
+    }).on('error', function(error) {
       reject(error);
       return;
     });
@@ -63,11 +63,11 @@ module.exports.getDevBuild = function () {
         return;
       }
 
-      res.on('data', function(chunk){
+      res.on('data', function(chunk) {
         body += chunk;
       });
       
-      res.on('end', function(){
+      res.on('end', function() {
         try {
           var response = JSON.parse(body);
           resolve ({
@@ -83,7 +83,7 @@ module.exports.getDevBuild = function () {
           return;
         }
       });
-    }).on('error', function(error){
+    }).on('error', function(error) {
       reject(error);
       return;
     });
