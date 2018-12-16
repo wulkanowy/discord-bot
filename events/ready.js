@@ -10,9 +10,8 @@ module.exports = (client) => {
       .setColor("F44336");
     channel.send({embed})
     .then((message) => {
-      setTimeout(() => {
-        message.delete();
-      }, 30000);
+      message.delete(30000)
+      .catch((error) => {});
     });
   });
 
