@@ -29,6 +29,10 @@ exports.run = (client, message, args) => {
       text: "Daje link do pobrania aplikacji."
     },
     {
+      command: "wersja",
+      text: "Wyświetla najnowsze wersje aplikacji."
+    },
+    {
       command: "status",
       text: "Sprawdza działalność dziennika (Nowy uczeń na vulcan.net.pl)"
     }
