@@ -25,7 +25,6 @@ module.exports.getBetaBuild = function () {
       res.on('end', function(){
         try {
           var response = JSON.parse(body);
-          console.log("Response: ", response);
           resolve ({
             url: response.html_url,
             directUrl: response.assets[0].browser_download_url,
@@ -70,7 +69,6 @@ module.exports.getDevBuild = function () {
       res.on('end', function(){
         try {
           var response = JSON.parse(body);
-          console.log("Response: ", response);
           resolve ({
             url: response.public_install_page_url,
             directUrl: response.expiring_download_url,
