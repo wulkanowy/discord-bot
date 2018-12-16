@@ -4,7 +4,6 @@ exports.run = (client, message, args) => {
       .setAuthor("Pobierz Wulkanowy!", "https://doteq.pinglimited.me/515xf8.png")
       .setColor("F44336")
       .addField("Google Play:", "https://play.google.com/store/apps/details?id=io.github.wulkanowy")
-      .addField("Wersję beta/dev pobierzesz na:", "https://wulkanowy.github.io/")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+      .addField("Wersję beta/dev pobierzesz na:", "https://wulkanowy.github.io/");
   message.channel.send({embed});
 }
