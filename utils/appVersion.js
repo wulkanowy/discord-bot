@@ -28,7 +28,8 @@ module.exports.getBetaBuild = function () {
           resolve ({
             url: response.html_url,
             directUrl: response.assets[0].browser_download_url,
-            version: response.tag_name
+            version: response.tag_name,
+            publishedAt: response.published_at
           });
         }
         catch (error) {
@@ -72,7 +73,8 @@ module.exports.getDevBuild = function () {
           resolve ({
             url: response.public_install_page_url,
             directUrl: response.expiring_download_url,
-            version: response.build_number
+            version: response.build_number,
+            publishedAt: response.finished_at
           });
         }
         catch (error) {
