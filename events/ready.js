@@ -3,7 +3,7 @@ var Discord = require("discord.js");
 module.exports = (client) => {
   client.guilds.forEach(guild => {
     console.log(`Dostępny na ${guild.name}`);
-    var channel = guild.channels.find(ch => ch.name === client.config.channels.status);
+    var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
     if (!channel) return;
     var embed = new Discord.RichEmbed()
       .setAuthor("Witam, jestem!", "https://doteq.pinglimited.me/515xf8.png")
@@ -14,7 +14,8 @@ module.exports = (client) => {
       .catch((error) => {});
     });
   });
-
+var schannel = guild.channels.find(ch => ch.name === client.config.channels.status);
+    if (!channel) return;
     var laststatus = 0;
   var minutes = 1, interval = minutes * 60 * 1000;
   
@@ -36,7 +37,7 @@ stary = false;
 		  }
 });
 
-channel.send("Sprawdzam... (To potrwa 5 sekund)")
+schannel.send("Sprawdzam... (To potrwa 5 sekund)")
     .then((message) => {
       message.delete(5000)
       .catch((error) => {});
@@ -53,7 +54,7 @@ if(nowy && stary && laststatus != 3){
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
       .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
-channel.send({embed});
+schannel.send({embed});
     laststatus = 3;
 }
 else if(nowy && !stary && laststatus != 2) {
@@ -65,7 +66,7 @@ else if(nowy && !stary && laststatus != 2) {
       .addField("Stary moduł uczeń:",
           "Awaria")
       .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
-channel.send({embed});
+schannel.send({embed});
     laststatus = 2;
 }
 else if(!nowy && stary && laststatus != 1){
@@ -77,7 +78,7 @@ else if(!nowy && stary && laststatus != 1){
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
       .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
-channel.send({embed});
+schannel.send({embed});
     laststatus = 1;
 }
 else if(laststatus != 0){
@@ -89,7 +90,7 @@ else if(laststatus != 0){
       .addField("Stary moduł uczeń:",
           "Awaria")
       .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
-channel.send({embed});
+schannel.send({embed});
   laststatus = 0;
 }
 }, 5000);
