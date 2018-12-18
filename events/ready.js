@@ -17,8 +17,6 @@ module.exports = (client) => {
       .catch((error) => {});
     });
   });
-var schannel = guild.channels.find(ch => ch.name === client.config.channels.status);
-    if (!channel) return;
     var laststatus = 0;
   var minutes = 1, interval = minutes * 60 * 1000;
   
