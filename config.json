@@ -1,6 +1,7 @@
 {
   "channels": {
     "bot": "bot",
+    "status": "status",
     "greetings": "powitalnia"
   },
   "prefix": "!",
