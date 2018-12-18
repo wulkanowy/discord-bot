@@ -34,7 +34,7 @@ exports.run = (client, message, args) => {
     },
     {
       command: "status",
-      text: "Sprawdza działalność dziennika (Nowy uczeń na vulcan.net.pl)"
+      text: "Sprawdza działalność dziennika"
     }
   ]
   displayHelp(message.channel);
