@@ -93,8 +93,7 @@ channel.send({embed});
   laststatus = 0;
 }
 }, 5000);
-}, interval)});
-}
+}, interval);
 
   console.log(`Uruchomiono bota :)`);
 }
