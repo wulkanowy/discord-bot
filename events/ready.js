@@ -1,9 +1,12 @@
 const getTitleAtUrl = require('get-title-at-url');
 var Discord = require("discord.js");
+var schannel;
 module.exports = (client) => {
   client.guilds.forEach(guild => {
     console.log(`Dostępny na ${guild.name}`);
     var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
+    schannel = guild.channels.find(ch => ch.name === client.config.channels.status);
+    if (!schannel) return;
     if (!channel) return;
     var embed = new Discord.RichEmbed()
       .setAuthor("Witam, jestem!", "https://doteq.pinglimited.me/515xf8.png")
