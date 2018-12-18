@@ -3,7 +3,7 @@ var Discord = require("discord.js");
 module.exports = (client) => {
   client.guilds.forEach(guild => {
     console.log(`Dostępny na ${guild.name}`);
-    var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
+    var channel = guild.channels.find(ch => ch.name === client.config.channels.status);
     if (!channel) return;
     var embed = new Discord.RichEmbed()
       .setAuthor("Witam, jestem!", "https://doteq.pinglimited.me/515xf8.png")
@@ -15,29 +15,86 @@ module.exports = (client) => {
     });
   });
 
-  var laststatus = true;
+    var laststatus = 0;
   var minutes = 1, interval = minutes * 60 * 1000;
-  setInterval(function() {
-    getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title) {
-      if (title === "Przerwa techniczna" && laststatus == true) {
-        client.guilds.forEach(guild => {
-          var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
-          if (!channel) return;
-          channel.send(`Dzienniczek Vulcan przeszedł na "przerwę techniczną", czyli tak naprawdę ma awarię. Więc aplikacja też.`);
-        });
-        laststatus = false;
-      }
-      else if(laststatus == false) {
-        client.guilds.forEach(guild => {
-          var channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
-          channel.send("Dziennik działa poprawnie", {
-            files: ['https://i.imgur.com/FcPd2Nf.png']
-          });
-        });
-        laststatus = true;
-      }
-      else return;
-  }, interval)});
   
+  setInterval(function() {
+getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title){
+          if (title === "Przerwa techniczna"){
+nowy = false;
+          }
+          else{
+			  nowy = true;
+		  }
+});
+getTitleAtUrl("https://uonetplus-opiekun.vulcan.net.pl/", function(title){
+          if (title === "Przerwa techniczna"){
+stary = false;
+          }
+          else{
+			  stary = true;
+		  }
+});
+
+channel.send("Sprawdzam... (To potrwa 5 sekund)")
+    .then((message) => {
+      message.delete(5000)
+      .catch((error) => {});
+    });
+
+setTimeout(function() {
+
+if(nowy && stary && laststatus != 3){
+	const embed = new Discord.RichEmbed()
+      .setTitle("Status się zmienił!")
+      .setColor("2ecc71")
+      .addField("Nowy moduł uczeń:",
+          "Wszystko powinno działać poprawnie.")
+      .addField("Stary moduł uczeń:",
+          "Wszystko powinno działać poprawnie.")
+      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+channel.send({embed});
+    laststatus = 3;
+}
+else if(nowy && !stary && laststatus != 2) {
+	const embed = new Discord.RichEmbed()
+      .setTitle("Status się zmienił!")
+      .setColor("f1c40f")
+      .addField("Nowy moduł uczeń:",
+          "Wszystko powinno działać poprawnie.")
+      .addField("Stary moduł uczeń:",
+          "Awaria")
+      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+channel.send({embed});
+    laststatus = 2;
+}
+else if(!nowy && stary && laststatus != 1){
+	const embed = new Discord.RichEmbed()
+      .setTitle("Status się zmienił!")
+      .setColor("f1c40f")
+      .addField("Nowy moduł uczeń:",
+          "Awaria")
+      .addField("Stary moduł uczeń:",
+          "Wszystko powinno działać poprawnie.")
+      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+channel.send({embed});
+    laststatus = 1;
+}
+else if(laststatus != 0){
+	const embed = new Discord.RichEmbed()
+      .setTitle("Status się zmienił!")
+      .setColor("e74c3c")
+      .addField("Nowy moduł uczeń:",
+          "Awaria")
+      .addField("Stary moduł uczeń:",
+          "Awaria")
+      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
+channel.send({embed});
+  laststatus = 0;
+}
+}, 5000);
+}, interval)});
+}
+
   console.log(`Uruchomiono bota :)`);
 }
