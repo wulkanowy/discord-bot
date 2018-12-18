@@ -33,6 +33,10 @@ exports.run = (client, message, args) => {
       text: "Wyświetla najnowsze wersje aplikacji."
     },
     {
+      command: "linki",
+      text: "Wyświetla przydatne linki"
+    },
+    {
       command: "status",
       text: "Sprawdza działalność dziennika"
     }
