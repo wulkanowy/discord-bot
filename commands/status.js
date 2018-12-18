@@ -1,61 +1,28 @@
-const getTitleAtUrl = require('get-title-at-url');
-var Discord = require("discord.js");
-var stary;
-var nowy;
-exports.run = (client, message, args) => {
-  getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title){
-    if (title === "Przerwa techniczna") {
-      nowy = false;
-    }
-    else {
-      nowy = true;
-    }
-  });
-  getTitleAtUrl("https://uonetplus-opiekun.vulcan.net.pl/", function(title){
-    if (title === "Przerwa techniczna") {
-      stary = false;
-    }
-    else {
-      stary = true;
-    }
-  });
+const Discord = require("discord.js");
+const uonetStatus = require("../utils/uonetStatus");
 
+exports.run = async (client, message, args) => {
   message.channel.startTyping();
 
-  setTimeout(function() {
+  try {
+    var studentNewStatus = await uonetStatus.studentNew();
+    var studentOldStatus = await uonetStatus.studentOld();
+  }
+  catch (error) {
+    message.channel.send(`Błąd: \`${error.message}\``);
     message.channel.stopTyping();
+    return;
+  }
 
-    if(nowy && stary){
-      const embed = new Discord.RichEmbed()
-        .setTitle("Status dziennika")
-        .setColor("2ecc71")
-        .addField("Nowy moduł uczeń:", "Wszystko powinno działać poprawnie.")
-        .addField("Stary moduł uczeń:", "Wszystko powinno działać poprawnie.");
-      message.channel.send({embed});
-    }
-    else if(nowy && !stary) {
-      const embed = new Discord.RichEmbed()
-        .setTitle("Status dziennika")
-        .setColor("f1c40f")
-        .addField("Nowy moduł uczeń:", "Wszystko powinno działać poprawnie.")
-        .addField("Stary moduł uczeń:", "Awaria");
-      message.channel.send({embed});
-    }
-    else if(!nowy && stary){
-      const embed = new Discord.RichEmbed()
-        .setTitle("Status dziennika")
-        .setColor("f1c40f")
-        .addField("Nowy moduł uczeń:", "Awaria")
-        .addField("Stary moduł uczeń:", "Wszystko powinno działać poprawnie.");
-      message.channel.send({embed});
-    }
-    else{
-      const embed = new Discord.RichEmbed()
-        .setTitle("Status dziennika")
-        .setColor("e74c3c")
-        .addField("Nowy moduł uczeń:", "Awaria")
-        .addField("Stary moduł uczeń:", "Awaria");
-      message.channel.send({embed});
-    }
-  }, 5000);
+  var statusCode = (studentNewStatus?2:0) + (studentOldStatus?1:0);
+
+  var statusColor = (statusCode === 3) ? ("2ecc71") : ( (statusCode === 0) ? ("e74c3c") : ("f1c40f") );
+
+  const embed = new Discord.RichEmbed()
+    .setTitle("Status dzienniczka")
+    .setColor(statusColor)
+    .addField("Nowy moduł uczeń:", studentNewStatus?"Wszystko powinno działać poprawnie":"Awaria")
+    .addField("Stary moduł uczeń:", studentOldStatus?"Wszystko powinno działać poprawnie":"Awaria");
+  message.channel.send({embed});
+  message.channel.stopTyping();
 }
