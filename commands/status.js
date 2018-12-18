@@ -23,10 +23,7 @@ console.log("nie dziala")
 });
 
 message.channel.startTyping();
-    .then((message) => {
-      message.delete(5000)
-      .catch((error) => {});
-    });
+
 
 setTimeout(function() {
 	message.channel.stopTyping();
