@@ -77,7 +77,7 @@ else if(!nowy && stary && laststatus != 1){
 schannel.send({embed});
     laststatus = 1;
 }
-else if(laststatus != 0){
+else if(!nowy && !stary && laststatus != 0){
 	const embed = new Discord.RichEmbed()
       .setTitle("Status się zmienił!")
       .setColor("e74c3c")
@@ -88,6 +88,7 @@ else if(laststatus != 0){
 schannel.send({embed});
   laststatus = 0;
 }
+else return;
 }, 5000);
 }, interval);
 
