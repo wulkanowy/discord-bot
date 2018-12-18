@@ -15,11 +15,11 @@ module.exports = (client) => {
     channel.send({embed})
       .then((message) => {
         message.delete(30000)
-      .catch((error) => {});
-    });
+        .catch((error) => {});
+      });
   });
 
-  var minutes = 1, interval = minutes * 60 * 1000;
+  var interval = client.config.statusInterval * 1000;
   
   setInterval(function() {
     getTitleAtUrl("https://uonetplus-uczen.vulcan.net.pl/", function(title) {
