@@ -22,13 +22,14 @@ console.log("nie dziala")
 		  }
 });
 
-message.channel.send("Sprawdzam... (To potrwa 5 sekund)")
+message.channel.startTyping();
     .then((message) => {
       message.delete(5000)
       .catch((error) => {});
     });
 
 setTimeout(function() {
+	message.channel.stopTyping();
 
 if(nowy && stary){
 	const embed = new Discord.RichEmbed()
@@ -38,7 +39,6 @@ if(nowy && stary){
           "Wszystko powinno działać poprawnie.")
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
   message.channel.send({embed});
 }
 else if(nowy && !stary) {
@@ -49,7 +49,6 @@ else if(nowy && !stary) {
           "Wszystko powinno działać poprawnie.")
       .addField("Stary moduł uczeń:",
           "Awaria")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
   message.channel.send({embed});
 }
 else if(!nowy && stary){
@@ -60,7 +59,6 @@ else if(!nowy && stary){
           "Awaria")
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
   message.channel.send({embed});
 }
 else{
@@ -72,7 +70,6 @@ else{
           "Awaria")
       .addField("Stary moduł uczeń:",
           "Awaria")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
   message.channel.send({embed});
 }
 }, 5000);
