@@ -1,6 +1,7 @@
 const getTitleAtUrl = require('get-title-at-url');
 var Discord = require("discord.js");
 var schannel;
+var laststatus = 3;
 module.exports = (client) => {
   client.guilds.forEach(guild => {
     console.log(`Dostępny na ${guild.name}`);
@@ -17,7 +18,7 @@ module.exports = (client) => {
       .catch((error) => {});
     });
   });
-    var laststatus = 0;
+
   var minutes = 1, interval = minutes * 60 * 1000;
   
   setInterval(function() {
@@ -38,13 +39,10 @@ stary = false;
 		  }
 });
 
-schannel.send("Sprawdzam... (To potrwa 5 sekund)")
-    .then((message) => {
-      message.delete(5000)
-      .catch((error) => {});
-    });
+schannel.startTyping();
 
 setTimeout(function() {
+	schannel.stopTyping();
 
 if(nowy && stary && laststatus != 3){
 	const embed = new Discord.RichEmbed()
@@ -54,7 +52,6 @@ if(nowy && stary && laststatus != 3){
           "Wszystko powinno działać poprawnie.")
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
 schannel.send({embed});
     laststatus = 3;
 }
@@ -66,7 +63,6 @@ else if(nowy && !stary && laststatus != 2) {
           "Wszystko powinno działać poprawnie.")
       .addField("Stary moduł uczeń:",
           "Awaria")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
 schannel.send({embed});
     laststatus = 2;
 }
@@ -78,7 +74,6 @@ else if(!nowy && stary && laststatus != 1){
           "Awaria")
       .addField("Stary moduł uczeń:",
           "Wszystko powinno działać poprawnie.")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
 schannel.send({embed});
     laststatus = 1;
 }
@@ -90,7 +85,6 @@ else if(laststatus != 0){
           "Awaria")
       .addField("Stary moduł uczeń:",
           "Awaria")
-      .setFooter("Wygenerowano przez Wulkanowy Bot", "https://doteq.pinglimited.me/515xf8.png");
 schannel.send({embed});
   laststatus = 0;
 }
