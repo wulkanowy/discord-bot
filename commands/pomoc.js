@@ -2,7 +2,7 @@ exports.run = (client, message, args) => {
   function displayHelp(channel) {
     var helpString = [
       "**Lista dostępnych komend:**",
-      ...help.map(e => `\`!${e.command}\`: ${e.text}`)
+      ...help.map(e => `\`${client.config.prefix}${e.command}\`: ${e.text}`)
     ].join("\n");
     channel.send(helpString);
   }
