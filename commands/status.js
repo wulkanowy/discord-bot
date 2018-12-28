@@ -14,15 +14,39 @@ exports.run = async (client, message, args) => {
     return;
   }
 
-  var statusCode = (studentNewStatus?2:0) + (studentOldStatus?1:0);
+  var statusColor = Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING ?
+    "2ecc71" : 
+    "f1c40f";
 
-  var statusColor = (statusCode === 3) ? ("2ecc71") : ( (statusCode === 0) ? ("e74c3c") : ("f1c40f") );
+  var studentNewMessage = "";
+
+  if (studentNewStatus.code === uonetStatus.STATUS_WORKING)
+    studentNewMessage = ":white_check_mark: Wszystko powinno działać poprawnie";
+  else if (studentNewStatus.code === uonetStatus.STATUS_ERROR)
+    studentNewMessage = studentNewStatus.message ?
+      `:warning: Błąd: \`${studentNewStatus.message}\`` :
+      `:warning: Błąd sprawdzania statusu`;
+  else if (studentNewStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
+    studentNewMessage = ":x: Przerwa techniczna"
+  }
+
+  var studentOldMessage = "";
+
+  if (studentOldStatus.code === uonetStatus.STATUS_WORKING)
+    studentOldMessage = ":white_check_mark: Wszystko powinno działać poprawnie";
+  else if (studentOldStatus.code === uonetStatus.STATUS_ERROR)
+    studentOldMessage = studentOldStatus.message ?
+      `:warning: Błąd: \`${studentOldStatus.message}\`` :
+      `:warning: Błąd sprawdzania statusu`;
+  else if (studentOldStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
+    studentOldMessage = ":x: Przerwa techniczna"
+  }
 
   const embed = new Discord.RichEmbed()
     .setTitle("Status dzienniczka")
     .setColor(statusColor)
-    .addField("Nowy moduł uczeń:", studentNewStatus?"Wszystko powinno działać poprawnie":"Awaria")
-    .addField("Stary moduł uczeń:", studentOldStatus?"Wszystko powinno działać poprawnie":"Awaria");
+    .addField("Nowy moduł uczeń:", studentNewMessage)
+    .addField("Stary moduł uczeń:", studentOldMessage);
   message.channel.send({embed});
   message.channel.stopTyping();
 }
