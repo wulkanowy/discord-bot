@@ -9,14 +9,13 @@ exports.run = (client, message, args) => {
 
   function parseCommand(message) {
     var messageMatch = message.trim(message).match(/^!\w{1,}.{0,}/g);
-    if(messageMatch) {
+    if (messageMatch) {
       var messageArray = messageMatch[0].split(" ");
       return {
         command: messageArray[0].substring(1).toLowerCase(),
         args: messageArray.slice(1)
       };
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -38,6 +37,6 @@ exports.run = (client, message, args) => {
       command: "pobierz",
       text: "Daje link do pobrania aplikacji."
     }
-  ]
+  ];
   displayHelp(message.channel);
-}
+};
