@@ -14,9 +14,7 @@ exports.run = async (client, message, args) => {
     return;
   }
 
-  var statusColor = Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING ?
-    "2ecc71" : 
-    "f1c40f";
+  var statusColor = Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING ? "2ecc71" : "f1c40f";
 
   var studentNewMessage = "";
 
