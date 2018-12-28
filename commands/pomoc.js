@@ -39,6 +39,10 @@ exports.run = (client, message, args) => {
     {
       command: "status",
       text: "Sprawdza działalność dziennika"
+    },
+    {
+      command: "lorem",
+      text: "Wyświetla fragment Lorem ipsum"
     }
   ]
   displayHelp(message.channel);
