@@ -45,25 +45,25 @@ module.exports = (client) => {
       var studentNewMessage = "";
 
       if (studentNewStatus.code === uonetStatus.STATUS_WORKING)
-        studentNewMessage = "Wszystko powinno działać poprawnie";
+        studentNewMessage = ":white_check_mark: Wszystko powinno działać poprawnie";
       else if (studentNewStatus.code === uonetStatus.STATUS_ERROR)
         studentNewMessage = studentNewStatus.message ?
-          `Błąd: \`${studentNewStatus.message}\`` :
-          `Błąd sprawdzania statusu`;
+          `:warning: Błąd: \`${studentNewStatus.message}\`` :
+          `:warning: Błąd sprawdzania statusu`;
       else if (studentNewStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-        studentNewMessage = "Przerwa techniczna"
+        studentNewMessage = ":x: Przerwa techniczna"
       }
-
+    
       var studentOldMessage = "";
-
+    
       if (studentOldStatus.code === uonetStatus.STATUS_WORKING)
-        studentOldMessage = "Wszystko powinno działać poprawnie";
+        studentOldMessage = ":white_check_mark: Wszystko powinno działać poprawnie";
       else if (studentOldStatus.code === uonetStatus.STATUS_ERROR)
         studentOldMessage = studentOldStatus.message ?
-          `Błąd: \`${studentOldStatus.message}\`` :
-          `Błąd sprawdzania statusu`;
+          `:warning: Błąd: \`${studentOldStatus.message}\`` :
+          `:warning: Błąd sprawdzania statusu`;
       else if (studentOldStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-        studentOldMessage = "Przerwa techniczna"
+        studentOldMessage = ":x: Przerwa techniczna"
       }
 
       const embed = new Discord.RichEmbed()
