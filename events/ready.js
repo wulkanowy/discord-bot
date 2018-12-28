@@ -69,6 +69,11 @@ module.exports = (client) => {
         .setColor(statusColor)
         .addField("Nowy moduł uczeń:", studentNewMessage)
         .addField("Stary moduł uczeń:", studentOldMessage);
+
+      if (Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING) {
+        embed.setImage("https://imgur.com/a/MNUXYJ5.png");
+      }
+
       statusChannels.forEach((statusChannel) => {
         statusChannel.send({embed});
       });

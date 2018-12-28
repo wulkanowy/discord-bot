@@ -45,6 +45,11 @@ exports.run = async (client, message, args) => {
     .setColor(statusColor)
     .addField("Nowy moduł uczeń:", studentNewMessage)
     .addField("Stary moduł uczeń:", studentOldMessage);
+
+  if (Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING) {
+    embed.setImage("https://imgur.com/FcPd2Nf.png");
+  }
+  
   message.channel.send({embed});
   message.channel.stopTyping();
 }
