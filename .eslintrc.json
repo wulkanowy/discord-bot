@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "import/no-dynamic-require": "off",
+    "global-require": "off",
+    "consistent-return": "off",
+    "no-console": "off",
+    "no-plusplus": "off"
+  }
+}
