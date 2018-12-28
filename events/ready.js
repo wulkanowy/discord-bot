@@ -18,7 +18,7 @@ module.exports = (client) => {
       .then((message) => {
         message.delete(30000)
           .catch((error) => {
-            console.error(error);
+            console.warn(error);
           });
       });
   });
