@@ -42,7 +42,7 @@ exports.run = (client, message, args) => {
     },
     {
       command: "lorem",
-      text: "Wyświetla fragment Lorem ipsum"
+      text: "Wyświetla fragment *Lorem ipsum*"
     }
   ]
   displayHelp(message.channel);
