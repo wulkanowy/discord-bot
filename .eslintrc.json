@@ -5,6 +5,7 @@
     "global-require": "off",
     "consistent-return": "off",
     "no-console": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-shadow": "warn"
   }
 }

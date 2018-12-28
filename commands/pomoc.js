@@ -12,14 +12,34 @@ const help = [
     text: 'Usuwa rolę użytkownikowi.',
   },
   {
+    command: 'rola lista',
+    text: 'Wyświetla dostępne role.',
+  },
+  {
     command: 'pobierz',
     text: 'Daje link do pobrania aplikacji.',
+  },
+  {
+    command: 'wersja',
+    text: 'Wyświetla najnowsze wersje aplikacji.',
+  },
+  {
+    command: 'linki',
+    text: 'Wyświetla przydatne linki',
+  },
+  {
+    command: 'status',
+    text: 'Sprawdza działalność dziennika',
+  },
+  {
+    command: 'lorem',
+    text: 'Wyświetla fragment *Lorem ipsum*',
   },
 ];
 
 exports.run = (client, message) => {
   message.channel.send([
     '**Lista dostępnych komend:**',
-    ...help.map(e => `\`!${e.command}\`: ${e.text}`),
+    ...help.map(e => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
   ].join('\n'));
 };

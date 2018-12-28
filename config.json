@@ -1,8 +1,16 @@
 {
-    "prefix": "!",
-    "roles": [
-      "eszkola.opolskie.pl",
-      "vulcan.net.pl",
-      "edu.gdansk.pl"
-    ]
+  "channels": {
+    "bot": "bot",
+    "status": "status",
+    "greetings": "powitalnia"
+  },
+  "statusInterval": 300,
+  "prefix": "!",
+  "roles": [
+    "eszkola.opolskie.pl",
+    "vulcan.net.pl",
+    "edu.gdansk.pl",
+    "umt.tarnow.pl",
+    "resman.pl"
+  ]
 }
