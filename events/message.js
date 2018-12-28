@@ -10,6 +10,6 @@ module.exports = (client, message) => {
       message.channel.send(`Nie ma takiej komendy \`!${command}\`\nW celu uzyskania pomocy wpisz \`!pomoc\``);
       return;
     }
-    
+
     cmd.run(client, message, args);
   };
