@@ -5,6 +5,7 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint ./",
     "start": "node ."
   },
   "author": "Dominik Korsa <dominik.korsa@gmail.com> (https://github.com/dominik-korsa)",
@@ -20,5 +21,10 @@
     "intl": "^1.2.5",
     "jjg-ping": "^1.0.1",
     "ping": "^0.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }

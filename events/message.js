@@ -5,9 +5,9 @@ module.exports = (client, message) => {
   if (message.content.indexOf(client.config.prefix) !== 0) return;
   if (message.channel.name !== client.config.channels.bot) return;
 
-  var args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
-  var command = args.shift().toLowerCase();
-  var cmd = client.commands.get(command);
+  const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  const cmd = client.commands.get(command);
 
   if (!cmd) {
     let commandsFuzzySet = new FuzzySet(Array.from(client.commands.keys()));
