@@ -4,14 +4,13 @@ module.exports.getBetaBuild = () => new Promise((resolve, reject) => {
   https.get('https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest', { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
     let body = '';
 
-    let error;
-    if (res.statusCode !== 200) {
-      error = new Error(`Request Failed. Status Code: ${res.statusCode}`);
-    } else if (!/^application\/json/.test(res.headers['content-type'])) {
-      error = new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-    }
-
-    if (error) {
+    try {
+      if (res.statusCode !== 200) {
+        throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
+      } else if (!/^application\/json/.test(res.headers['content-type'])) {
+        throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+      }
+    } catch (error) {
       reject(error);
       res.resume();
       return;
@@ -44,14 +43,13 @@ module.exports.getDevBuild = () => new Promise((resolve, reject) => {
   https.get('https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/0/info', (res) => {
     let body = '';
 
-    let error;
-    if (res.statusCode !== 200) {
-      error = new Error(`Request Failed. Status Code: ${res.statusCode}`);
-    } else if (!/^application\/json/.test(res.headers['content-type'])) {
-      error = new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-    }
-
-    if (error) {
+    try {
+      if (res.statusCode !== 200) {
+        throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
+      } else if (!/^application\/json/.test(res.headers['content-type'])) {
+        throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+      }
+    } catch (error) {
       reject(error);
       res.resume();
       return;
