@@ -5,7 +5,7 @@
 
 The official repository for the bot on the [Wulkanowy Discord server](https://discord.gg/vccAQBr).
 
-## Setup
+## Setup and running locally
 
 Install dependencies
 ```shell
@@ -16,3 +16,10 @@ Run lint
 ```shell
 $ npm run lint
 ```
+
+Run bot **Requires `DiscordToken` environmental variable**
+```shell
+$ npm run start
+```
+
+`DiscordToken` is an environmental variable that specifies **Discord Bot Token**. It needs to be specified for the bot to work. For testing please use your own bot token.
