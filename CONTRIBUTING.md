@@ -31,7 +31,7 @@ npm run lint
 
 - Use the present tense. (`Use toilet paper` not `Used toilet paper`)
 - Use the imperative mood. (`Flush the toilet` not `Flushes the toilet`)
-- Use this format in pull request merge commits: `Name (#Pull)`. (`Wash hands (#16)`)
+- Use this format in pull request merge commits: `Name (#Pull)`. (example: `Wash hands (#16)`)
 
 ## Running the bot locally
 
