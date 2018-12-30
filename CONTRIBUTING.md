@@ -20,7 +20,7 @@ You have an idea or you have found a bug in the bot. The simplest way to share i
 First create a fork of the [wulkanowy/discord-bot](https://github.com/wulkanowy/discord-bot). If you are just getting started please see [How does the bot work](#how-does-the-bot-work). This will give you basic understanding of the code of the bot. To test the bot locally see [Running the bot locally](#running-the-bot-locally).
 When pushing commits and creating pull requests please follow the [Styleguides](#styleguides).
 
-Please also use lint to make sure the code is correctlu formatted:
+Please also use lint to make sure the code is correctly formatted:
 ```shell
 npm run lint
 ```
