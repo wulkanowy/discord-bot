@@ -4,7 +4,10 @@ The following is a set of guidelines for contributing to Discord Bot repo.
 
 ## Table of contents
 
-[How can you contribute?](#how-can-you-contribute)
+- [How can you contribute?](#how-can-you-contribute)
+- [Styleguides](#styleguides)
+- [Running the bot locally](#running-the-bot-locally)
+- [How does the bot work?](#how-does-the-bot-work)
 
 ## How can you contribute?
 
