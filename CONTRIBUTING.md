@@ -33,6 +33,14 @@ npm run lint
 - Use the imperative mood. (`Flush the toilet` not `Flushes the toilet`)
 - Use this format in pull request merge commits: `Name (#Pull)`. (example: `Wash hands (#16)`)
 
+### Git branch names
+
+- Seperate words with hyphens. (`branch-name` not `BranchName` or `branch_name`)
+- Use lowercase letters. (`cool-branch` not `Cool-Branch`)
+- Make them descriptive. (`fix-windows-install-bug` not `fix-bugs`)
+- Keep them short. (`install-lint` not `install-eslinter-to-keep-code-clean`)
+- Don't include characters other than letters, numbers and hyphens.
+
 ## Running the bot locally
 
 To run the bot on your machine first install all the required dependencies using:
