@@ -59,4 +59,25 @@ $ npm start
 
 ## How does the bot work?
 
-Work In Progress
+`bot.js` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `Discord Token` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
+
+### Events
+
+All client instance events are loaded from `events` folder. They are js modules exporting function that is triggered from an event. The parameters are `client` and after that all event callback parameters. (Example: The `message` callback takes `(client, message)`).
+
+### Commands
+
+All commands are stored in `commands`. They export an **object**, that has property called `run` - a function taking three arguments:
+- `client` - Discord client (same as in events)
+- `message` - Instance of Discord `Message` class - message triggering the command
+- `args` - Array containing the rest of arguments, seperated by spaces. (Example: `!tell everyone something nice` will be `[everyone, something, nice]`). To join arguments back to a string just use `array.join(arguments)`.
+
+### Help
+
+Commands help is stored in the `commands/pomoc.js` command in a `help` array. The array contains objects with `command` and `text` properties indicating - *you've guessed it* - command name and help text.
+
+### Config
+
+`config.json` stores editable, easy to configure config. It's properties are stored in `client.config`.
+
+**NOTE:** This file should not contain any secure variables - they should be stored in environmental variables.
