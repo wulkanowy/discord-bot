@@ -21,9 +21,9 @@ Run lint
 $ npm run lint
 ```
 
-Run bot **Requires `DiscordToken` environmental variable**
+Run bot **Requires `DISCORD_TOKEN` environmental variable**
 ```shell
 $ npm run start
 ```
 
-`DiscordToken` is an environmental variable that specifies **Discord Bot Token**. It needs to be specified for the bot to work. For testing please use your own bot token.
+`DISCORD_TOKEN` is an environmental variable that specifies **Discord Bot Token**. It needs to be specified for the bot to work. For testing please use your own bot token.
