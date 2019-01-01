@@ -5,7 +5,11 @@
 
 The official repository for the bot on the [Wulkanowy Discord server](https://discord.gg/vccAQBr).
 
-## Setup and running locally
+## Contributing
+
+**Full guidelines are in the [CONTRIBUTING](CONTRIBUTING.md) file.**
+
+### Setup and running locally
 
 Install dependencies
 ```shell
