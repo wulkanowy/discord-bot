@@ -16,10 +16,14 @@ module.exports = (client) => {
       .setColor('F44336');
     channel.send({ embed })
       .then((message) => {
-        message.delete(30000)
-          .catch((error) => {
+        setTimeout(async () => {
+          if (message.deleted) return;
+          try {
+            await message.delete();
+          } catch (error) {
             console.warn(error);
-          });
+          }
+        }, 30000);
       });
   });
 
