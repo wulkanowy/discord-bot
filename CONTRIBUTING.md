@@ -21,6 +21,7 @@ First create a fork of the [wulkanowy/discord-bot](https://github.com/wulkanowy/
 When pushing commits and creating pull requests please follow the [Styleguides](#styleguides).
 
 Please also use lint to make sure the code is correctly formatted:
+
 ```shell
 npm run lint
 ```
@@ -44,22 +45,36 @@ npm run lint
 ## Running the bot locally
 
 To run the bot on your machine first install all the required dependencies using:
+
 ```shell
-$ npm install
+npm install
 ```
 
 Then you will have to set up a bot on [Discord Developers Portal](https://discordapp.com/developers) and add it on your Discord server.
 
-After that copy the bot token form the bot settings and set it as the `DiscordToken` environmental variable.
+After that copy the bot token form the bot settings and set it as the `DISCORD_TOKEN` environmental variable.
 
-To run the bot use:
+If you are using a Unix-based system launch the bot using:
+
 ```shell
-$ npm start
+DISCORD_TOKEN=YOUR_TOKEN_HERE npm start
 ```
 
-## How does the bot work?
+If you are running Windows and using cmd use:
 
-`bot.js` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `Discord Token` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
+```shell
+set DISCORD_TOKEN=YOUR_TOKEN_HERE
+npm start
+```
+
+If you are using powershell use:
+
+```powershell
+$env:DISCORD_TOKEN=YOUR_TOKEN_HERE
+npm start
+```
+
+`bot.js` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `DISCORD_TOKEN` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
 
 ### Events
 
@@ -68,6 +83,7 @@ All client instance events are loaded from `events` folder. They are js modules 
 ### Commands
 
 All commands are stored in `commands`. They export an **object**, that has property called `run` - a function taking three arguments:
+
 - `client` - Discord client (same as in events)
 - `message` - Instance of Discord `Message` class - message triggering the command
 - `args` - Array containing the rest of arguments, seperated by spaces. (Example: `!tell everyone something nice` will be `[everyone, something, nice]`). To join arguments back to a string just use `array.join(arguments)`.

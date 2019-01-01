@@ -29,7 +29,7 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
-if (!process.env.DiscordToken) {
+if (!process.env.DISCORD_TOKEN) {
   throw new Error('Token not provided');
 }
-client.login(process.env.DiscordToken);
+client.login(process.env.DISCORD_TOKEN);
