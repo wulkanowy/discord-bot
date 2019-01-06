@@ -64,7 +64,6 @@ module.exports.getDevBuild = () => new Promise((resolve, reject) => {
         const response = JSON.parse(body);
         resolve({
           url: response.public_install_page_url,
-          directUrl: response.expiring_download_url,
           version: response.build_number,
           publishedAt: response.finished_at,
         });
