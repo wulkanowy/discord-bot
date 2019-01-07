@@ -19,13 +19,13 @@ exports.run = async (client, message) => {
 
   let devMessage = '';
 
-  devMessage += `***master***: **${devMaster.version}** opublikowana **${new Date(devMaster.publishedAt).toLocaleString('pl-PL', {
+  devMessage += `- ***master***: **${devMaster.version}** opublikowana **${new Date(devMaster.publishedAt).toLocaleString('pl-PL', {
     timeZone: 'Europe/Warsaw',
     hour12: false,
   })}**`;
 
   dev.forEach((element) => {
-    devMessage += `\n*${element.branch}*: **${element.version}** opublikowana **${new Date(element.publishedAt).toLocaleString('pl-PL', {
+    devMessage += `\n- *${element.branch}*: **${element.version}** opublikowana **${new Date(element.publishedAt).toLocaleString('pl-PL', {
       timeZone: 'Europe/Warsaw',
       hour12: false,
     })}**`;
