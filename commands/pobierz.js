@@ -5,15 +5,31 @@ exports.run = async (client, message) => {
   message.channel.startTyping();
 
   let beta = {};
-  let dev = {};
+  let dev = [];
   try {
     beta = await appVersion.getBetaBuild();
-    dev = await appVersion.getDevBuild();
+    dev = await appVersion.getDevBuilds();
   } catch (error) {
     message.channel.send(`Błąd: \`${error.message}\``);
     message.channel.stopTyping();
     return;
   }
+
+  const devMaster = dev.splice(dev.findIndex(e => e.branch === 'master'), 1)[0];
+
+  let devMessage = '';
+
+  devMessage += `- ***master***: **${devMaster.version}** opublikowana **${new Date(devMaster.publishedAt).toLocaleString('pl-PL', {
+    timeZone: 'Europe/Warsaw',
+    hour12: false,
+  })}**\n${devMaster.url}`;
+
+  dev.forEach((element) => {
+    devMessage += `\n- *${element.branch}*: **${element.version}** opublikowana **${new Date(element.publishedAt).toLocaleString('pl-PL', {
+      timeZone: 'Europe/Warsaw',
+      hour12: false,
+    })}**\n${element.url}`;
+  });
 
   const embed = new Discord.RichEmbed()
     .setAuthor('Pobierz Wulkanowy!', 'https://doteq.pinglimited.me/515xf8.png')
@@ -27,12 +43,7 @@ exports.run = async (client, message) => {
       + 'Sklep Play: https://play.google.com/store/apps/details?id=io.github.wulkanowy\n'
       + `GitHub: ${beta.url}\n`
       + `Direct: ${beta.directUrl}`)
-    .addField('Wersja DEV',
-      `Aktualna wersja: **v${dev.version}** opublikowana **${new Date(dev.publishedAt).toLocaleString('pl-PL', {
-        timeZone: 'Europe/Warsaw',
-        hour12: false,
-      })}**\n\n`
-      + `Bitrise: ${dev.url}\n`);
+    .addField('Wersja DEV', devMessage);
   message.channel.send({ embed });
   message.channel.stopTyping();
 };
