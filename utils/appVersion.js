@@ -76,3 +76,41 @@ module.exports.getDevBuild = () => new Promise((resolve, reject) => {
     reject(error);
   });
 });
+
+module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
+  https.get(`https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/${branch}/artifacts/0/info`, (res) => {
+    let body = '';
+
+    try {
+      if (res.statusCode !== 200) {
+        throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
+      } else if (!/^application\/json/.test(res.headers['content-type'])) {
+        throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+      }
+    } catch (error) {
+      reject(error);
+      res.resume();
+      return;
+    }
+
+    res.on('data', (chunk) => {
+      body += chunk;
+    });
+
+    res.on('end', () => {
+      try {
+        const response = JSON.parse(body);
+        resolve({
+          url: response.public_install_page_url,
+          version: response.build_number,
+          publishedAt: response.finished_at,
+        });
+      } catch (error) {
+        console.log(body);
+        reject(error);
+      }
+    });
+  }).on('error', (error) => {
+    reject(error);
+  });
+});
