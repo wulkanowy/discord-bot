@@ -5,7 +5,7 @@ exports.run = async (client, message) => {
   message.channel.startTyping();
 
   let beta = {};
-  let dev = {};
+  let dev = [];
   try {
     beta = await appVersion.getBetaBuild();
     dev = await appVersion.getDevBuilds();
