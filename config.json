@@ -2,7 +2,7 @@
   "channels": {
     "bot": "bot",
     "status": "status",
-    "greetings": "powitalnia"
+    "greetings": "welcome"
   },
   "statusInterval": 300,
   "prefix": "!",
