@@ -1,5 +1,8 @@
 const Discord = require('discord.js');
+const moment = require('moment-timezone');
 const appVersion = require('../utils/appVersion');
+
+moment.locale('pl');
 
 exports.run = async (client, message) => {
   message.channel.startTyping();
@@ -19,16 +22,14 @@ exports.run = async (client, message) => {
 
   let devMessage = '';
 
-  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${new Date(devMasterBuild.publishedAt).toLocaleString('pl-PL', {
-    timeZone: 'Europe/Warsaw',
-    hour12: false,
-  })}**\n${devMasterBuild.url}`;
+  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${
+    moment(devMasterBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+  }**\n${devMasterBuild.url}`;
 
   devPrBuilds.forEach((build) => {
-    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${new Date(build.publishedAt).toLocaleString('pl-PL', {
-      timeZone: 'Europe/Warsaw',
-      hour12: false,
-    })}**\n${build.url}`;
+    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${
+      moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+    }**\n${build.url}`;
   });
 
   const embed = new Discord.RichEmbed()
@@ -36,10 +37,9 @@ exports.run = async (client, message) => {
     .addField('Strona internetowa', 'https://wulkanowy.github.io/')
     .setColor('F44336')
     .addField('Wersja beta',
-      `Aktualna wersja: **v${betaBuild.version}** opublikowana **${new Date(betaBuild.publishedAt).toLocaleString('pl-PL', {
-        timeZone: 'Europe/Warsaw',
-        hour12: false,
-      })}**\n\n`
+      `Aktualna wersja: **v${betaBuild.version}** opublikowana **${
+        moment(betaBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+      }**\n\n`
       + 'Sklep Play: https://play.google.com/store/apps/details?id=io.github.wulkanowy\n'
       + `GitHub: ${betaBuild.url}\n`
       + `Direct: ${betaBuild.directUrl}`)

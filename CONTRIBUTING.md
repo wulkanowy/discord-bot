@@ -78,9 +78,6 @@ npm start
 
 ### Additional environmental variables
 
-#### NODE_ICU_DATA
-`NODE_ICU_DATA` should be set to `node_modules\full-icu` to support internalization.
-
 #### GITHUB_API_TOKEN
 `GITHUB_API_TOKEN` is the API token for GitHub. Specifying it increases your API calls limit from 60 to 5000 per hour.
 

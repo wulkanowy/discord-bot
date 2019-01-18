@@ -16,10 +16,10 @@
   "dependencies": {
     "discord.js": "^11.4.2",
     "enmap": "^4.5.0",
-    "full-icu": "^1.2.1",
     "fuzzyset.js": "0.0.8",
     "get-title-at-url": "^1.1.6",
     "jjg-ping": "^1.0.1",
+    "moment-timezone": "^0.5.23",
     "ping": "^0.2.2"
   },
   "devDependencies": {
