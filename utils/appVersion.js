@@ -47,7 +47,7 @@ module.exports.getBetaBuild = () => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getDevBuilds = () => new Promise((resolve, reject) => {
+module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/branches${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
