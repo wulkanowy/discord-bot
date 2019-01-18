@@ -45,7 +45,7 @@ module.exports.getBetaBuild = () => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getDevBuilds = () => new Promise((resolve, reject) => {
+module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/branches${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
@@ -82,6 +82,57 @@ module.exports.getDevBuilds = () => new Promise((resolve, reject) => {
         }
 
         const branches = response.map(e => e.name);
+        const branchBuildPromises = branches.map(
+          e => module.exports.getDevBuildBranch(e)
+            .catch(error => error),
+        );
+        const branchBuilds = await Promise.all(branchBuildPromises);
+
+        resolve(branchBuilds);
+      });
+    },
+  ).on('error', (error) => {
+    reject(error);
+  });
+});
+
+module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
+  https.get(
+    `https://api.github.com/repos/wulkanowy/wulkanowy/pulls${
+      process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
+    }`,
+    { headers: { 'User-Agent': 'Mozilla/5.0' } },
+    (res) => {
+      let body = '';
+
+      try {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+          return;
+        } if (!/^application\/json/.test(res.headers['content-type'])) {
+          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+        }
+      } catch (error) {
+        reject(error);
+        res.resume();
+        return;
+      }
+
+      res.on('data', (chunk) => {
+        body += chunk;
+      });
+
+      res.on('end', async () => {
+        let response;
+        try {
+          response = JSON.parse(body);
+        } catch (error) {
+          console.log(body);
+          reject(error);
+          return;
+        }
+
+        const branches = response.map(e => e.head.ref);
         const branchBuildPromises = branches.map(
           e => module.exports.getDevBuildBranch(e)
             .catch(error => error),
@@ -134,3 +185,5 @@ module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
     reject(error);
   });
 });
+
+module.exports.getDevMasterBuild = () => module.exports.getDevBuildBranch('master');

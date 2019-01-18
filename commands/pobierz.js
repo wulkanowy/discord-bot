@@ -4,31 +4,31 @@ const appVersion = require('../utils/appVersion');
 exports.run = async (client, message) => {
   message.channel.startTyping();
 
-  let beta = {};
-  let dev = [];
+  let betaBuild;
+  let devMasterBuild;
+  let devPrBuilds;
   try {
-    beta = await appVersion.getBetaBuild();
-    dev = await appVersion.getDevBuilds();
+    betaBuild = await appVersion.getBetaBuild();
+    devMasterBuild = await appVersion.getDevMasterBuild();
+    devPrBuilds = await appVersion.getDevPrBuilds();
   } catch (error) {
     message.channel.send(`Błąd: \`${error.message}\``);
     message.channel.stopTyping();
     return;
   }
 
-  const devMaster = dev.splice(dev.findIndex(e => e.branch === 'master'), 1)[0];
-
   let devMessage = '';
 
-  devMessage += `- ***master***: **${devMaster.version}** opublikowana **${new Date(devMaster.publishedAt).toLocaleString('pl-PL', {
+  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${new Date(devMasterBuild.publishedAt).toLocaleString('pl-PL', {
     timeZone: 'Europe/Warsaw',
     hour12: false,
-  })}**\n${devMaster.url}`;
+  })}**\n${devMasterBuild.url}`;
 
-  dev.forEach((element) => {
-    devMessage += `\n- *${element.branch}*: **${element.version}** opublikowana **${new Date(element.publishedAt).toLocaleString('pl-PL', {
+  devPrBuilds.forEach((build) => {
+    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${new Date(build.publishedAt).toLocaleString('pl-PL', {
       timeZone: 'Europe/Warsaw',
       hour12: false,
-    })}**\n${element.url}`;
+    })}**\n${build.url}`;
   });
 
   const embed = new Discord.RichEmbed()
@@ -36,13 +36,13 @@ exports.run = async (client, message) => {
     .addField('Strona internetowa', 'https://wulkanowy.github.io/')
     .setColor('F44336')
     .addField('Wersja beta',
-      `Aktualna wersja: **v${beta.version}** opublikowana **${new Date(beta.publishedAt).toLocaleString('pl-PL', {
+      `Aktualna wersja: **v${betaBuild.version}** opublikowana **${new Date(betaBuild.publishedAt).toLocaleString('pl-PL', {
         timeZone: 'Europe/Warsaw',
         hour12: false,
       })}**\n\n`
       + 'Sklep Play: https://play.google.com/store/apps/details?id=io.github.wulkanowy\n'
-      + `GitHub: ${beta.url}\n`
-      + `Direct: ${beta.directUrl}`)
+      + `GitHub: ${betaBuild.url}\n`
+      + `Direct: ${betaBuild.directUrl}`)
     .addField('Wersja DEV', devMessage);
   message.channel.send({ embed });
   message.channel.stopTyping();
