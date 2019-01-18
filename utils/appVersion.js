@@ -98,6 +98,57 @@ module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
   });
 });
 
+module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
+  https.get(
+    `https://api.github.com/repos/wulkanowy/wulkanowy/pulls${
+      process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
+    }`,
+    { headers: { 'User-Agent': 'Mozilla/5.0' } },
+    (res) => {
+      let body = '';
+
+      try {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+          return;
+        } if (!/^application\/json/.test(res.headers['content-type'])) {
+          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+        }
+      } catch (error) {
+        reject(error);
+        res.resume();
+        return;
+      }
+
+      res.on('data', (chunk) => {
+        body += chunk;
+      });
+
+      res.on('end', async () => {
+        let response;
+        try {
+          response = JSON.parse(body);
+        } catch (error) {
+          console.log(body);
+          reject(error);
+          return;
+        }
+
+        const branches = response.map(e => e.head.ref);
+        const branchBuildPromises = branches.map(
+          e => module.exports.getDevBuildBranch(e)
+            .catch(error => error),
+        );
+        const branchBuilds = await Promise.all(branchBuildPromises);
+
+        resolve(branchBuilds);
+      });
+    },
+  ).on('error', (error) => {
+    reject(error);
+  });
+});
+
 module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
   https.get(`https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/${branch}/artifacts/0/info`, (res) => {
     let body = '';
@@ -140,3 +191,5 @@ module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
 module.exports.getDevMasterBuild = () => module.exports.getDevBuildBranch('master');
 
 global.getDevMasterBuild = module.exports.getDevMasterBuild;
+global.getDevBranchBuilds = module.exports.getDevBranchBuilds;
+global.getDevPrBuilds = module.exports.getDevPrBuilds;
