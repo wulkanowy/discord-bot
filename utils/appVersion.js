@@ -1,7 +1,5 @@
 const https = require('https');
 
-process.stdin.resume();
-
 module.exports.getBetaBuild = () => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest${
@@ -189,7 +187,3 @@ module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
 });
 
 module.exports.getDevMasterBuild = () => module.exports.getDevBuildBranch('master');
-
-global.getDevMasterBuild = module.exports.getDevMasterBuild;
-global.getDevBranchBuilds = module.exports.getDevBranchBuilds;
-global.getDevPrBuilds = module.exports.getDevPrBuilds;
