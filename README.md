@@ -27,3 +27,5 @@ $ npm run start
 ```
 
 `DISCORD_TOKEN` is an environmental variable that specifies **Discord Bot Token**. It needs to be specified for the bot to work. For testing please use your own bot token.
+
+To make the dates display correctly set `NODE_ICU_DATA` environmental variable to `node_modules\full-icu`.

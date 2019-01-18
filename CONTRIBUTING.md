@@ -76,6 +76,14 @@ npm start
 
 `bot.js` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `DISCORD_TOKEN` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
 
+### Additional environmental variables
+
+#### NODE_ICU_DATA
+`NODE_ICU_DATA` should be set to `node_modules\full-icu` to support internalization.
+
+#### GITHUB_API_TOKEN
+`GITHUB_API_TOKEN` is the API token for GitHub. Specifying it increases your API calls limit from 60 to 5000 per hour.
+
 ### Events
 
 All client instance events are loaded from `events` folder. They are js modules exporting function that is triggered from an event. The parameters are `client` and after that all event callback parameters. (Example: The `message` callback takes `(client, message)`).
