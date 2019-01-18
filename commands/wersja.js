@@ -1,5 +1,8 @@
 const Discord = require('discord.js');
+const moment = require('moment-timezone');
 const appVersion = require('../utils/appVersion');
+
+moment.locale('pl');
 
 exports.run = async (client, message) => {
   message.channel.startTyping();
@@ -19,25 +22,22 @@ exports.run = async (client, message) => {
 
   let devMessage = '';
 
-  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${new Date(devMasterBuild.publishedAt).toLocaleString('pl-PL', {
-    timeZone: 'Europe/Warsaw',
-    hour12: false,
-  })}**`;
+  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${
+    moment(devMasterBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+  }**`;
 
   devPrBuilds.forEach((build) => {
-    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${new Date(build.publishedAt).toLocaleString('pl-PL', {
-      timeZone: 'Europe/Warsaw',
-      hour12: false,
-    })}**`;
+    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${
+      moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+    }**`;
   });
 
   const embed = new Discord.RichEmbed()
     .setAuthor('Najnowsze wersje Wulkanowego', 'https://doteq.pinglimited.me/515xf8.png')
     .setColor('F44336')
-    .addField('Wersja beta', `**v${betaBuild.version}** opublikowana **${new Date(betaBuild.publishedAt).toLocaleString('pl-PL', {
-      timeZone: 'Europe/Warsaw',
-      hour12: false,
-    })}**`)
+    .addField('Wersja beta', `**v${betaBuild.version}** opublikowana **${
+      moment(betaBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+    }**`)
     .addField('Wersja DEV', devMessage);
   message.channel.send({ embed });
   message.channel.stopTyping();
