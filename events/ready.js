@@ -66,7 +66,7 @@ module.exports = (client) => {
           ? `:warning: Błąd: \`${studentOldStatus.message}\``
           : ':warning: Błąd sprawdzania statusu';
       } else if (studentOldStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-        studentOldMessage = ':x: Przerwa techniczna';
+        studentOldMessage = ':przerwa: Przerwa techniczna';
       }
 
       const embed = new Discord.RichEmbed()
