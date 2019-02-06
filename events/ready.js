@@ -55,7 +55,7 @@ module.exports = (client) => {
           ? `:warning: Błąd: \`${studentNewStatus.message}\``
           : ':warning: Błąd sprawdzania statusu';
       } else if (studentNewStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-        studentNewMessage = ':x: Przerwa techniczna';
+        studentNewMessage = '<:przerwa:537743331875225601> Przerwa techniczna';
       }
 
       let studentOldMessage = '';
@@ -66,7 +66,7 @@ module.exports = (client) => {
           ? `:warning: Błąd: \`${studentOldStatus.message}\``
           : ':warning: Błąd sprawdzania statusu';
       } else if (studentOldStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-        studentOldMessage = ':przerwa: Przerwa techniczna';
+        studentOldMessage = '<:przerwa:537743331875225601> Przerwa techniczna';
       }
 
       const embed = new Discord.RichEmbed()
