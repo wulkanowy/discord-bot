@@ -25,7 +25,7 @@ exports.run = async (client, message) => {
       ? `:warning: Błąd: \`${studentNewStatus.message}\``
       : ':warning: Błąd sprawdzania statusu';
   } else if (studentNewStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-    studentNewMessage = ':x: Przerwa techniczna';
+    studentNewMessage = ':przerwa: Przerwa techniczna';
   }
 
   let studentOldMessage = '';
@@ -36,7 +36,7 @@ exports.run = async (client, message) => {
       ? `:warning: Błąd: \`${studentOldStatus.message}\``
       : ':warning: Błąd sprawdzania statusu';
   } else if (studentOldStatus.code === uonetStatus.STATUS_TECHNICAL_BREAK) {
-    studentOldMessage = ':x: Przerwa techniczna';
+    studentOldMessage = ':przerwa: Przerwa techniczna';
   }
 
   const embed = new Discord.RichEmbed()
