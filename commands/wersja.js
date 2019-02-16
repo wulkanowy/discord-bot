@@ -33,7 +33,7 @@ exports.run = async (client, message) => {
   });
 
   const embed = new Discord.RichEmbed()
-    .setAuthor('Najnowsze wersje Wulkanowego', 'https://doteq.pinglimited.me/515xf8.png')
+    .setAuthor('Najnowsze wersje Wulkanowego', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
     .setColor('F44336')
     .addField('Wersja beta', `**v${betaBuild.version}** opublikowana **${
       moment(betaBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()

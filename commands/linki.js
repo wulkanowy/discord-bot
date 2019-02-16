@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 exports.run = (client, message) => {
   const embed = new Discord.RichEmbed()
-    .setAuthor('Linki', 'https://doteq.pinglimited.me/515xf8.png')
+    .setAuthor('Linki', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
     .addField('Strona', 'https://wulkanowy.github.io/')
     .addField('GitHub', 'https://github.com/wulkanowy/')
     .addField('Sklep Play', 'https://play.google.com/store/apps/details?id=io.github.wulkanowy&hl=pl')
