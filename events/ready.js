@@ -12,7 +12,7 @@ module.exports = (client) => {
     if (!channel) return;
 
     const embed = new Discord.RichEmbed()
-      .setAuthor('Witam, jestem!', 'https://doteq.pinglimited.me/515xf8.png')
+      .setAuthor('Witam, jestem!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
       .setColor('F44336');
     channel.send({ embed })
       .then((message) => {
