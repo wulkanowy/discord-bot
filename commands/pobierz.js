@@ -33,7 +33,7 @@ exports.run = async (client, message) => {
   });
 
   const embed = new Discord.RichEmbed()
-    .setAuthor('Pobierz Wulkanowy!', 'https://doteq.pinglimited.me/515xf8.png')
+    .setAuthor('Pobierz Wulkanowy!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
     .addField('Strona internetowa', 'https://wulkanowy.github.io/')
     .setColor('F44336')
     .addField('Wersja beta',
