@@ -6,25 +6,7 @@ let lastStatusCode = 0;
 
 module.exports = (client) => {
   client.guilds.forEach((guild) => {
-    console.log(`Dostępny na ${guild.name}`);
-    const channel = guild.channels.find(ch => ch.name === client.config.channels.bot);
     statusChannels.push(guild.channels.find(ch => ch.name === client.config.channels.status));
-    if (!channel) return;
-
-    const embed = new Discord.RichEmbed()
-      .setAuthor('Witam, jestem!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
-      .setColor('F44336');
-    channel.send({ embed })
-      .then((message) => {
-        setTimeout(async () => {
-          if (message.deleted) return;
-          try {
-            await message.delete();
-          } catch (error) {
-            console.warn(error);
-          }
-        }, 30000);
-      });
   });
 
   const interval = client.config.statusInterval * 1000;
