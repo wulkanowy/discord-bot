@@ -22,14 +22,14 @@ exports.run = async (client, message) => {
 
   let devMessage = '';
 
-  devMessage += `- ***master***: **${devMasterBuild.version}** opublikowana **${
+  devMessage += `- [***master***](${devMasterBuild.url}): **${devMasterBuild.version}** opublikowana **${
     moment(devMasterBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
-  }**\n${devMasterBuild.url}`;
+  }**`;
 
   devPrBuilds.forEach((build) => {
-    devMessage += `\n- *${build.branch}*: **${build.version}** opublikowana **${
+    devMessage += `\n- [*${build.branch}*](${build.url}): **${build.version}** opublikowana **${
       moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
-    }**\n${build.url}`;
+    }**`;
   });
 
   const embed = new Discord.RichEmbed()
@@ -39,10 +39,10 @@ exports.run = async (client, message) => {
     .addField('Wersja beta',
       `Aktualna wersja: **v${betaBuild.version}** opublikowana **${
         moment(betaBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
-      }**\n\n`
-      + 'Sklep Play: https://play.google.com/store/apps/details?id=io.github.wulkanowy\n'
-      + `GitHub: ${betaBuild.url}\n`
-      + `Direct: ${betaBuild.directUrl}`)
+      }**\n`
+      + '[Sklep Play](https://play.google.com/store/apps/details?id=io.github.wulkanowy) | '
+      + `[GitHub](${betaBuild.url}) | `
+      + `[Direct](${betaBuild.directUrl})`)
     .addField('Wersja DEV', devMessage);
   message.channel.send({ embed });
   message.channel.stopTyping();
