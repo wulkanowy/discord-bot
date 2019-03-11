@@ -17,11 +17,7 @@ const help = [
   },
   {
     command: 'pobierz',
-    text: 'Daje link do pobrania aplikacji.',
-  },
-  {
-    command: 'wersja',
-    text: 'Wyświetla najnowsze wersje aplikacji.',
+    text: 'Wyświetla najnowsze wersje aplikacji oraz linki do ich pobrania.',
   },
   {
     command: 'linki',
