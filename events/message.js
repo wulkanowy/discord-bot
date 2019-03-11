@@ -12,7 +12,7 @@ module.exports = (client, message) => {
   if (!cmd) {
     const commandsFuzzySet = new FuzzySet(Array.from(client.commands.keys()));
     const match = commandsFuzzySet.get(command, null, 0.5);
-    message.channel.send(`Nie ma takiej komendy \`${client.config.prefix}${command}\`\n${match ? `Czy chodziło ci o \`${client.config.prefix}${match[0][1]}\`? *(podobieństwo **${Math.round(match[0][0] * 1000) / 10}%**)*\n` : ''}W celu uzyskania pomocy wpisz \`!pomoc\``);
+    message.channel.send(`Nie ma takiej komendy \`${client.config.prefix}${command}\`\n${match ? `Czy chodziło ci o \`${client.config.prefix}${match[0][1]}\`?\n` : ''}W celu uzyskania pomocy wpisz \`!pomoc\``);
     return;
   }
 
