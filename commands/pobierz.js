@@ -22,12 +22,12 @@ exports.run = async (client, message) => {
 
   let devMessage = '';
 
-  devMessage += `- [***master***](${devMasterBuild.url}): **${devMasterBuild.version}** opublikowana **${
+  devMessage += `- ***[master](${devMasterBuild.url})***: **${devMasterBuild.version}** opublikowana **${
     moment(devMasterBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
   }**`;
 
   devPrBuilds.forEach((build) => {
-    devMessage += `\n- [*${build.branch}*](${build.url}): **${build.version}** opublikowana **${
+    devMessage += `\n- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${
       moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
     }**`;
   });
