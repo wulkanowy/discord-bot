@@ -58,7 +58,7 @@ module.exports = (client) => {
         .addField('Stary moduł uczeń:', studentOldMessage);
 
       if (Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING) {
-        embed.setImage('https://imgur.com/FcPd2Nf.png');
+        embed.setImage('https://i.imgur.com/oBPbqmy.png');
       }
 
       statusChannels.forEach((statusChannel) => {

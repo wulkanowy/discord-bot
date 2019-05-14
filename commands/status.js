@@ -46,7 +46,7 @@ exports.run = async (client, message) => {
     .addField('Stary moduł uczeń:', studentOldMessage);
 
   if (Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING) {
-    embed.setImage('https://imgur.com/FcPd2Nf.png');
+    embed.setImage('https://i.imgur.com/oBPbqmy.png');
   }
 
   message.channel.send({ embed });
