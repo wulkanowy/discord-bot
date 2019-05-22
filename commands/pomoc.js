@@ -28,6 +28,10 @@ const help = [
     text: 'Sprawdza działalność dziennika',
   },
   {
+    command: 'ping',
+    text: 'Odpowadia **PONG!** - sprawdzanie czy bot działa',
+  },
+  {
     command: 'lorem',
     text: 'Wyświetla fragment *Lorem ipsum*',
   },
