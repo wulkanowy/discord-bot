@@ -7,6 +7,7 @@ exports.run = (client, message) => {
     .addField('GitHub', 'https://github.com/wulkanowy/')
     .addField('Sklep Play', 'https://play.google.com/store/apps/details?id=io.github.wulkanowy&hl=pl')
     .addField('Trello', 'https://trello.com/b/A97NUM1s/wulkanowy/')
+    .addField('PayPal', 'https://www.paypal.me/wulkanowy')
     .setColor('F44336');
   message.channel.send({ embed });
 };
