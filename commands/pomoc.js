@@ -29,7 +29,7 @@ const help = [
   },
   {
     command: 'ping',
-    text: 'Odpowadia **PONG!** - sprawdzanie czy bot działa',
+    text: 'Pokazuje opóźnienie bota',
   },
   {
     command: 'lorem',
