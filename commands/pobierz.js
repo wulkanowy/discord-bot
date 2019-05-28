@@ -53,7 +53,7 @@ exports.run = async (client, message) => {
   } else if (buildMessagePlain.length < 2048) {
     message.channel.send(buildMessagePlain, { embed });
   } else {
-    embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/) by pobrać jakiegoś');
+    embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/#download) by pobrać jakiegoś');
     message.channel.send({ embed });
   }
   message.channel.stopTyping();
