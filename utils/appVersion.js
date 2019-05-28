@@ -132,12 +132,11 @@ module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
           return;
         }
 
-        const branches = response.map(e => e.head.ref);
-        const branchBuildPromises = branches.map(
-          e => module.exports.getDevBuildBranch(e)
-            .catch(error => error),
-        );
-        const branchBuilds = await Promise.all(branchBuildPromises);
+        const branchBuilds = await Promise.all(response
+          .map(e => e.head.ref)
+          .map(e => module.exports.getDevBuildBranch(e)
+            .catch(error => error)
+          ));
 
         resolve(branchBuilds);
       });
@@ -148,21 +147,16 @@ module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
 });
 
 module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
-  https.get(`https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/${branch}/artifacts/0/info`, (res) => {
-    let body = '';
+  const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/${branch}/artifacts/0/info`;
+  https.get(url, (res) => {
 
-    try {
-      if (res.statusCode !== 200) {
-        throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-      } else if (!/^application\/json/.test(res.headers['content-type'])) {
-        throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-      }
-    } catch (error) {
-      reject(error);
+    if (!/^application\/json/.test(res.headers['content-type'])) {
+      reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
       res.resume();
       return;
     }
 
+    let body = '';
     res.on('data', (chunk) => {
       body += chunk;
     });
@@ -172,7 +166,7 @@ module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
         const response = JSON.parse(body);
         resolve({
           branch,
-          url: response.public_install_page_url,
+          url: response.public_install_page_url || url,
           version: response.build_number,
           publishedAt: response.finished_at,
         });
