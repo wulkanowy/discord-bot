@@ -4,6 +4,15 @@ const appVersion = require('../utils/appVersion');
 
 moment.locale('pl');
 
+function getBuildLinks(master, prs, rich) {
+  if (rich) {
+    return `- ***[master](${master.url})***: **${master.version}** opublikowana **${moment(master.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**\n${prs
+      .map(build => `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**`)
+      .join('\n')}`;
+  }
+  return `- master: ${master.url} - ${master.version}\n${prs.map(build => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
+}
+
 exports.run = async (client, message) => {
   message.channel.startTyping();
 
@@ -20,17 +29,8 @@ exports.run = async (client, message) => {
     return;
   }
 
-  let devMessage = '';
-
-  devMessage += `- ***[master](${devMasterBuild.url})***: **${devMasterBuild.version}** opublikowana **${
-    moment(devMasterBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
-  }**`;
-
-  devPrBuilds.forEach((build) => {
-    devMessage += `\n- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${
-      moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
-    }**`;
-  });
+  const buildMessageRich = getBuildLinks(devMasterBuild, devPrBuilds, true);
+  const buildMessagePlain = getBuildLinks(devMasterBuild, devPrBuilds, false);
 
   const embed = new Discord.RichEmbed()
     .setAuthor('Pobierz Wulkanowy!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
@@ -42,8 +42,19 @@ exports.run = async (client, message) => {
       }**\n`
       + '[Sklep Play](https://play.google.com/store/apps/details?id=io.github.wulkanowy) | '
       + `[GitHub](${betaBuild.url}) | `
-      + `[Direct](${betaBuild.directUrl})`)
-    .addField('Wersja DEV', devMessage);
-  message.channel.send({ embed });
+      + `[Direct](${betaBuild.directUrl})`);
+
+  if (buildMessageRich.length < 1024) {
+    embed.addField('Wersja DEV', buildMessageRich);
+    message.channel.send({ embed });
+  } else if (buildMessagePlain.length < 1024) {
+    embed.addField('Wersja DEV', buildMessagePlain);
+    message.channel.send({ embed });
+  } else if (buildMessagePlain.length < 2048) {
+    message.channel.send(buildMessagePlain, { embed });
+  } else {
+    embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/) by pobrać jakiegoś');
+    message.channel.send({ embed });
+  }
   message.channel.stopTyping();
 };

@@ -134,9 +134,7 @@ module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
 
         const branchBuilds = await Promise.all(response
           .map(e => e.head.ref)
-          .map(e => module.exports.getDevBuildBranch(e)
-            .catch(error => error)
-          ));
+          .map(e => module.exports.getDevBuildBranch(e).catch(error => error)));
 
         resolve(branchBuilds);
       });
@@ -148,8 +146,8 @@ module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
 
 module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
   const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/${branch}/artifacts/0/info`;
-  https.get(url, (res) => {
 
+  https.get(url, (res) => {
     if (!/^application\/json/.test(res.headers['content-type'])) {
       reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
       res.resume();
