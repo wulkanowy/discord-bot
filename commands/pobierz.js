@@ -4,33 +4,33 @@ const appVersion = require('../utils/appVersion');
 
 moment.locale('pl');
 
-function getBuildLinks(master, prs, rich) {
+function getBuildLinks(develop, prs, rich) {
   if (rich) {
-    return `- ***[master](${master.url})***: **${master.version}** opublikowana **${moment(master.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**\n${prs
+    return `- ***[develop](${develop.url})***: **${develop.version}** opublikowana **${moment(develop.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**\n${prs
       .map(build => `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**`)
       .join('\n')}`;
   }
-  return `- master: ${master.url} - ${master.version}\n${prs.map(build => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
+  return `- develop: ${develop.url} - ${develop.version}\n${prs.map(build => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
 }
 
 exports.run = async (client, message) => {
   message.channel.startTyping();
 
   let betaBuild;
-  let devMasterBuild;
+  let devDevelopBuild;
   let devPrBuilds;
   try {
     betaBuild = await appVersion.getBetaBuild();
-    devMasterBuild = await appVersion.getDevMasterBuild();
-    devPrBuilds = await appVersion.getDevPrBuilds();
+    devDevelopBuild = await appVersion.getDevelopBuild();
+    devPrBuilds = await appVersion.getPrBuilds();
   } catch (error) {
     message.channel.send(`Błąd: \`${error.message}\``);
     message.channel.stopTyping();
     return;
   }
 
-  const buildMessageRich = getBuildLinks(devMasterBuild, devPrBuilds, true);
-  const buildMessagePlain = getBuildLinks(devMasterBuild, devPrBuilds, false);
+  const buildMessageRich = getBuildLinks(devDevelopBuild, devPrBuilds, true);
+  const buildMessagePlain = getBuildLinks(devDevelopBuild, devPrBuilds, false);
 
   const embed = new Discord.RichEmbed()
     .setAuthor('Pobierz Wulkanowy!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')

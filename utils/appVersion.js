@@ -96,7 +96,7 @@ module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getDevPrBuilds = () => new Promise((resolve, reject) => {
+module.exports.getPrBuilds = () => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/pulls${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
@@ -178,4 +178,4 @@ module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getDevMasterBuild = () => module.exports.getDevBuildBranch('master');
+module.exports.getDevelopBuild = () => module.exports.getDevBuildBranch('develop');
