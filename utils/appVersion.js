@@ -28,6 +28,7 @@ module.exports.getBetaBuild = () => new Promise((resolve, reject) => {
       res.on('end', () => {
         try {
           const response = JSON.parse(body);
+          if (0 === response.assets.length) response.assets[0] = {};
           resolve({
             url: response.html_url,
             directUrl: response.assets[0].browser_download_url,
