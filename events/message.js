@@ -43,7 +43,6 @@ module.exports = async (client, message) => {
     repos.forEach((repo) => {
       const embed = new Discord.RichEmbed()
         .setTitle(`${repo.name}`)
-        .setDescription(repo.description)
         .setURL(repo.url)
         .setThumbnail(repo.avatar)
         .setFooter(
@@ -51,6 +50,12 @@ module.exports = async (client, message) => {
           'https://i.imgur.com/LGyvq8p.png',
         )
         .setColor('ffeb3b');
+
+      if (repo.description) {
+        embed.setDescription(repo.description);
+      } else {
+        embed.setDescription('Brak opisu');
+      }
 
       if (repo.homepage) {
         embed.addField('Strona domowa', repo.homepage);
