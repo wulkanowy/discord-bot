@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
 
     cmd.run(client, message, args);
   } else {
-    const repoNameRegex = /\b\S+\/\S+\b/g;
+    const repoNameRegex = /[\w-]+\/[\w-]+/g;
     const matches = message.content.match(repoNameRegex);
 
     if (matches === null) return;
