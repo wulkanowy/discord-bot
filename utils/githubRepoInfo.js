@@ -38,6 +38,7 @@ module.exports.getRepoInfo = (owner, repo) => new Promise((resolve, reject) => {
             description: response.description,
             stars: response.stargazers_count,
             name: response.full_name,
+            homepage: response.homepage || null,
           });
         } catch (error) {
           console.log(body);

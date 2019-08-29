@@ -44,7 +44,6 @@ module.exports = async (client, message) => {
       const embed = new Discord.RichEmbed()
         .setTitle(`${repo.name}`)
         .setDescription(repo.description)
-        .addField('Gwiazdki', repo.stars)
         .setURL(repo.url)
         .setThumbnail(repo.avatar)
         .setFooter(
@@ -52,6 +51,11 @@ module.exports = async (client, message) => {
           'https://i.imgur.com/LGyvq8p.png',
         )
         .setColor('ffeb3b');
+
+      if (repo.homepage) {
+        embed.addField('Strona domowa', repo.homepage);
+      }
+      embed.addField('Gwiazdki', repo.stars);
 
       message.channel.send(embed);
     });
