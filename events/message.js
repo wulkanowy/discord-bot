@@ -86,7 +86,7 @@ module.exports = async (client, message) => {
 
       issues.forEach((issue) => {
         const embed = new Discord.RichEmbed()
-          .setTitle(issue.title)
+          .setTitle(`[#${issue.number}] ${issue.title}`)
           .setURL(issue.url)
           .setAuthor(issue.user.login, issue.user.avatar, issue.user.url)
           .setFooter(

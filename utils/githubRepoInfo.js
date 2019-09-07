@@ -85,6 +85,7 @@ const getWulkanowyPullInfo = number => new Promise((resolve, reject) => {
           const response = JSON.parse(body);
 
           resolve({
+            number,
             user: {
               login: response.user.login,
               avatar: response.user.avatar_url,
@@ -150,6 +151,7 @@ module.exports.getWulkanowyIssueInfo = number => new Promise((resolve, reject) =
           }
 
           resolve({
+            number,
             user: {
               login: response.user.login,
               avatar: response.user.avatar_url,
