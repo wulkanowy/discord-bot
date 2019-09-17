@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const FuzzySet = require('fuzzyset.js');
+const { prune } = require('voca');
 const githubRepoInfo = require('../utils/githubRepoInfo');
 
 module.exports = async (client, message) => {
@@ -21,48 +22,99 @@ module.exports = async (client, message) => {
     cmd.run(client, message, args);
   } else {
     const repoNameRegex = /[\w-]+\/[\w-]+/g;
-    const matches = message.content.match(repoNameRegex);
+    const repoNameMatches = message.content.match(repoNameRegex);
 
-    if (matches === null) return;
+    if (repoNameMatches !== null) {
+      const repos = (await Promise.all(
+        repoNameMatches.map(async (match) => {
+          const [owner, repo] = match.split('/');
+          let info = null;
+          try {
+            info = await githubRepoInfo.getRepoInfo(owner, repo);
+          } catch (error) {
+            console.warn(error);
+          }
 
-    const repos = (await Promise.all(
-      matches.map(async (match) => {
-        const [owner, repo] = match.split('/');
-        let info = null;
-        try {
-          info = await githubRepoInfo.getRepoInfo(owner, repo);
-        } catch (error) {
-          console.warn(error);
+          return info;
+        }),
+      ))
+        .filter(e => e !== null);
+
+      repos.forEach((repo) => {
+        const embed = new Discord.RichEmbed()
+          .setTitle(`${repo.name}`)
+          .setURL(repo.url)
+          .setThumbnail(repo.avatar)
+          .setFooter(
+            'GitHub',
+            'https://i.imgur.com/LGyvq8p.png',
+          )
+          .setColor('ffeb3b');
+
+        if (repo.description) {
+          embed.setDescription(repo.description);
+        } else {
+          embed.setDescription('Brak opisu');
         }
 
-        return info;
-      }),
-    ))
-      .filter(e => e !== null);
+        if (repo.homepage) {
+          embed.addField('Strona domowa', repo.homepage);
+        }
+        embed.addField('Gwiazdki', repo.stars);
 
-    repos.forEach((repo) => {
-      const embed = new Discord.RichEmbed()
-        .setTitle(`${repo.name}`)
-        .setURL(repo.url)
-        .setThumbnail(repo.avatar)
-        .setFooter(
-          'GitHub',
-          'https://i.imgur.com/LGyvq8p.png',
-        )
-        .setColor('ffeb3b');
+        message.channel.send(embed);
+      });
+    }
 
-      if (repo.description) {
-        embed.setDescription(repo.description);
-      } else {
-        embed.setDescription('Brak opisu');
-      }
+    const issueNumberRegex = /\B#\d+\b/g;
+    const issueNumberMatches = message.content.match(issueNumberRegex);
 
-      if (repo.homepage) {
-        embed.addField('Strona domowa', repo.homepage);
-      }
-      embed.addField('Gwiazdki', repo.stars);
+    if (issueNumberMatches !== null) {
+      const issues = (await Promise.all(
+        issueNumberMatches.map(async (match) => {
+          let info = null;
+          try {
+            info = await githubRepoInfo.getWulkanowyIssueInfo(match.substring(1));
+          } catch (error) {
+            console.warn(error);
+          }
 
-      message.channel.send(embed);
-    });
+          return info;
+        }),
+      ))
+        .filter(e => e !== null);
+
+      issues.forEach((issue) => {
+        const embed = new Discord.RichEmbed()
+          .setTitle(`[#${issue.number}] ${issue.title}`)
+          .setURL(issue.url)
+          .setAuthor(issue.user.login, issue.user.avatar, issue.user.url)
+          .setFooter(
+            'GitHub',
+            'https://i.imgur.com/LGyvq8p.png',
+          );
+
+        if (issue.type === 'issue') embed.addField('Typ', 'Issue');
+        else if (issue.type === 'pull') embed.addField('Typ', 'Pull request');
+
+        if (issue.state === 'open') embed.addField('Stan', 'Otwarty');
+        else if (issue.state === 'closed') embed.addField('Stan', issue.merged ? 'Merged' : 'Zamknięty');
+
+        if (issue.type === 'pull' && issue.state === 'open') embed.addField('Wersja robocza', issue.draft ? 'Tak' : 'Nie');
+
+        if (issue.description) {
+          embed.setDescription(prune(issue.description, 512, '\n(...)'));
+        } else {
+          embed.setDescription('Brak opisu');
+        }
+
+        if (issue.merged) embed.setColor('6f42c1');
+        else if (issue.draft) embed.setColor('#6a737d');
+        else if (issue.state === 'open') embed.setColor('2cbe4e');
+        else embed.setColor('#cb2431');
+
+        message.channel.send(embed);
+      });
+    }
   }
 };
