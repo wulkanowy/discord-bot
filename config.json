@@ -7,11 +7,11 @@
   "statusInterval": 300,
   "prefix": "!",
   "roles": [
-    "eszkola.opolskie.pl",
-    "vulcan.net.pl",
     "edu.gdansk.pl",
     "edu.lublin.eu",
+    "eszkola.opolskie.pl",
+    "resman.pl",
     "umt.tarnow.pl",
-    "resman.pl"
+    "vulcan.net.pl"
   ]
 }
