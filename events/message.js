@@ -66,15 +66,15 @@ module.exports = async (client, message) => {
       });
     }
 
-    const issueNumberRegex = /\B#\d+\b/g;
-    const issueNumberMatches = message.content.match(issueNumberRegex);
+    const issueNumberRegex = /\s#\d+\s/g;
+    const issueNumberMatches = ` ${message.content} `.match(issueNumberRegex);
 
     if (issueNumberMatches !== null) {
       const issues = (await Promise.all(
         issueNumberMatches.map(async (match) => {
           let info = null;
           try {
-            info = await githubRepoInfo.getWulkanowyIssueInfo(match.substring(1));
+            info = await githubRepoInfo.getWulkanowyIssueInfo(match.trim().substring(1));
           } catch (error) {
             console.warn(error);
           }
