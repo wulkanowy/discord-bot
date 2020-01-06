@@ -16,6 +16,20 @@ exports.run = (client, message) => {
       chunks.push(chunk);
     });
 
+    try {
+      if (res.statusCode === 404) {
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
+      } else if (!/^application\/json/.test(res.headers['content-type'])) {
+        throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
+      }
+    } catch (error) {
+      res.resume();
+      return;
+    }
+
     res.on('end', () => {
       const body = JSON.parse(Buffer.concat(chunks).toString());
       message.delete()

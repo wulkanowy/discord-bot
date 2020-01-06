@@ -23,6 +23,7 @@ module.exports = async (client, message) => {
     cmd.run(client, message, args);
   } else {
     if (message.content.startsWith('==') && message.content.slice(-2) === '==') {
+      if (message.content.slice(2, -2).length === 0) return;
       hastebinSender.run(client, message);
       return;
     }
