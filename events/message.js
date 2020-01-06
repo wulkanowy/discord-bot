@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const FuzzySet = require('fuzzyset.js');
 const { prune } = require('voca');
 const githubRepoInfo = require('../utils/githubRepoInfo');
+const hastebinSender = require('../utils/hastebin.js');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;
@@ -21,6 +22,11 @@ module.exports = async (client, message) => {
 
     cmd.run(client, message, args);
   } else {
+    if (message.content.startsWith('==') && message.content.slice(-2) === '==') {
+      if (message.content.slice(2, -2).length === 0) return;
+      hastebinSender.run(client, message);
+      return;
+    }
     const repoNameRegex = /[\w-]+\/[\w-]+/g;
     const repoNameMatches = message.content.match(repoNameRegex);
 
