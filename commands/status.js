@@ -7,9 +7,10 @@ exports.run = async (client, message) => {
   let studentNewStatus = {};
   let studentOldStatus = {};
   try {
-    studentNewStatus = await uonetStatus.studentNew();
-    studentOldStatus = await uonetStatus.studentOld();
+    studentNewStatus = await uonetStatus.checkService("https://uonetplus-uczen.vulcan.net.pl/warszawa", "Uczeń");
+    studentOldStatus = await uonetStatus.checkService("https://uonetplus-opiekun.vulcan.net.pl/warszawa", "Uczeń");
   } catch (error) {
+    console.error(error);
     message.channel.send(`Błąd: \`${error.message}\``);
     message.channel.stopTyping();
     return;
@@ -17,7 +18,7 @@ exports.run = async (client, message) => {
 
   const statusColor = Math.max(studentNewStatus.code, studentOldStatus.code) === uonetStatus.STATUS_WORKING ? '2ecc71' : 'f1c40f';
 
-  let studentNewMessage = '';
+  let studentNewMessage = 's';
 
   if (studentNewStatus.code === uonetStatus.STATUS_WORKING) studentNewMessage = ':white_check_mark: Wszystko powinno działać poprawnie';
   else if (studentNewStatus.code === uonetStatus.STATUS_ERROR) {
