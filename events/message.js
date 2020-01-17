@@ -44,7 +44,7 @@ module.exports = async (client, message) => {
           return info;
         }),
       ))
-        .filter(e => e !== null);
+        .filter((e) => e !== null);
 
       repos.forEach((repo) => {
         const embed = new Discord.RichEmbed()
@@ -88,7 +88,7 @@ module.exports = async (client, message) => {
           return info;
         }),
       ))
-        .filter(e => e !== null);
+        .filter((e) => e !== null);
 
       issues.forEach((issue) => {
         const embed = new Discord.RichEmbed()

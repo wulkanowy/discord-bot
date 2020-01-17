@@ -40,6 +40,6 @@ const help = [
 exports.run = (client, message) => {
   message.channel.send([
     '**Lista dostępnych komend:**',
-    ...help.map(e => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
+    ...help.map((e) => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
   ].join('\n'));
 };

@@ -7,10 +7,10 @@ moment.locale('pl');
 function getBuildLinks(develop, prs, rich) {
   if (rich) {
     return `- ***[develop](${develop.url})***: **${develop.version}** opublikowana **${moment(develop.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**\n${prs
-      .map(build => `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**`)
+      .map((build) => `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**`)
       .join('\n')}`;
   }
-  return `- develop: ${develop.url} - ${develop.version}\n${prs.map(build => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
+  return `- develop: ${develop.url} - ${develop.version}\n${prs.map((build) => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
 }
 
 exports.run = async (client, message) => {

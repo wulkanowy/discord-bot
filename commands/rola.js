@@ -6,7 +6,7 @@ exports.run = (client, message, args) => {
       for (let i = 0; i < roles.length && !found; i++) {
         if (roles[i] === args[1].toLowerCase()) {
           found = true;
-          const role = message.guild.roles.find(r => r.name === roles[i]);
+          const role = message.guild.roles.find((r) => r.name === roles[i]);
 
           if (!role) {
             message.channel.send('Błąd: `Nie znaleziono roli na serwerze`');
@@ -25,7 +25,7 @@ exports.run = (client, message, args) => {
       }
 
       if (!found) {
-        message.channel.send(`Nieznana rola \`${args[1].toLowerCase()}\`\nDostępne role: ${client.config.roles.map(e => `\`${e}\``).join(', ')}`);
+        message.channel.send(`Nieznana rola \`${args[1].toLowerCase()}\`\nDostępne role: ${client.config.roles.map((e) => `\`${e}\``).join(', ')}`);
       }
     } else if (args[0].toLowerCase() === 'usun' && args[1]) {
       let found = false;
@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
         if (roles[i] === args[1].toLowerCase()) {
           found = true;
 
-          const role = message.guild.roles.find(r => r.name === roles[i]);
+          const role = message.guild.roles.find((r) => r.name === roles[i]);
 
           if (!role) {
             message.channel.send('Błąd: `Nie znaleziono roli na serwerze`');
@@ -55,10 +55,10 @@ exports.run = (client, message, args) => {
       }
 
       if (!found) {
-        message.channel.send(`Nieznana rola \`${args[1].toLowerCase()}\`\nDostępne role: ${client.config.roles.map(e => `\`${e}\``).join(', ')}`);
+        message.channel.send(`Nieznana rola \`${args[1].toLowerCase()}\`\nDostępne role: ${client.config.roles.map((e) => `\`${e}\``).join(', ')}`);
       }
     } else if (args[0].toLowerCase() === 'lista') {
-      message.channel.send(`Dostępne role: ${client.config.roles.map(e => `\`${e}\``).join(', ')}`);
+      message.channel.send(`Dostępne role: ${client.config.roles.map((e) => `\`${e}\``).join(', ')}`);
     } else {
       message.channel.send('Użycie: `!rola <dodaj|usun> <nazwa_roli>` lub `!rola lista`');
     }

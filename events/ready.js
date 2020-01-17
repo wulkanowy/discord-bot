@@ -6,7 +6,7 @@ let lastStatusCode = 0;
 
 module.exports = (client) => {
   client.guilds.forEach((guild) => {
-    statusChannels.push(guild.channels.find(ch => ch.name === client.config.channels.status));
+    statusChannels.push(guild.channels.find((ch) => ch.name === client.config.channels.status));
   });
 
   const interval = client.config.statusInterval * 1000;

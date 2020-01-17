@@ -7,8 +7,8 @@ exports.run = async (client, message) => {
   let studentNewStatus = {};
   let studentOldStatus = {};
   try {
-    studentNewStatus = await uonetStatus.checkService("https://uonetplus-uczen.vulcan.net.pl/warszawa", "Uczeń");
-    studentOldStatus = await uonetStatus.checkService("https://uonetplus-opiekun.vulcan.net.pl/warszawa", "Uczeń");
+    studentNewStatus = await uonetStatus.checkService('https://uonetplus-uczen.vulcan.net.pl/warszawa', 'Uczeń');
+    studentOldStatus = await uonetStatus.checkService('https://uonetplus-opiekun.vulcan.net.pl/warszawa', 'Uczeń');
   } catch (error) {
     console.error(error);
     message.channel.send(`Błąd: \`${error.message}\``);

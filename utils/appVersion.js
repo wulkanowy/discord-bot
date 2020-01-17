@@ -59,7 +59,8 @@ module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
         if (res.statusCode !== 200) {
           reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
           return;
-        } if (!/^application\/json/.test(res.headers['content-type'])) {
+        }
+        if (!/^application\/json/.test(res.headers['content-type'])) {
           throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
         }
       } catch (error) {
@@ -82,11 +83,9 @@ module.exports.getDevBranchBuilds = () => new Promise((resolve, reject) => {
           return;
         }
 
-        const branches = response.map(e => e.name);
-        const branchBuildPromises = branches.map(
-          e => module.exports.getDevBuildBranch(e)
-            .catch(error => error),
-        );
+        const branches = response.map((e) => e.name);
+        const branchBuildPromises = branches.map((e) => module.exports.getDevBuildBranch(e)
+          .catch((err) => err));
         const branchBuilds = await Promise.all(branchBuildPromises);
 
         resolve(branchBuilds);
@@ -110,7 +109,8 @@ module.exports.getPrBuilds = () => new Promise((resolve, reject) => {
         if (res.statusCode !== 200) {
           reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
           return;
-        } if (!/^application\/json/.test(res.headers['content-type'])) {
+        }
+        if (!/^application\/json/.test(res.headers['content-type'])) {
           throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
         }
       } catch (error) {
@@ -134,8 +134,8 @@ module.exports.getPrBuilds = () => new Promise((resolve, reject) => {
         }
 
         const branchBuilds = await Promise.all(response
-          .map(e => e.head.ref)
-          .map(e => module.exports.getDevBuildBranch(e).catch(error => error)));
+          .map((e) => e.head.ref)
+          .map((e) => module.exports.getDevBuildBranch(e).catch((error) => error)));
 
         resolve(branchBuilds);
       });
@@ -145,7 +145,7 @@ module.exports.getPrBuilds = () => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getDevBuildBranch = branch => new Promise((resolve, reject) => {
+module.exports.getDevBuildBranch = (branch) => new Promise((resolve, reject) => {
   const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/${branch}/artifacts/0/info`;
 
   https.get(url, (res) => {

@@ -51,7 +51,7 @@ module.exports.getRepoInfo = (owner, repo) => new Promise((resolve, reject) => {
   });
 });
 
-const getWulkanowyPullInfo = number => new Promise((resolve, reject) => {
+const getWulkanowyPullInfo = (number) => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/pulls/${number}${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
@@ -110,7 +110,7 @@ const getWulkanowyPullInfo = number => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getWulkanowyIssueInfo = number => new Promise((resolve, reject) => {
+module.exports.getWulkanowyIssueInfo = (number) => new Promise((resolve, reject) => {
   https.get(
     `https://api.github.com/repos/wulkanowy/wulkanowy/issues/${number}${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''

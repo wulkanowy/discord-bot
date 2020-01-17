@@ -10,7 +10,7 @@ module.exports = (client, member) => {
     .setColor('F44336');
   member.send({ embed: embedDM });
 
-  const channel = member.guild.channels.find(ch => ch.name === client.config.channels.greetings);
+  const channel = member.guild.channels.find((ch) => ch.name === client.config.channels.greetings);
   if (!channel) return;
   const embedPublic = new Discord.RichEmbed()
     .setAuthor('Na serwerze pojawił się', avatar)
