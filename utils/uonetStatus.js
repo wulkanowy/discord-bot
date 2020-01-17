@@ -31,6 +31,20 @@ module.exports.checkService = (url, expect) => rp(url).then((res) => {
   };
 });
 
+module.exports.interpretCodeMessage = (status) => {
+  if (status.code === module.exports.STATUS_WORKING) return ':white_check_mark: Wszystko powinno działać poprawnie';
+
+  if (status.code === module.exports.STATUS_ERROR) {
+    return status.message ? `:warning: Błąd: \`${status.message}\`` : ':warning: Błąd sprawdzania statusu';
+  }
+
+  if (status.code === module.exports.STATUS_TECHNICAL_BREAK) {
+    return '<:przerwa:537743331875225601> Przerwa techniczna';
+  }
+
+  return '';
+};
+
 module.exports.STATUS_WORKING = 0;
 module.exports.STATUS_ERROR = 1;
 module.exports.STATUS_TECHNICAL_BREAK = 2;
