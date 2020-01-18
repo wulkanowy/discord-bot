@@ -1,9 +1,24 @@
-const { parse } = require('node-html-parser');
+const cheerio = require('cheerio');
 const rp = require('request-promise');
 
 module.exports.checkService = (url, expect) => rp(url).then((res) => {
-  const doc = parse(res);
-  const title = doc.querySelector('title').text;
+  console.log(`Check status for ${url}`);
+  const $ = cheerio.load(res);
+  const title = $('title').text();
+
+  if (res.includes('Podany identyfikator klienta jest niepoprawny')) {
+    return {
+      code: module.exports.STATUS_ERROR,
+      message: $('#MainPage_ErrorDiv div').html().split('</h2>')[1].split('<br>')[0],
+    };
+  }
+
+  if (res.includes('Podany symbol grupujący jest nieprawidłowy')) {
+    return {
+      code: module.exports.STATUS_ERROR,
+      message: $('.block .blockInner').text().trim(),
+    };
+  }
 
   if (expect === title) {
     return {
