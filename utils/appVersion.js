@@ -146,7 +146,7 @@ module.exports.getPrBuilds = () => new Promise((resolve, reject) => {
 });
 
 module.exports.getDevBuildBranch = (branch) => new Promise((resolve, reject) => {
-  const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/${branch}/artifacts/0/info`;
+  const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/${branch}/artifacts/0/info`;
 
   https.get(url, (res) => {
     if (!/^application\/json/.test(res.headers['content-type'])) {
