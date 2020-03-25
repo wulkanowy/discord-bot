@@ -32,7 +32,7 @@ exports.run = async (client, message) => {
   const buildMessageRich = getBuildLinks(devDevelopBuild, devPrBuilds, true);
   const buildMessagePlain = getBuildLinks(devDevelopBuild, devPrBuilds, false);
 
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
     .setAuthor('Pobierz Wulkanowy!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
     .addField('Strona internetowa', 'https://wulkanowy.github.io/')
     .setColor('F44336')
