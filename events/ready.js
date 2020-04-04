@@ -5,8 +5,9 @@ const statusChannels = [];
 let lastStatusCode = 0;
 
 module.exports = (client) => {
-  client.guilds.forEach((guild) => {
-    statusChannels.push(guild.channels.find((ch) => ch.name === client.config.channels.status));
+  client.guilds.cache.forEach((guild) => {
+    statusChannels.push(guild.channels.cache
+      .find((ch) => ch.name === client.config.channels.status));
   });
 
   const interval = client.config.statusInterval * 1000;
@@ -46,7 +47,7 @@ module.exports = (client) => {
         mobileApiStatus.code,
       ) === uonetStatus.STATUS_WORKING ? '2ecc71' : 'f1c40f';
 
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
         .setTitle('Status dzienniczka (dla symbolu *warszawa*)')
         .setColor(statusColor)
         .addField('Nowy moduł uczeń:', uonetStatus.interpretCodeMessage(studentNewStatus))

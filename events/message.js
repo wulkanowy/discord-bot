@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
         .filter((e) => e !== null);
 
       repos.forEach((repo) => {
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.MessageEmbed()
           .setTitle(`${repo.name}`)
           .setURL(repo.url)
           .setThumbnail(repo.avatar)
@@ -91,7 +91,7 @@ module.exports = async (client, message) => {
         .filter((e) => e !== null);
 
       issues.forEach((issue) => {
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.MessageEmbed()
           .setTitle(`[#${issue.number}] ${issue.title}`)
           .setURL(issue.url)
           .setAuthor(issue.user.login, issue.user.avatar, issue.user.url)
