@@ -27,14 +27,14 @@ module.exports = async (client, message) => {
       hastebinSender.run(client, message);
       return;
     }
-    const repoNameRegex = /(?:\s|^)([\w-.]+)\/([\w-.]+)(?=\s|$)/g;
-    const repoNameMatches = message.content.matchAll(repoNameRegex);
+    const repoRegex = /(?:\s|^)([\w-.]+)\/([\w-.]+)(?=\s|$)/g;
+    const repoMatches = Array.from(message.content.matchAll(repoRegex));
 
-    if (repoNameMatches !== null) {
+    if (repoMatches.length > 0) {
       message.channel.startTyping();
 
       const repos = (await Promise.all(
-        Array.from(repoNameMatches).map(async (match) => {
+        repoMatches.map(async (match) => {
           const [, owner, repo] = match;
           let info = null;
           try {
@@ -76,27 +76,29 @@ module.exports = async (client, message) => {
       message.channel.stopTyping();
     }
 
-    const issueNumberRegex = /(?:\s|^)(?:(?:([\w-.]+)\/)?([\w-.]+))?#(\d+)(?=\s|$)/g;
-    const issueNumberMatches = message.content.matchAll(issueNumberRegex);
+    const issueRegex = /(?:\s|^)(?:(?:([\w-.]+)\/)?([\w-.]+))?#(\d+)(?=\s|$)/g;
+    const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
-    if (issueNumberMatches !== null) {
+    if (issueMatches.length > 0) {
       message.channel.startTyping();
 
       const issues = (await Promise.all(
-        Array.from(issueNumberMatches).map(async (match) => {
-          const [, owner, repo, issue] = match;
-          let info = null;
+        issueMatches.map(async (match) => {
+          const owner = match[1] || 'wulkanowy';
+          const repo = match[2] || 'wulkanowy';
+          const issue = match[3];
           try {
-            info = await githubRepoInfo.getWulkanowyIssueInfo(owner, repo, issue);
+            const info = await githubRepoInfo.getWulkanowyIssueInfo(owner, repo, issue);
+            if (!info) return null;
+            return {
+              ...info,
+              repositoryOwner: owner,
+              repositoryName: repo,
+            };
           } catch (error) {
             console.warn(error);
+            return null;
           }
-
-          return {
-            ...info,
-            repositoryOwner: owner || 'wulkanowy',
-            repositoryName: repo || 'wulkanowy',
-          };
         }),
       ))
         .filter((e) => e !== null);
