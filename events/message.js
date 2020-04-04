@@ -84,7 +84,6 @@ module.exports = async (client, message) => {
 
       const issues = (await Promise.all(
         Array.from(issueNumberMatches).map(async (match) => {
-          console.log(match);
           const [, owner, repo, issue] = match;
           let info = null;
           try {
