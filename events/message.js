@@ -27,13 +27,13 @@ module.exports = async (client, message) => {
       hastebinSender.run(client, message);
       return;
     }
-    const repoNameRegex = /[\w-]+\/[\w-]+/g;
-    const repoNameMatches = message.content.match(repoNameRegex);
+    const repoNameRegex = /(?:\s|^)([\w-.]+)\/([\w-.]+)(?=\s|$)/g;
+    const repoNameMatches = message.content.matchAll(repoNameRegex);
 
     if (repoNameMatches !== null) {
       const repos = (await Promise.all(
-        repoNameMatches.map(async (match) => {
-          const [owner, repo] = match.split('/');
+        Array.from(repoNameMatches).map(async (match) => {
+          const [, owner, repo] = match;
           let info = null;
           try {
             info = await githubRepoInfo.getRepoInfo(owner, repo);
@@ -72,15 +72,17 @@ module.exports = async (client, message) => {
       });
     }
 
-    const issueNumberRegex = /\s#\d+\s/g;
-    const issueNumberMatches = ` ${message.content} `.match(issueNumberRegex);
+    const issueNumberRegex = /(?:\s|^)(?:(?:([\w-.]+)\/)?([\w-.]+))?#(\d+)(?=\s|$)/g;
+    const issueNumberMatches = message.content.matchAll(issueNumberRegex);
 
     if (issueNumberMatches !== null) {
       const issues = (await Promise.all(
-        issueNumberMatches.map(async (match) => {
+        Array.from(issueNumberMatches).map(async (match) => {
+          console.log(match);
+          const [, owner, repo, issue] = match;
           let info = null;
           try {
-            info = await githubRepoInfo.getWulkanowyIssueInfo(match.trim().substring(1));
+            info = await githubRepoInfo.getWulkanowyIssueInfo(owner, repo, issue);
           } catch (error) {
             console.warn(error);
           }

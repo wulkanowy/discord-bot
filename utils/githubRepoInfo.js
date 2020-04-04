@@ -110,9 +110,9 @@ const getWulkanowyPullInfo = (number) => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getWulkanowyIssueInfo = (number) => new Promise((resolve, reject) => {
+module.exports.getWulkanowyIssueInfo = (owner = 'wulkanowy', repo = 'wulkanowy', number) => new Promise((resolve, reject) => {
   https.get(
-    `https://api.github.com/repos/wulkanowy/wulkanowy/issues/${number}${
+    `https://api.github.com/repos/${owner}/${repo}/issues/${number}${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
     }`,
     { headers: { 'User-Agent': 'Mozilla/5.0' } },
