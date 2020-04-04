@@ -27,13 +27,15 @@ module.exports = async (client, message) => {
       hastebinSender.run(client, message);
       return;
     }
-    const repoNameRegex = /[\w-]+\/[\w-]+/g;
-    const repoNameMatches = message.content.match(repoNameRegex);
+    const repoRegex = /(?:\s|^)([\w-.]+)\/([\w-.]+)(?=\s|$)/g;
+    const repoMatches = Array.from(message.content.matchAll(repoRegex));
 
-    if (repoNameMatches !== null) {
+    if (repoMatches.length > 0) {
+      message.channel.startTyping();
+
       const repos = (await Promise.all(
-        repoNameMatches.map(async (match) => {
-          const [owner, repo] = match.split('/');
+        repoMatches.map(async (match) => {
+          const [, owner, repo] = match;
           let info = null;
           try {
             info = await githubRepoInfo.getRepoInfo(owner, repo);
@@ -46,7 +48,7 @@ module.exports = async (client, message) => {
       ))
         .filter((e) => e !== null);
 
-      repos.forEach((repo) => {
+      await Promise.all(repos.map(async (repo) => {
         const embed = new Discord.MessageEmbed()
           .setTitle(`${repo.name}`)
           .setURL(repo.url)
@@ -68,33 +70,45 @@ module.exports = async (client, message) => {
         }
         embed.addField('Gwiazdki', repo.stars);
 
-        message.channel.send(embed);
-      });
+        await message.channel.send(embed);
+      }));
+
+      message.channel.stopTyping();
     }
 
-    const issueNumberRegex = /\s#\d+\s/g;
-    const issueNumberMatches = ` ${message.content} `.match(issueNumberRegex);
+    const issueRegex = /(?:\s|^)(?:(?:([\w-.]+)\/)?([\w-.]+))?#(\d+)(?=\s|$)/g;
+    const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
-    if (issueNumberMatches !== null) {
+    if (issueMatches.length > 0) {
+      message.channel.startTyping();
+
       const issues = (await Promise.all(
-        issueNumberMatches.map(async (match) => {
-          let info = null;
+        issueMatches.map(async (match) => {
+          const owner = match[1] || 'wulkanowy';
+          const repo = match[2] || 'wulkanowy';
+          const issue = match[3];
           try {
-            info = await githubRepoInfo.getWulkanowyIssueInfo(match.trim().substring(1));
+            const info = await githubRepoInfo.getWulkanowyIssueInfo(owner, repo, issue);
+            if (!info) return null;
+            return {
+              ...info,
+              repositoryOwner: owner,
+              repositoryName: repo,
+            };
           } catch (error) {
             console.warn(error);
+            return null;
           }
-
-          return info;
         }),
       ))
         .filter((e) => e !== null);
 
-      issues.forEach((issue) => {
+      await Promise.all(issues.map(async (issue) => {
         const embed = new Discord.MessageEmbed()
           .setTitle(`[#${issue.number}] ${issue.title}`)
           .setURL(issue.url)
           .setAuthor(issue.user.login, issue.user.avatar, issue.user.url)
+          .addField('Repozytorium', `${issue.repositoryOwner}/${issue.repositoryName}`)
           .setFooter(
             'GitHub',
             'https://i.imgur.com/LGyvq8p.png',
@@ -119,8 +133,10 @@ module.exports = async (client, message) => {
         else if (issue.state === 'open') embed.setColor('2cbe4e');
         else embed.setColor('#cb2431');
 
-        message.channel.send(embed);
-      });
+        await message.channel.send(embed);
+      }));
+
+      message.channel.stopTyping();
     }
   }
 };

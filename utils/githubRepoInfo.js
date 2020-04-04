@@ -9,18 +9,16 @@ module.exports.getRepoInfo = (owner, repo) => new Promise((resolve, reject) => {
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
@@ -51,27 +49,25 @@ module.exports.getRepoInfo = (owner, repo) => new Promise((resolve, reject) => {
   });
 });
 
-const getWulkanowyPullInfo = (number) => new Promise((resolve, reject) => {
+const getWulkanowyPullInfo = (owner, repo, number) => new Promise((resolve, reject) => {
   https.get(
-    `https://api.github.com/repos/wulkanowy/wulkanowy/pulls/${number}${
+    `https://api.github.com/repos/${owner}/${repo}/pulls/${number}${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
     }`,
     { headers: { 'User-Agent': 'Mozilla/5.0' } },
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
@@ -110,27 +106,25 @@ const getWulkanowyPullInfo = (number) => new Promise((resolve, reject) => {
   });
 });
 
-module.exports.getWulkanowyIssueInfo = (number) => new Promise((resolve, reject) => {
+module.exports.getWulkanowyIssueInfo = (owner, repo, number) => new Promise((resolve, reject) => {
   https.get(
-    `https://api.github.com/repos/wulkanowy/wulkanowy/issues/${number}${
+    `https://api.github.com/repos/${owner}/${repo}/issues/${number}${
       process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
     }`,
     { headers: { 'User-Agent': 'Mozilla/5.0' } },
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
@@ -144,7 +138,7 @@ module.exports.getWulkanowyIssueInfo = (number) => new Promise((resolve, reject)
           const response = JSON.parse(body);
 
           if (response.pull_request) {
-            getWulkanowyPullInfo(number)
+            getWulkanowyPullInfo(owner, repo, number)
               .then(resolve)
               .catch(reject);
             return;
