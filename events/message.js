@@ -31,6 +31,8 @@ module.exports = async (client, message) => {
     const repoNameMatches = message.content.matchAll(repoNameRegex);
 
     if (repoNameMatches !== null) {
+      message.channel.startTyping();
+
       const repos = (await Promise.all(
         Array.from(repoNameMatches).map(async (match) => {
           const [, owner, repo] = match;
@@ -46,7 +48,7 @@ module.exports = async (client, message) => {
       ))
         .filter((e) => e !== null);
 
-      repos.forEach((repo) => {
+      await Promise.all(repos.map(async (repo) => {
         const embed = new Discord.MessageEmbed()
           .setTitle(`${repo.name}`)
           .setURL(repo.url)
@@ -68,14 +70,18 @@ module.exports = async (client, message) => {
         }
         embed.addField('Gwiazdki', repo.stars);
 
-        message.channel.send(embed);
-      });
+        await message.channel.send(embed);
+      }));
+
+      message.channel.stopTyping();
     }
 
     const issueNumberRegex = /(?:\s|^)(?:(?:([\w-.]+)\/)?([\w-.]+))?#(\d+)(?=\s|$)/g;
     const issueNumberMatches = message.content.matchAll(issueNumberRegex);
 
     if (issueNumberMatches !== null) {
+      message.channel.startTyping();
+
       const issues = (await Promise.all(
         Array.from(issueNumberMatches).map(async (match) => {
           console.log(match);
@@ -92,7 +98,7 @@ module.exports = async (client, message) => {
       ))
         .filter((e) => e !== null);
 
-      issues.forEach((issue) => {
+      await Promise.all(issues.map(async (issue) => {
         const embed = new Discord.MessageEmbed()
           .setTitle(`[#${issue.number}] ${issue.title}`)
           .setURL(issue.url)
@@ -121,8 +127,10 @@ module.exports = async (client, message) => {
         else if (issue.state === 'open') embed.setColor('2cbe4e');
         else embed.setColor('#cb2431');
 
-        message.channel.send(embed);
-      });
+        await message.channel.send(embed);
+      }));
+
+      message.channel.stopTyping();
     }
   }
 };
