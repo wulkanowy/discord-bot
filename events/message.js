@@ -92,7 +92,11 @@ module.exports = async (client, message) => {
             console.warn(error);
           }
 
-          return info;
+          return {
+            ...info,
+            repositoryOwner: owner || 'wulkanowy',
+            repositoryName: repo || 'wulkanowy',
+          };
         }),
       ))
         .filter((e) => e !== null);
@@ -102,6 +106,7 @@ module.exports = async (client, message) => {
           .setTitle(`[#${issue.number}] ${issue.title}`)
           .setURL(issue.url)
           .setAuthor(issue.user.login, issue.user.avatar, issue.user.url)
+          .addField('Repozytorium', `${issue.repositoryOwner}/${issue.repositoryName}`)
           .setFooter(
             'GitHub',
             'https://i.imgur.com/LGyvq8p.png',
