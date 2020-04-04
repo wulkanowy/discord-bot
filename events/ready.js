@@ -5,30 +5,22 @@ const statusChannels = [];
 let lastStatusCode = 0;
 
 module.exports = (client) => {
-  client.guilds.forEach((guild) => {
-    statusChannels.push(guild.channels.find((ch) => ch.name === client.config.channels.status));
+  client.guilds.cache.forEach((guild) => {
+    statusChannels.push(guild.channels.cache
+      .find((ch) => ch.name === client.config.channels.status));
   });
 
   const interval = client.config.statusInterval * 1000;
 
   setInterval(async () => {
-    let studentNewStatus = {
-      code: uonetStatus.STATUS_ERROR,
-      message: 'Prawdopodobnie nie działa, bo koronawirus',
-    };
-    let studentOldStatus = {
-      code: uonetStatus.STATUS_ERROR,
-      message: 'Prawdopodobnie nie działa',
-    };
-    let mobileApiStatus = {
-      code: uonetStatus.STATUS_ERROR,
-      message: 'Prawdopodobnie nie działa',
-    };
+    let studentNewStatus = {};
+    let studentOldStatus = {};
+    let mobileApiStatus = {};
 
     try {
-      // studentNewStatus = await uonetStatus.checkService('https://uonetplus-uczen.vulcan.net.pl/warszawa', 'Uczeń');
-      // studentOldStatus = await uonetStatus.checkService('https://uonetplus-opiekun.vulcan.net.pl/warszawa', 'Uczeń');
-      // mobileApiStatus = await uonetStatus.checkService('https://lekcjaplus.vulcan.net.pl/warszawa', 'UONET+ dla urządzeń mobilnych');
+      studentNewStatus = await uonetStatus.checkService('https://uonetplus-uczen.vulcan.net.pl/warszawa', 'Uczeń');
+      studentOldStatus = await uonetStatus.checkService('https://uonetplus-opiekun.vulcan.net.pl/warszawa', 'Uczeń');
+      mobileApiStatus = await uonetStatus.checkService('https://lekcjaplus.vulcan.net.pl/warszawa', 'UONET+ dla urządzeń mobilnych');
     } catch (error) {
       console.error(error);
       statusChannels.forEach((statusChannel) => {
@@ -46,7 +38,7 @@ module.exports = (client) => {
         mobileApiStatus.code,
       ) === uonetStatus.STATUS_WORKING ? '2ecc71' : 'f1c40f';
 
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
         .setTitle('Status dzienniczka (dla symbolu *warszawa*)')
         .setColor(statusColor)
         .addField('Nowy moduł uczeń:', uonetStatus.interpretCodeMessage(studentNewStatus))

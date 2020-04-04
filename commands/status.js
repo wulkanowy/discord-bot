@@ -9,23 +9,14 @@ exports.run = async (client, message, args) => {
     [symbol] = args;
   }
 
-  let studentNewStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa, bo koronawirus',
-  };
-  let studentOldStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa',
-  };
-  let mobileApiStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa',
-  };
+  let studentNewStatus = {};
+  let studentOldStatus = {};
+  let mobileApiStatus = {};
 
   try {
-    // studentNewStatus = await uonetStatus.checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
-    // studentOldStatus = await uonetStatus.checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń');
-    // mobileApiStatus = await uonetStatus.checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych');
+    studentNewStatus = await uonetStatus.checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
+    studentOldStatus = await uonetStatus.checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń');
+    mobileApiStatus = await uonetStatus.checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych');
   } catch (error) {
     console.error(error);
     message.channel.send(`Błąd: \`${error.message}\``);
@@ -35,7 +26,7 @@ exports.run = async (client, message, args) => {
 
   const statusColor = Math.max(studentNewStatus.code, studentOldStatus.code, mobileApiStatus.code) === uonetStatus.STATUS_WORKING ? '2ecc71' : 'f1c40f';
 
-  const embed = new Discord.RichEmbed()
+  const embed = new Discord.MessageEmbed()
     .setTitle(`Status dzienniczka (dla symbolu *${symbol}*)`)
     .setColor(statusColor)
     .addField('Nowy moduł uczeń:', uonetStatus.interpretCodeMessage(studentNewStatus))
