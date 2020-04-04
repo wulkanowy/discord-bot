@@ -9,18 +9,16 @@ module.exports.getRepoInfo = (owner, repo) => new Promise((resolve, reject) => {
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
@@ -60,18 +58,16 @@ const getWulkanowyPullInfo = (number) => new Promise((resolve, reject) => {
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
@@ -119,18 +115,16 @@ module.exports.getWulkanowyIssueInfo = (owner = 'wulkanowy', repo = 'wulkanowy',
     (res) => {
       let body = '';
 
-      try {
-        if (res.statusCode === 404) {
-          resolve(null);
-          res.resume();
-          return;
-        } if (res.statusCode !== 200) {
-          throw new Error(`Request Failed. Status Code: ${res.statusCode}`);
-        } else if (!/^application\/json/.test(res.headers['content-type'])) {
-          throw new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`);
-        }
-      } catch (error) {
-        reject(error);
+      if (res.statusCode === 404) {
+        resolve(null);
+        res.resume();
+        return;
+      } if (res.statusCode !== 200) {
+        reject(new Error(`Request Failed. Status Code: ${res.statusCode}`));
+        res.resume();
+        return;
+      } if (!/^application\/json/.test(res.headers['content-type'])) {
+        reject(new Error(`Invalid content-type. Expected application/json but received ${res.headers['content-type']}`));
         res.resume();
         return;
       }
