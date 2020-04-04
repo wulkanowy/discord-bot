@@ -9,15 +9,15 @@ exports.run = async (client, message, args) => {
     [symbol] = args;
   }
 
-  let studentNewStatus = {
+  const studentNewStatus = {
     code: uonetStatus.STATUS_ERROR,
     message: 'Prawdopodobnie nie działa, bo koronawirus',
   };
-  let studentOldStatus = {
+  const studentOldStatus = {
     code: uonetStatus.STATUS_ERROR,
     message: 'Prawdopodobnie nie działa',
   };
-  let mobileApiStatus = {
+  const mobileApiStatus = {
     code: uonetStatus.STATUS_ERROR,
     message: 'Prawdopodobnie nie działa',
   };
