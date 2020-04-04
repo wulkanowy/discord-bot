@@ -9,23 +9,14 @@ exports.run = async (client, message, args) => {
     [symbol] = args;
   }
 
-  const studentNewStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa, bo koronawirus',
-  };
-  const studentOldStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa',
-  };
-  const mobileApiStatus = {
-    code: uonetStatus.STATUS_ERROR,
-    message: 'Prawdopodobnie nie działa',
-  };
+  let studentNewStatus = {};
+  let studentOldStatus = {};
+  let mobileApiStatus = {};
 
   try {
-    // studentNewStatus = await uonetStatus.checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
-    // studentOldStatus = await uonetStatus.checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń');
-    // mobileApiStatus = await uonetStatus.checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych');
+    studentNewStatus = await uonetStatus.checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
+    studentOldStatus = await uonetStatus.checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń');
+    mobileApiStatus = await uonetStatus.checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych');
   } catch (error) {
     console.error(error);
     message.channel.send(`Błąd: \`${error.message}\``);
