@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const { prune } = require('voca');
 const _ = require('lodash');
+const { prune } = require('voca');
 const githubRepoInfo = require('../utils/githubRepoInfo');
 
 module.exports = async function issueHandler(client, message) {

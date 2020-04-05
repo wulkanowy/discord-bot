@@ -1,7 +1,7 @@
 const commandHandler = require('../message-handlers/command');
-const hastebinHandler = require('../message-handlers/hastebin');
-const repoHandler = require('../message-handlers/repo-handler');
 const issueHandler = require('../message-handlers/issue-handler');
+const repoHandler = require('../message-handlers/repo-handler');
+const hastebinHandler = require('../message-handlers/hastebin');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;

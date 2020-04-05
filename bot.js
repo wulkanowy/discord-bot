@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
-const Enmap = require('enmap');
 const fs = require('fs');
+const Enmap = require('enmap');
+const Discord = require('discord.js');
 const config = require('./config.json');
 
 const client = new Discord.Client();
@@ -8,7 +8,10 @@ const client = new Discord.Client();
 client.config = config;
 
 fs.readdir('./events/', (err, files) => {
-  if (err) return console.error(err);
+  if (err) {
+    console.error(err);
+    return;
+  }
   files.forEach((file) => {
     const event = require(`./events/${file}`);
     const eventName = file.split('.')[0];
@@ -19,7 +22,10 @@ fs.readdir('./events/', (err, files) => {
 client.commands = new Enmap();
 
 fs.readdir('./commands/', (err, files) => {
-  if (err) return console.error(err);
+  if (err) {
+    console.error(err);
+    return;
+  }
   files.forEach((file) => {
     if (!file.endsWith('.js')) return;
     const props = require(`./commands/${file}`);

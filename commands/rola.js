@@ -3,7 +3,7 @@ exports.run = (client, message, args) => {
     if (args[0].toLowerCase() === 'dodaj' && args[1]) {
       let found = false;
       const { roles } = client.config;
-      for (let i = 0; i < roles.length && !found; i++) {
+      for (let i = 0; i < roles.length && !found; i += 1) {
         if (roles[i] === args[1].toLowerCase()) {
           found = true;
           const role = message.guild.roles.cache.find((r) => r.name === roles[i]);
@@ -30,7 +30,7 @@ exports.run = (client, message, args) => {
     } else if (args[0].toLowerCase() === 'usun' && args[1]) {
       let found = false;
       const { roles } = client.config;
-      for (let i = 0; i < roles.length && !found; i++) {
+      for (let i = 0; i < roles.length && !found; i += 1) {
         console.log(roles[i]);
         if (roles[i] === args[1].toLowerCase()) {
           found = true;

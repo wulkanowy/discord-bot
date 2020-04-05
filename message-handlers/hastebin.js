@@ -1,4 +1,4 @@
-const hastebinSender = require('../utils/hastebin');
+const hastebinSender = require('../utils/hastebin.js');
 
 module.exports = function hastebinHandler(client, message) {
   if (message.content.startsWith('==') && message.content.slice(-2) === '==') {

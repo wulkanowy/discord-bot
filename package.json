@@ -5,8 +5,8 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint ./",
-    "lint:fix": "./node_modules/.bin/eslint ./ --fix",
+    "lint": "eslint -c .eslintrc.json ./",
+    "lint:fix": "eslint -c .eslintrc.json ./ --fix",
     "start": "node ."
   },
   "author": "Dominik Korsa <dominik.korsa@gmail.com> (https://github.com/dominik-korsa)",
@@ -30,6 +30,6 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-plugin-import": "^2.20.2"
   }
 }
