@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const FuzzySet = require('fuzzyset.js');
 const { prune } = require('voca');
+const _ = require('lodash');
 const githubRepoInfo = require('../utils/githubRepoInfo');
 const hastebinSender = require('../utils/hastebin.js');
 
@@ -33,17 +34,22 @@ module.exports = async (client, message) => {
     if (repoMatches.length > 0) {
       message.channel.startTyping();
 
+      const repoNames = _.uniqWith(
+        repoMatches.map((repoMatch) => ({
+          owner: repoMatch[1],
+          repo: repoMatch[2],
+        })),
+        _.isEqual,
+      );
+
       const repos = (await Promise.all(
-        repoMatches.map(async (match) => {
-          const [, owner, repo] = match;
-          let info = null;
+        repoNames.map(async ({ owner, repo }) => {
           try {
-            info = await githubRepoInfo.getRepoInfo(owner, repo);
+            return await githubRepoInfo.getRepoInfo(owner, repo);
           } catch (error) {
             console.warn(error);
+            return null;
           }
-
-          return info;
         }),
       ))
         .filter((e) => e !== null);
@@ -82,11 +88,17 @@ module.exports = async (client, message) => {
     if (issueMatches.length > 0) {
       message.channel.startTyping();
 
+      const issueNames = _.uniqWith(
+        issueMatches.map((issueMatch) => ({
+          owner: issueMatch[1] || 'wulkanowy',
+          repo: issueMatch[2] || 'wulkanowy',
+          issue: issueMatch[3],
+        })),
+        _.isEqual,
+      );
+
       const issues = (await Promise.all(
-        issueMatches.map(async (match) => {
-          const owner = match[1] || 'wulkanowy';
-          const repo = match[2] || 'wulkanowy';
-          const issue = match[3];
+        issueNames.map(async ({ owner, repo, issue }) => {
           try {
             const info = await githubRepoInfo.getWulkanowyIssueInfo(owner, repo, issue);
             if (!info) return null;
