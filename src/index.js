@@ -1,13 +1,13 @@
 const fs = require('fs');
 const Enmap = require('enmap');
 const Discord = require('discord.js');
-const config = require('./config.json');
+const config = require('../config.json');
 
 const client = new Discord.Client();
 
 client.config = config;
 
-fs.readdir('./events/', (err, files) => {
+fs.readdir('./src/events/', (err, files) => {
   if (err) {
     console.error(err);
     return;
@@ -21,7 +21,7 @@ fs.readdir('./events/', (err, files) => {
 
 client.commands = new Enmap();
 
-fs.readdir('./commands/', (err, files) => {
+fs.readdir('./src/commands/', (err, files) => {
   if (err) {
     console.error(err);
     return;
@@ -30,7 +30,7 @@ fs.readdir('./commands/', (err, files) => {
     if (!file.endsWith('.js')) return;
     const props = require(`./commands/${file}`);
     const commandName = file.split('.')[0];
-    console.log(`Ladowanie komendy ${commandName}`);
+    console.log(`Wczytywanie komendy ${commandName}`);
     client.commands.set(commandName, props);
   });
 });
