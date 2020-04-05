@@ -1,7 +1,7 @@
 const fs = require('fs');
 const Enmap = require('enmap');
 const Discord = require('discord.js');
-const config = require('./config.json');
+const config = require('../config.json');
 
 const client = new Discord.Client();
 
@@ -13,7 +13,7 @@ fs.readdir('./events/', (err, files) => {
     return;
   }
   files.forEach((file) => {
-    const event = require(`./events/${file}`);
+    const event = require(`./src/events`);
     const eventName = file.split('.')[0];
     client.on(eventName, event.bind(null, client));
   });
@@ -28,7 +28,7 @@ fs.readdir('./commands/', (err, files) => {
   }
   files.forEach((file) => {
     if (!file.endsWith('.js')) return;
-    const props = require(`./commands/${file}`);
+    const props = require(`./src/commands`);
     const commandName = file.split('.')[0];
     console.log(`Ladowanie komendy ${commandName}`);
     client.commands.set(commandName, props);
