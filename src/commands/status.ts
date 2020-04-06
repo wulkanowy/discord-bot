@@ -1,17 +1,22 @@
-const Discord = require('discord.js');
-const uonetStatus = require('../utils/uonetStatus');
+import Discord from 'discord.js';
+import * as uonetStatus from '../utils/uonet-status';
+import Client from '../client';
 
-exports.run = async (client, message, args) => {
-  message.channel.startTyping();
+export default async function status(
+  client: Client,
+  message: Discord.Message,
+  args: string[],
+): Promise<void> {
+  await message.channel.startTyping();
 
   let symbol = 'warszawa';
   if (args[0]) {
     [symbol] = args;
   }
 
-  let studentNewStatus = {};
-  let studentOldStatus = {};
-  let mobileApiStatus = {};
+  let studentNewStatus: uonetStatus.ServiceStatus;
+  let studentOldStatus: uonetStatus.ServiceStatus;
+  let mobileApiStatus: uonetStatus.ServiceStatus;
 
   try {
     studentNewStatus = await uonetStatus.checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
@@ -24,7 +29,11 @@ exports.run = async (client, message, args) => {
     return;
   }
 
-  const statusColor = Math.max(studentNewStatus.code, studentOldStatus.code, mobileApiStatus.code) === uonetStatus.STATUS_WORKING ? '2ecc71' : 'f1c40f';
+  const statusColor = Math.max(
+    studentNewStatus.code || 0,
+    studentOldStatus.code || 0,
+    mobileApiStatus.code || 0,
+  ) === uonetStatus.StatusCode.Working ? '2ecc71' : 'f1c40f';
 
   const embed = new Discord.MessageEmbed()
     .setTitle(`Status dzienniczka (dla symbolu *${symbol}*)`)
@@ -37,10 +46,10 @@ exports.run = async (client, message, args) => {
     studentNewStatus.code,
     studentOldStatus.code,
     mobileApiStatus.code,
-  ) === uonetStatus.STATUS_WORKING) {
+  ) === uonetStatus.StatusCode.Working) {
     embed.setImage('https://i.imgur.com/oBPbqmy.png');
   }
 
   message.channel.send({ embed });
   message.channel.stopTyping();
-};
+}

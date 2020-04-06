@@ -1,3 +1,6 @@
+import Discord from 'discord.js';
+import Client from '../client';
+
 const help = [
   {
     command: 'pomoc',
@@ -37,9 +40,9 @@ const help = [
   },
 ];
 
-exports.run = (client, message) => {
-  message.channel.send([
+export default async function pomoc(client: Client, message: Discord.Message): Promise<void> {
+  await message.channel.send([
     '**Lista dostępnych komend:**',
-    ...help.map((e) => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
+    ...help.map((e: { command: string; text: string }) => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
   ].join('\n'));
-};
+}

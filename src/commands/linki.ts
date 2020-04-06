@@ -1,6 +1,7 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
+import Client from '../client';
 
-exports.run = (client, message) => {
+export default async function linki(client: Client, message: Discord.Message): Promise<void> {
   const embed = new Discord.MessageEmbed()
     .setAuthor('Linki', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
     .addField('Strona', 'https://wulkanowy.github.io/')
@@ -10,5 +11,5 @@ exports.run = (client, message) => {
     .addField('PayPal', 'https://www.paypal.me/wulkanowy')
     .addField('Pomoc w tłumaczeniu', 'https://crowdin.com/project/wulkanowy')
     .setColor('F44336');
-  message.channel.send({ embed });
-};
+  await message.channel.send({ embed });
+}

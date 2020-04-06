@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Root",
+  "description": "",
+  "required": [
+    "channels",
+    "statusInterval",
+    "prefix",
+    "roles"
+  ],
+  "properties": {
+    "channels": {
+      "$id": "#/properties/channels",
+      "type": "object",
+      "title": "Channels",
+      "description": "",
+      "default": {},
+      "examples": [
+        {
+          "status": "status",
+          "bot": "bot",
+          "greetings": "welcome"
+        }
+      ],
+      "required": [
+        "bot",
+        "status",
+        "greetings"
+      ],
+      "properties": {
+        "bot": {
+          "$id": "#/properties/channels/properties/bot",
+          "type": "string",
+          "title": "Bot channel",
+          "description": "",
+          "default": "",
+          "examples": [
+            "bot"
+          ]
+        },
+        "status": {
+          "$id": "#/properties/channels/properties/status",
+          "type": "string",
+          "title": "Status channel",
+          "description": "",
+          "default": "",
+          "examples": [
+            "status"
+          ]
+        },
+        "greetings": {
+          "$id": "#/properties/channels/properties/greetings",
+          "type": "string",
+          "title": "Greetings channel",
+          "description": "",
+          "default": "",
+          "examples": [
+            "welcome"
+          ]
+        }
+      }
+    },
+    "statusInterval": {
+      "$id": "#/properties/statusInterval",
+      "type": "integer",
+      "title": "Status Check Interval",
+      "description": "",
+      "default": 0,
+      "examples": [
+        300
+      ]
+    },
+    "prefix": {
+      "$id": "#/properties/prefix",
+      "type": "string",
+      "title": "Command prefix",
+      "description": "",
+      "default": "",
+      "examples": [
+        "!"
+      ]
+    },
+    "roles": {
+      "$id": "#/properties/roles",
+      "type": "array",
+      "title": "List of roles available for users",
+      "description": "",
+      "default": [],
+      "items": {
+        "$id": "#/properties/roles/items",
+        "type": "string",
+        "title": "Role",
+        "description": "",
+        "default": "",
+        "examples": [
+          "edu.gdansk.pl",
+          "edu.lublin.eu",
+          "eszkola.opolskie.pl",
+          "resman.pl",
+          "umt.tarnow.pl",
+          "vulcan.net.pl"
+        ]
+      }
+    }
+  }
+}
