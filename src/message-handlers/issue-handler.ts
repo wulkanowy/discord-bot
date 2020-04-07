@@ -16,7 +16,7 @@ export default async function issueHandler(
   const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
   if (issueMatches.length > 0) {
-    await message.channel.startTyping();
+    message.channel.startTyping();
 
     const issueNames = _.uniqWith(
       issueMatches.map((issueMatch: RegExpMatchArray) => ({

@@ -1,4 +1,4 @@
-import request from 'request-promise';
+import request from 'request-promise-native';
 
 export type RepoInfo = {
   avatar: string;

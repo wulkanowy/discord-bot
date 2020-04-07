@@ -21,7 +21,7 @@ function getBuildLinks(
 }
 
 export default async function pobierz(client: Client, message: Discord.Message): Promise<void> {
-  await message.channel.startTyping();
+  message.channel.startTyping();
 
   try {
     const betaBuild = await appVersion.getBetaBuild();

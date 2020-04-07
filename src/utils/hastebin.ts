@@ -1,4 +1,4 @@
-import request from 'request-promise';
+import request from 'request-promise-native';
 
 export async function send(text: string): Promise<string> {
   const options = {

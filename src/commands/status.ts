@@ -7,7 +7,7 @@ export default async function status(
   message: Discord.Message,
   args: string[],
 ): Promise<void> {
-  await message.channel.startTyping();
+  message.channel.startTyping();
 
   let symbol = 'warszawa';
   if (args[0]) {

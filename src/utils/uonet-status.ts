@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import request from 'request-promise';
+import request from 'request-promise-native';
 
 export enum StatusCode {
   Working = 0,

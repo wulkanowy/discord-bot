@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import Client from './client';
 import guildMemberAddHandler from './event-handlers/guild-member-add';
 import messageHandler from './event-handlers/message';
@@ -10,7 +11,7 @@ if (!process.env.DISCORD_TOKEN) {
 
 let client: Client;
 
-fs.promises.readFile('../config.json', 'utf8')
+fs.promises.readFile(path.join(__dirname, '../config.json'), 'utf8')
   .then((data: string) => {
     client = new Client(JSON.parse(data));
 
@@ -19,4 +20,9 @@ fs.promises.readFile('../config.json', 'utf8')
     client.on('ready', readyHandler.bind(null, client));
 
     client.login(process.env.DISCORD_TOKEN);
+  })
+  .catch((error: Error) => {
+    console.error('Podczas wczytywania plików konfiguracyjnych wystąpił błąd');
+    console.error(error);
+    process.exit(1);
   });
