@@ -2,7 +2,6 @@ import Discord from 'discord.js';
 import _ from 'lodash';
 import * as GitHub from '../utils/github';
 import Client from '../client';
-import { RepoInfo } from '../utils/github';
 
 function notEmpty<T>(value: T | null | undefined): value is T {
   return value !== null && value !== undefined;
@@ -26,7 +25,7 @@ export default async function repoHandler(
       _.isEqual,
     );
 
-    const repos: RepoInfo[] = (await Promise.all(
+    const repos: GitHub.RepoInfo[] = (await Promise.all(
       repoNames.map(async ({ owner, repo }: { owner: string; repo: string }) => {
         try {
           return await GitHub.getRepoInfo(owner, repo);
