@@ -1,12 +1,52 @@
 {
-  "extends": "airbnb-base",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".ts"
+        ]
+      }
+    }
+  },
   "rules": {
-    "import/no-dynamic-require": "off",
-    "global-require": "off",
-    "consistent-return": "warn",
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/typedef": [ "error" ],
+    "@typescript-eslint/unbound-method": [ "off" ],
+    "import/extensions": [
+      "error",
+      {
+        "ts": "never",
+        "json": "always"
+      }
+    ],
+    "import/no-cycle": "off",
+    "import/order": [ "error" ],
+    "import/prefer-default-export": "off",
     "no-console": "off",
-    "no-plusplus": "error",
-    "no-shadow": "warn",
-    "import/order": ["error"]
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ]
   }
 }

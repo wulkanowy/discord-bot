@@ -1,8 +1,16 @@
-const Discord = require('discord.js');
-const _ = require('lodash');
-const githubRepoInfo = require('../utils/githubRepoInfo');
+import Discord from 'discord.js';
+import _ from 'lodash';
+import * as GitHub from '../utils/github';
+import Client from '../client';
 
-module.exports = async function repoHandler(client, message) {
+function notEmpty<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
+}
+
+export default async function repoHandler(
+  client: Client,
+  message: Discord.Message,
+): Promise<void> {
   const repoRegex = /(?:\s|^)([\w-.]+)\/([\w-.]+)(?=\s|$)/g;
   const repoMatches = Array.from(message.content.matchAll(repoRegex));
 
@@ -10,26 +18,26 @@ module.exports = async function repoHandler(client, message) {
     message.channel.startTyping();
 
     const repoNames = _.uniqWith(
-      repoMatches.map((repoMatch) => ({
+      repoMatches.map((repoMatch: RegExpMatchArray) => ({
         owner: repoMatch[1],
         repo: repoMatch[2],
       })),
       _.isEqual,
     );
 
-    const repos = (await Promise.all(
-      repoNames.map(async ({ owner, repo }) => {
+    const repos: GitHub.RepoInfo[] = (await Promise.all(
+      repoNames.map(async ({ owner, repo }: { owner: string; repo: string }) => {
         try {
-          return await githubRepoInfo.getRepoInfo(owner, repo);
+          return await GitHub.getRepoInfo(owner, repo);
         } catch (error) {
           console.warn(error);
           return null;
         }
       }),
     ))
-      .filter((e) => e !== null);
+      .filter(notEmpty);
 
-    await Promise.all(repos.map(async (repo) => {
+    await Promise.all(repos.map(async (repo: GitHub.RepoInfo) => {
       const embed = new Discord.MessageEmbed()
         .setTitle(`${repo.name}`)
         .setURL(repo.url)
@@ -56,4 +64,4 @@ module.exports = async function repoHandler(client, message) {
 
     message.channel.stopTyping();
   }
-};
+}

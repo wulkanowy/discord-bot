@@ -1,11 +1,11 @@
 # Contributing to Discord Bot
 
-The following is a set of guidelines for contributing to Discord Bot repo.
+The following is a set of guidelines for contributing to Discord Bot repo. The bot is written in **TypeScript**
 
 ## Table of contents
 
 - [How can you contribute?](#how-can-you-contribute)
-- [Styleguides](#styleguides)
+- [Style guides](#style-guides)
 - [Running the bot locally](#running-the-bot-locally)
 - [How does the bot work?](#how-does-the-bot-work)
 
@@ -18,7 +18,7 @@ You have an idea or you have found a bug in the bot. The simplest way to share i
 ### Contributing code
 
 First create a fork of the [wulkanowy/discord-bot](https://github.com/wulkanowy/discord-bot). If you are just getting started please see [How does the bot work](#how-does-the-bot-work). This will give you basic understanding of the code of the bot. To test the bot locally see [Running the bot locally](#running-the-bot-locally).
-When pushing commits and creating pull requests please follow the [Styleguides](#styleguides).
+When pushing commits and creating pull requests please follow the [Style guides](#style-guides).
 
 Please also use lint to make sure the code is correctly formatted:
 
@@ -26,7 +26,7 @@ Please also use lint to make sure the code is correctly formatted:
 npm run lint
 ```
 
-## Styleguides
+## Style guides
 
 ### Git commit messages
 
@@ -36,11 +36,12 @@ npm run lint
 
 ### Git branch names
 
-- Seperate words with hyphens. (`branch-name` not `BranchName` or `branch_name`)
-- Use lowercase letters. (`cool-branch` not `Cool-Branch`)
-- Make them descriptive. (`fix-windows-install-bug` not `fix-bugs`)
+- Use `kebab-case` (aka. `hyphen-case`, `dash-case`)
+  - Separate words with hyphens. (`branch-name` not `BranchName` or `branch_name`)
+  - Don't include characters other than letters, numbers and hyphens.
+  - Use lowercase letters. (`cool-branch` not `Cool-Branch`)
+- Make them descriptive. (`fix-windows-install` not `fix-bugs`)
 - Keep them short. (`install-lint` not `install-eslinter-to-keep-code-clean`)
-- Don't include characters other than letters, numbers and hyphens.
 
 ## Running the bot locally
 
@@ -67,38 +68,42 @@ set DISCORD_TOKEN=YOUR_TOKEN_HERE
 npm start
 ```
 
-If you are using powershell use:
+If you are using PowerShell use:
 
 ```powershell
 $env:DISCORD_TOKEN=YOUR_TOKEN_HERE
 npm start
 ```
 
-`bot.js` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `DISCORD_TOKEN` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
-
 ### Additional environmental variables
 
 #### GITHUB_API_TOKEN
 `GITHUB_API_TOKEN` is the API token for GitHub. Specifying it increases your API calls limit from 60 to 5000 per hour.
 
+## How does the bot work?
+
+`src/index.ts` is the main file in the bot. It handles connecting to the Discord API via **Discord.js** using `DISCORD_TOKEN` as the bot token (see [Running the bot locally](#running-the-bot-locally)). It also loads all the commands end events.
+
 ### Events
 
-All client instance events are loaded from `events` folder. They are js modules exporting function that is triggered from an event. The parameters are `client` and after that all event callback parameters. (Example: The `message` callback takes `(client, message)`).
+All client instance events are stored in the `event-handlers` folder. They are ts modules exporting function that is triggered from an event. The parameters are `client` and after that all event callback parameters. (Example: The `message` callback takes `(client, message)`). All event have to be registered in `index.ts`.
 
 ### Commands
 
-All commands are stored in `commands`. They export an **object**, that has property called `run` - a function taking three arguments:
+All commands are stored in `commands`. They export (using `export default`) a **function** taking three arguments:
 
 - `client` - Discord client (same as in events)
 - `message` - Instance of Discord `Message` class - message triggering the command
 - `args` - Array containing the rest of arguments, seperated by spaces. (Example: `!tell everyone something nice` will be `[everyone, something, nice]`). To join arguments back to a string just use `array.join(arguments)`.
 
+When adding a new function don't forget to add it to `commands/index.ts`.
+
 ### Help
 
-Commands help is stored in the `commands/pomoc.js` command in a `help` array. The array contains objects with `command` and `text` properties indicating - *you've guessed it* - command name and help text.
+Commands help is stored in the `commands/pomoc.ts` command in the `help` array. The array contains objects with `command` and `text` properties indicating - *you've guessed it* - command name and help text.
 
 ### Config
 
-`config.json` stores editable, easy to configure config. It's properties are stored in `client.config`.
+`config.json` stores editable bot config. It's properties can be accessed via `client.config`.
 
 **NOTE:** This file should not contain any secure variables - they should be stored in environmental variables.

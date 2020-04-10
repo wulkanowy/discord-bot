@@ -1,6 +1,7 @@
-const Discord = require('discord.js');
+import Discord from 'discord.js';
+import Client from '../client';
 
-exports.run = async (client, message) => {
+export default async function ping(client: Client, message: Discord.Message): Promise<void> {
   const testmessage = await message.channel.send('Sprawdzam...');
   const embed = new Discord.MessageEmbed()
     .setTitle('PONG! :ping_pong:')
@@ -9,5 +10,5 @@ exports.run = async (client, message) => {
       + `${`Opóźnienie API Discord wynosi **${Math.round(client.ws.ping)}ms**`}`,
     )
     .setColor('F44336');
-  testmessage.edit({ embed });
-};
+  await testmessage.edit({ content: '', embed });
+}
