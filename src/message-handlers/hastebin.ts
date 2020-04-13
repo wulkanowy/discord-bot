@@ -12,8 +12,8 @@ export default async function hastebinHandler(
     if (text.length === 0) return false;
 
     try {
+      message.channel.startTyping();
       const key = await hastebin.send(text);
-      await message.delete();
       await message.channel.send({
         embed: {
           color: 11062,
@@ -25,6 +25,8 @@ export default async function hastebinHandler(
           url: `https://hastebin.cf/${key}`,
         },
       });
+      await message.delete();
+      message.channel.stopTyping();
     } catch (error) {
       console.error(error);
       await message.channel.send(`Błąd: \`${error.message}\``);

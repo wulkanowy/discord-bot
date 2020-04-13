@@ -3,12 +3,11 @@ import request from 'request-promise-native';
 export async function send(text: string): Promise<string> {
   const options = {
     method: 'POST',
-    uri: 'hastebin.cf/documents',
+    uri: 'https://hastebin.cf/documents',
     body: text,
-    json: true,
   };
 
-  const response = await request(options);
+  const response = JSON.parse(await request(options));
 
   return response.key;
 }
