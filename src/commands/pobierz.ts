@@ -2,22 +2,50 @@ import moment from 'moment-timezone';
 import Discord from 'discord.js';
 import Client from '../client';
 import * as appVersion from '../utils/app-version';
+import { DevBuild, DevBuildRedirect } from '../utils/app-version';
 
 moment.locale('pl');
 
 function getBuildLinks(
-  develop: appVersion.DevBuild,
-  prs: appVersion.DevBuild[],
+  develop: DevBuild | DevBuildRedirect,
+  prs: Array<DevBuild | DevBuildRedirect>,
   rich: boolean,
 ): string {
   if (rich) {
-    return `- ***[develop](${develop.url})***: **${develop.version}** opublikowana **${moment(develop.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**\n${
+    let developString: string;
+    if (develop.redirect) {
+      developString = `- ***[develop](${develop.redirectUrl})***: *Nie odnaleziono*`;
+    } else {
+      developString = `- ***[develop](${develop.url})***: **${develop.version}** opublikowana **${
+        moment(develop.publishedAt)
+          .tz('Europe/Warsaw')
+          .calendar()
+          .toLowerCase()
+      }**`;
+    }
+    return `${developString}\n${
       prs
-        .map((build: appVersion.DevBuild) => `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${moment(build.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()}**`)
+        .map((build: appVersion.DevBuild | appVersion.DevBuildRedirect) => (build.redirect
+          ? `- *[${build.branch}](${build.redirectUrl})*: *Nie odnaleziono*`
+          : `- *[${build.branch}](${build.url})*: **${build.version}** opublikowana **${
+            moment(build.publishedAt)
+              .tz('Europe/Warsaw')
+              .calendar()
+              .toLowerCase()
+          }**`))
         .join('\n')
     }`;
   }
-  return `- develop: ${develop.url} - ${develop.version}\n${prs.map((build: appVersion.DevBuild) => `- ${build.branch}: ${build.url} - ${build.version}`).join('\n')}`;
+  let developString: string;
+  if (develop.redirect) {
+    developString = `- **develop**: ${develop.redirectUrl} - *Nie odnaleziono*`;
+  } else {
+    developString = `- **develop**: ${develop.url} - ${develop.version}`;
+  }
+  return `${developString}\n${prs.map((build: appVersion.DevBuild | appVersion.DevBuildRedirect) => (build.redirect
+    ? `- ${build.branch}: ${build.redirectUrl} - *Nie odnaleziono*`
+    : `- ${build.branch}: ${build.url} - ${build.version}`)).join('\n')
+  }`;
 }
 
 export default async function pobierz(client: Client, message: Discord.Message): Promise<void> {
@@ -37,7 +65,10 @@ export default async function pobierz(client: Client, message: Discord.Message):
       .setColor('F44336')
       .addField('Wersja beta',
         `Aktualna wersja: **v${betaBuild.version}** opublikowana **${
-          moment(betaBuild.publishedAt).tz('Europe/Warsaw').calendar().toLowerCase()
+          moment(betaBuild.publishedAt)
+            .tz('Europe/Warsaw')
+            .calendar()
+            .toLowerCase()
         }**\n`
         + '[Sklep Play](https://play.google.com/store/apps/details?id=io.github.wulkanowy) | '
         + `[GitHub](${betaBuild.url}) | `
@@ -52,7 +83,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
     } else if (buildMessagePlain.length < 2048) {
       await message.channel.send(buildMessagePlain, { embed });
     } else {
-      embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/#download) by pobrać jakiegoś');
+      embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
       await message.channel.send({ embed });
     }
   } catch (error) {

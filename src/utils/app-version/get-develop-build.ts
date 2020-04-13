@@ -1,5 +1,5 @@
-import { DevBuild, getDevBuildBranch } from '.';
+import { DevBuild, DevBuildRedirect, getDevBuildBranch } from '.';
 
-export default function getDevelopBuild(): Promise<DevBuild> {
+export default function getDevelopBuild(): Promise<DevBuild | DevBuildRedirect> {
   return getDevBuildBranch('develop');
 }

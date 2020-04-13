@@ -1,7 +1,7 @@
 import request from 'request-promise-native';
-import { DevBuild, getDevBuildBranch } from '.';
+import { DevBuild, DevBuildRedirect, getDevBuildBranch } from '.';
 
-export default async function getPrBuilds(): Promise<DevBuild[]> {
+export default async function getPrBuilds(): Promise<Array<DevBuild | DevBuildRedirect>> {
   const url = `https://api.github.com/repos/wulkanowy/wulkanowy/pulls${
     process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
   }`;

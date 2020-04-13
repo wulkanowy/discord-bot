@@ -10,4 +10,11 @@ export type DevBuild = {
   url: string;
   version: string;
   publishedAt: string;
+  redirect: false;
+};
+
+export type DevBuildRedirect = {
+  branch: string;
+  redirectUrl: string;
+  redirect: true;
 };
