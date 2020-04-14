@@ -1,7 +1,8 @@
 export enum StatusCode {
   Working = 0,
-  Error = 1,
-  TechnicalBreak = 2
+  Timeout = 1,
+  Error = 2,
+  TechnicalBreak = 3
 }
 
 export interface ServiceStatus {

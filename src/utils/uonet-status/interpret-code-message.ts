@@ -11,5 +11,9 @@ export default function interpretCodeMessage(status: ServiceStatus): string {
     return '<:przerwa:537743331875225601> Przerwa techniczna';
   }
 
+  if (status.code === StatusCode.Timeout) {
+    return ':hourglass: Przekroczono limit czasu połączenia';
+  }
+
   return '';
 }

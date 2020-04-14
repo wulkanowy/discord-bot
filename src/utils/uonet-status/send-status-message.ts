@@ -6,13 +6,15 @@ export default async function sendStatusMessage(
   symbol: string,
   lastStatusCode: number | undefined = undefined,
 ): Promise<number> {
-  const studentNewStatus = await checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń');
-  const studentOldStatus = await checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń');
-  const mobileApiStatus = await checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych');
+  const [studentNewStatus, studentOldStatus, mobileApiStatus] = await Promise.all([
+    checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń'),
+    checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń'),
+    checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych'),
+  ]);
 
-  const statusCode = (studentNewStatus ? studentNewStatus.code * 3 : 0)
-    + (mobileApiStatus ? mobileApiStatus.code * 2 : 0)
-    + (studentNewStatus ? studentNewStatus.code : 0);
+  const statusCode = (studentNewStatus ? studentNewStatus.code : 0)
+    + (mobileApiStatus ? mobileApiStatus.code * 8 : 0)
+    + (studentNewStatus ? studentNewStatus.code * 64 : 0);
 
   if (lastStatusCode === undefined || statusCode !== lastStatusCode) {
     const statusColor = Math.max(

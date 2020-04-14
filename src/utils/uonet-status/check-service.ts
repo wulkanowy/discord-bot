@@ -7,8 +7,10 @@ export default async function checkService(
   expectedTitle: string,
 ): Promise<ServiceStatus> {
   try {
-    const response = await request(url);
-    console.log(`Check status for ${url}`);
+    const response = await request({
+      url,
+      timeout: 10000,
+    });
     const $ = cheerio.load(response);
     const title = $('title').text();
 
@@ -45,6 +47,13 @@ export default async function checkService(
       message: `Nieznana odpowiedź: ${title}`,
     };
   } catch (error) {
+    if (error.cause.code === 'ETIMEDOUT') {
+      return {
+        code: StatusCode.Timeout,
+        message: 'Przekroczono limit czasu połączenia',
+      };
+    }
+
     console.warn(error);
     return {
       code: StatusCode.Error,
