@@ -15,5 +15,12 @@ export default function interpretCodeMessage(status: ServiceStatus): string {
     return ':hourglass: Przekroczono limit czasu połączenia';
   }
 
+  if (status.code === StatusCode.DatabaseUpdate) {
+    if (status.newDatabaseVersion && status.oldDatabaseVersion) {
+      return `:arrows_counterclockwise: Trwa aktualizacja bazy danych: **${status.oldDatabaseVersion}** ⟶ **${status.newDatabaseVersion}**`;
+    }
+    return ':arrows_counterclockwise: Trwa aktualizacja bazy danych';
+  }
+
   return '';
 }

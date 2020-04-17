@@ -17,21 +17,39 @@ export default async function checkService(
     if (response.includes('Podany identyfikator klienta jest niepoprawny')) {
       return {
         code: StatusCode.Error,
-        message: $('#MainPage_ErrorDiv div').html()?.split('</h2>')[1]?.split('<br>')[0] ?? 'Podany identyfikator klienta jest niepoprawny',
+        message: $('#MainPage_ErrorDiv div').html()?.split('</h2>')[1]?.split('<br>')[0] || undefined,
       };
     }
 
     if (response.includes('Podany symbol grupujący jest nieprawidłowy')) {
       return {
         code: StatusCode.Error,
-        message: $('.block .blockInner').text().trim(),
+        message: $('.block .blockInner').text().trim() || undefined,
+      };
+    }
+
+    if (response.includes('Trwa aktualizacja bazy danych')) {
+      const versionsRegex = /Aktualna wersja.*?(\d+\.\d+\.\d+\.\d+).*?do.*?(\d+\.\d+\.\d+\.\d+)/;
+      const errorText = $('#MainPage_ErrorDiv div').text();
+      const versionsMatch = versionsRegex.exec(errorText);
+
+      if (!versionsMatch) {
+        return {
+          code: StatusCode.DatabaseUpdate,
+          message: errorText,
+        };
+      }
+
+      return {
+        code: StatusCode.DatabaseUpdate,
+        oldDatabaseVersion: versionsMatch[1],
+        newDatabaseVersion: versionsMatch[2],
       };
     }
 
     if (expectedTitle === title) {
       return {
         code: StatusCode.Working,
-        message: 'Nie znaleziono problemów',
       };
     }
 
@@ -50,7 +68,6 @@ export default async function checkService(
     if (error.cause.code === 'ETIMEDOUT') {
       return {
         code: StatusCode.Timeout,
-        message: 'Przekroczono limit czasu połączenia',
       };
     }
 
