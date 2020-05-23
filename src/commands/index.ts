@@ -13,6 +13,7 @@ export default new Map<string, Command>(Object.entries({
   ping,
   pobierz,
   pomoc,
+  help: pomoc,
   rola,
   status,
 }));

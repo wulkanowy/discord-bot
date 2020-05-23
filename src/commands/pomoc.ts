@@ -7,6 +7,10 @@ const help = [
     text: 'Wyświetla pomoc (to).',
   },
   {
+    command: 'help',
+    text: 'Alias dla komendy `%PREFIX%pomoc`',
+  },
+  {
     command: 'rola dodaj <nazwa_roli>',
     text: 'Dodaje rolę użytkownikowi.',
   },
@@ -43,6 +47,6 @@ const help = [
 export default async function pomoc(client: Client, message: Discord.Message): Promise<void> {
   await message.channel.send([
     '**Lista dostępnych komend:**',
-    ...help.map((e: { command: string; text: string }) => `\`${client.config.prefix}${e.command}\`: ${e.text}`),
+    ...help.map((e: { command: string; text: string }) => `\`${client.config.prefix}${e.command}\`: ${e.text.replace('%PREFIX%', client.config.prefix)}`),
   ].join('\n'));
 }
