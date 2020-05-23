@@ -20,67 +20,67 @@ export default async function issueHandler(
     
     let repository = 'wulkanowy';
     switch(message.channel.id) { 
-      case 666358671428550677: { 
+      case '666358671428550677': { 
         repository = 'uonet-api';
         break; 
       } 
-      case 558341774704115713: { 
+      case '558341774704115713': { 
         repository = 'sdk';
         break; 
       } 
-      case 542450812937306112: { 
+      case '542450812937306112': { 
         repository = 'sdk-node';
         break; 
       } 
-      case 666790865976688641: { 
+      case '666790865976688641': { 
         repository = 'school-extension-server';
         break; 
       } 
-      case 558344919962353664: { 
+      case '558344919962353664': { 
         repository = 'fake-log';
         break; 
       } 
-      case 558345420028248076: { 
+      case '558345420028248076': { 
         repository = 'uonet-request-signer';
         break; 
       } 
-      case 558345023100420118: { 
+      case '558345023100420118': { 
         repository = 'wulkanowy.github.io';
         break; 
       } 
-      case 592063735363796993: { 
+      case '592063735363796993': { 
         repository = 'material-chips-input';
         break; 
       } 
-      case 558345487573319680: { 
+      case '558345487573319680': { 
         repository = 'qr';
         break; 
       } 
-      case 558345455558197249: { 
+      case '558345455558197249': { 
         repository = 'cli';
         break; 
       } 
-      case 565275490630238208: { 
+      case '565275490630238208': { 
         repository = 'fake-vulcan-ext';
         break; 
       } 
-      case 523847362632744975: { 
+      case '523847362632744975': { 
         repository = 'discord-bot';
         break; 
       } 
-      case 558345138557157389: { 
+      case '558345138557157389': { 
         repository = 'bitrise-redirector';
         break; 
       } 
-      case 558345380081696809: { 
+      case '558345380081696809': { 
         repository = 'average-volcano';
         break; 
       } 
-      case 558345520045621268: { 
+      case '558345520045621268': { 
         repository = 'timetable-parser-js';
         break; 
       } 
-      case 698499304465104906: { 
+      case '698499304465104906': { 
         repository = 'symbols-generator';
         break; 
       } 
