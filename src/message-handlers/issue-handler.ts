@@ -19,7 +19,7 @@ export default async function issueHandler(
     message.channel.startTyping();
 
     let repository = 'wulkanowy';
-    switch(message.channel.id) { 
+    switch (message.channel.id) {
       case '666358671428550677': { repository = 'uonet-api'; break; }
       case '558341774704115713': { repository = 'sdk'; break; }
       case '542450812937306112': { repository = 'sdk-node'; break; }
