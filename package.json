@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint -c .eslintrc.json --ext .ts src/**",
     "lint:fix": "eslint -c .eslintrc.json --ext .ts src/** --fix",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node --tls-min-v1.0 src/index.ts"
   },
   "author": "Dominik Korsa <dominik.korsa@gmail.com> (https://github.com/dominik-korsa)",
   "contributors": [
