@@ -5,12 +5,16 @@ export default async function sendStatusMessage(
   channels: Array<Discord.TextChannel | Discord.DMChannel>,
   symbol: string,
   lastStatusCode: number | undefined = undefined,
+  host: string | undefined = 'vulcan.net.pl',
+  mobileUrl: string | undefined = 'https://lekcjaplus.vulcan.net.pl',
+  expectedTitle: string | undefined = 'Uczeń',
 ): Promise<number> {
   const [studentNewStatus, studentOldStatus, mobileApiStatus] = await Promise.all([
-    checkService(`https://uonetplus-uczen.vulcan.net.pl/${symbol}`, 'Uczeń'),
-    checkService(`https://uonetplus-opiekun.vulcan.net.pl/${symbol}`, 'Uczeń'),
-    checkService(`https://lekcjaplus.vulcan.net.pl/${symbol}`, 'UONET+ dla urządzeń mobilnych'),
+    checkService(`https://uonetplus-uczen.${host}/${symbol}`, expectedTitle),
+    checkService(`https://uonetplus-opiekun.${host}/${symbol}`, expectedTitle),
+    checkService(`${mobileUrl}/${symbol}`, 'UONET+ dla urządzeń mobilnych'),
   ]);
+  console.log(`https://uonetplus-uczen.${host}/${symbol}`);
 
   const statusCode = (studentNewStatus ? studentNewStatus.code : 0)
     + (mobileApiStatus ? mobileApiStatus.code * 8 : 0)
@@ -24,7 +28,7 @@ export default async function sendStatusMessage(
     ) === StatusCode.Working ? '2ecc71' : 'f1c40f';
 
     const embed = new Discord.MessageEmbed()
-      .setTitle(`Status dzienniczka (dla symbolu *${symbol}*)`)
+      .setTitle(`Status dzienniczka ${host} (dla symbolu *${symbol}*)`)
       .setColor(statusColor)
       .addField('Nowy moduł uczeń:', interpretCodeMessage(studentNewStatus))
       .addField('Stary moduł uczeń:', interpretCodeMessage(studentOldStatus))
