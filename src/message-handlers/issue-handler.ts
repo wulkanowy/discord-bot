@@ -26,6 +26,7 @@ export default async function issueHandler(
       case '666790865976688641': { repository = 'school-extension-server'; break; }
       case '558344919962353664': { repository = 'fake-log'; break; }
       case '558345420028248076': { repository = 'uonet-request-signer'; break; }
+      case '714234783156142171': { repository = 'AppKillerManager'; break; }
       case '558345023100420118': { repository = 'wulkanowy.github.io'; break; }
       case '592063735363796993': { repository = 'material-chips-input'; break; }
       case '558345487573319680': { repository = 'qr'; break; }

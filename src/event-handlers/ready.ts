@@ -24,10 +24,8 @@ async function performCheck(): Promise<void> {
 }
 
 export default function readyHandler(client: Client): void {
-  client.guilds.cache.forEach((guild: Discord.Guild) => {
-    statusChannels.push(guild.channels.cache
-      .find((ch: Discord.GuildChannel) => ch.type === 'text' && ch.name === client.config.channels.status) as Discord.TextChannel);
-  });
+  statusChannels.push(client.channels.cache
+    .find((ch: Discord.Channel) => ch.id === '522119365265588224') as Discord.TextChannel);
 
   const statusCheckInterval = client.config.statusInterval * 1000;
 
