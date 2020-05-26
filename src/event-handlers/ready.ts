@@ -25,7 +25,7 @@ async function performCheck(): Promise<void> {
 
 export default function readyHandler(client: Client): void {
   statusChannels.push(client.channels.cache
-    .find((ch: Discord.Channel) => ch.id === '523847362632744975') as Discord.TextChannel);
+    .find((ch: Discord.Channel) => ch.id === '522119365265588224') as Discord.TextChannel);
 
   const statusCheckInterval = client.config.statusInterval * 1000;
 
