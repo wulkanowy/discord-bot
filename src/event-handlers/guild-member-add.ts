@@ -20,7 +20,7 @@ export default async function guildMemberAddHandler(
   if (!channel || !(channel instanceof Discord.TextChannel)) return;
   const embedPublic = new Discord.MessageEmbed()
     .setAuthor('Na serwerze pojawił się', avatar || undefined)
-    .setDescription(`<@${id}>`)
+    .setDescription(`<@!${id}>`)
     .setColor('F44336');
   await channel.send({ embed: embedPublic });
 }
