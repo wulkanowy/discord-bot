@@ -17,7 +17,7 @@ export default async function getDevBuildBranch(
 
     return {
       branch,
-      url: response.body.public_install_page_url || url,
+      url: response.body.public_install_page_url,
       version: response.body.build_number,
       publishedAt: response.body.finished_at,
       redirect: false,
