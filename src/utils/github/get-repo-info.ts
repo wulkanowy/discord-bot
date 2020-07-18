@@ -1,4 +1,4 @@
-import request from 'request-promise-native';
+import got from 'got';
 import { RepoInfo } from '.';
 
 export default async function getRepoInfo(owner: string, repo: string): Promise<RepoInfo | null> {
@@ -6,27 +6,32 @@ export default async function getRepoInfo(owner: string, repo: string): Promise<
     process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
   }`;
 
-  const options = {
-    method: 'GET',
-    uri: url,
-    headers: {
-      'User-Agent': 'Mozilla/5.0',
-    },
-    json: true,
-  };
-
   try {
-    const response = await request(options);
+    const response = await got<{
+      owner: {
+        avatar_url: string;
+      };
+      html_url: string;
+      description: string;
+      stargazers_count: number;
+      full_name: string;
+      homepage?: string;
+    }>(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+      },
+      responseType: 'json',
+    });
     return {
-      avatar: response.owner.avatar_url,
-      url: response.html_url,
-      description: response.description,
-      stars: response.stargazers_count,
-      name: response.full_name,
-      homepage: response.homepage || null,
+      avatar: response.body.owner.avatar_url,
+      url: response.body.html_url,
+      description: response.body.description,
+      stars: response.body.stargazers_count,
+      name: response.body.full_name,
+      homepage: response.body.homepage || null,
     };
   } catch (error) {
-    if (error.response.statusCode === 404) return null;
+    if (error instanceof got.HTTPError && error.response.statusCode === 404) return null;
     throw error;
   }
 }
