@@ -29,7 +29,9 @@
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "error",
-    "@typescript-eslint/typedef": [ "error" ],
+    "@typescript-eslint/typedef": [ "error", {
+      "arrowParameter": false
+    } ],
     "@typescript-eslint/unbound-method": [ "off" ],
     "import/extensions": [
       "error",

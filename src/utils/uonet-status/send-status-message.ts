@@ -2,7 +2,7 @@ import Discord from 'discord.js';
 import { checkService, interpretCodeMessage, StatusCode } from '.';
 
 export default async function sendStatusMessage(
-  channels: Array<Discord.TextChannel | Discord.DMChannel>,
+  channels: Array<Discord.TextChannel | Discord.DMChannel | Discord.NewsChannel>,
   symbol: string,
   lastStatusCode: number | undefined = undefined,
   host: string | undefined = 'vulcan.net.pl',
@@ -42,9 +42,9 @@ export default async function sendStatusMessage(
       embed.setImage('https://i.imgur.com/oBPbqmy.png');
     }
 
-    channels.forEach((statusChannel: Discord.TextChannel | Discord.DMChannel) => {
-      statusChannel.send({ embed });
-    });
+    await Promise.all(channels.map(
+      (statusChannel) => statusChannel.send({ embed }),
+    ));
   }
 
   return statusCode;

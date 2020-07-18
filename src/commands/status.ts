@@ -45,7 +45,6 @@ export default async function status(
     expectedTitle = 'Uczeń';
   }
 
-
   try {
     await uonetStatus.sendStatusMessage(
       [message.channel], symbol, undefined, host, mobileUrl, expectedTitle,

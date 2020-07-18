@@ -3,8 +3,9 @@ import Client from '../client';
 
 export default async function guildMemberAddHandler(
   client: Client,
-  member: Discord.GuildMember,
+  partialMember: Discord.PartialGuildMember | Discord.GuildMember,
 ): Promise<void> {
+  const member = await partialMember.fetch();
   console.log(`${member.user.username} wbił!`);
   const avatar = member.user.avatarURL();
   const { id } = member.user;
