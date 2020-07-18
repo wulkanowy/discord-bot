@@ -1,4 +1,4 @@
-import request from 'request-promise-native';
+import got from 'got';
 import { IssueInfo, PullInfo, getPullInfo } from '.';
 
 export default async function getIssueInfo(
@@ -10,38 +10,48 @@ export default async function getIssueInfo(
     process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
   }`;
 
-  const options = {
-    method: 'GET',
-    uri: url,
-    headers: {
-      'User-Agent': 'Mozilla/5.0',
-    },
-    json: true,
-  };
-
   try {
-    const response = await request(options);
-    if (response.pull_request) {
+    const response = await got<{
+      user: {
+        login: string;
+        avatar_url: string;
+        html_url: string;
+      };
+      html_url: string;
+      title: string;
+      body: string;
+      state: 'open' | 'closed';
+      pull_request?: {
+        url: string;
+      };
+    }>(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+      },
+      responseType: 'json',
+    });
+
+    if ('pull_request' in response.body) {
       return getPullInfo(owner, repo, number);
     }
 
     return {
       number,
       user: {
-        login: response.user.login,
-        avatar: response.user.avatar_url,
-        url: response.user.html_url,
+        login: response.body.user.login,
+        avatar: response.body.user.avatar_url,
+        url: response.body.user.html_url,
       },
-      url: response.html_url,
-      title: response.title,
-      description: response.body,
-      open: response.state === 'open',
+      url: response.body.html_url,
+      title: response.body.title,
+      description: response.body.body,
+      open: response.body.state === 'open',
       owner,
       repo,
       type: 'issue',
     };
   } catch (error) {
-    if (error.response.statusCode === 404) return null;
+    if (error instanceof got.HTTPError && error.response.statusCode === 404) return null;
     throw error;
   }
 }

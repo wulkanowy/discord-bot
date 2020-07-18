@@ -8,7 +8,7 @@ export type BetaBuild = {
 export type DevBuild = {
   branch: string;
   url: string;
-  version: string;
+  version: number;
   publishedAt: string;
   redirect: false;
 };

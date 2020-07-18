@@ -1,4 +1,4 @@
-import request from 'request-promise-native';
+import got from 'got';
 import { PullInfo } from '.';
 
 export default async function getPullInfo(
@@ -10,34 +10,43 @@ export default async function getPullInfo(
     process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
   }`;
 
-  const options = {
-    method: 'GET',
-    uri: url,
-    headers: {
-      'User-Agent': 'Mozilla/5.0',
-    },
-    json: true,
-  };
-
   try {
-    const response = await request(options);
+    const response = await got<{
+      user: {
+        login: string;
+        avatar_url: string;
+        html_url: string;
+      };
+      html_url: string;
+      title: string;
+      body: string;
+      merged: boolean;
+      draft: boolean;
+      state: 'open' | 'closed';
+    }>(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+      },
+      responseType: 'json',
+    });
+
     return {
       number,
       user: {
-        login: response.user.login,
-        avatar: response.user.avatar_url,
-        url: response.user.html_url,
+        login: response.body.user.login,
+        avatar: response.body.user.avatar_url,
+        url: response.body.user.html_url,
       },
-      url: response.html_url,
-      title: response.title,
-      description: response.body,
-      merged: response.merged || false,
-      draft: response.mergeable_state === 'draft' || false,
-      open: response.state === 'open',
+      url: response.body.html_url,
+      title: response.body.title,
+      description: response.body.body,
+      merged: response.body.merged,
+      draft: response.body.draft,
+      open: response.body.state === 'open',
       type: 'pull',
     };
   } catch (error) {
-    if (error.response.statusCode === 404) return null;
+    if (error instanceof got.HTTPError && error.response.statusCode === 404) return null;
     throw error;
   }
 }

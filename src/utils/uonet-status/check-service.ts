@@ -1,5 +1,5 @@
-import request from 'request-promise-native';
 import cheerio from 'cheerio';
+import got from 'got';
 import { ServiceStatus, StatusCode } from '.';
 
 export default async function checkService(
@@ -7,28 +7,28 @@ export default async function checkService(
   expectedTitle: string,
 ): Promise<ServiceStatus> {
   try {
-    const response = await request({
-      url,
+    const response = await got(url, {
       timeout: 10000,
+      responseType: 'text',
     });
-    const $ = cheerio.load(response);
+    const $ = cheerio.load(response.body);
     const title = $('title').text();
 
-    if (response.includes('Podany identyfikator klienta jest niepoprawny')) {
+    if (response.body.includes('Podany identyfikator klienta jest niepoprawny')) {
       return {
         code: StatusCode.Error,
         message: $('#MainPage_ErrorDiv div').html()?.split('</h2>')[1]?.split('<br>')[0] || undefined,
       };
     }
 
-    if (response.includes('Podany symbol grupujący jest nieprawidłowy')) {
+    if (response.body.includes('Podany symbol grupujący jest nieprawidłowy')) {
       return {
         code: StatusCode.Error,
         message: $('.block .blockInner').text().trim() || undefined,
       };
     }
 
-    if (response.includes('Trwa aktualizacja bazy danych')) {
+    if (response.body.includes('Trwa aktualizacja bazy danych')) {
       const versionsRegex = /Aktualna wersja.*?(\d+\.\d+\.\d+\.\d+).*?do.*?(\d+\.\d+\.\d+\.\d+)/;
       const errorText = $('#MainPage_ErrorDiv div').text();
       const versionsMatch = versionsRegex.exec(errorText);
@@ -65,7 +65,7 @@ export default async function checkService(
       message: `Nieznana odpowiedź: ${title}`,
     };
   } catch (error) {
-    if (error.cause.code === 'ETIMEDOUT') {
+    if (error instanceof got.TimeoutError) {
       return {
         code: StatusCode.Timeout,
       };
@@ -74,7 +74,7 @@ export default async function checkService(
     console.warn(error);
     return {
       code: StatusCode.Error,
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:',
     };
   }
 }

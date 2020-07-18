@@ -1,4 +1,4 @@
-import request from 'request-promise-native';
+import got from 'got';
 import { DevBuild, DevBuildRedirect } from '.';
 
 export default async function getDevBuildBranch(
@@ -6,23 +6,24 @@ export default async function getDevBuildBranch(
 ): Promise<DevBuild | DevBuildRedirect> {
   try {
     const url = `https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/${branch}/artifacts/0/info`;
-    const options = {
-      method: 'GET',
-      uri: url,
-      json: true,
-    };
 
-    const response = await request(options);
+    const response = await got<{
+      build_number: number;
+      public_install_page_url: string;
+      finished_at: string;
+    }>(url, {
+      responseType: 'json',
+    });
 
     return {
       branch,
-      url: response.public_install_page_url || url,
-      version: response.build_number,
-      publishedAt: response.finished_at,
+      url: response.body.public_install_page_url,
+      version: response.body.build_number,
+      publishedAt: response.body.finished_at,
       redirect: false,
     };
   } catch (error) {
-    if (error.response.statusCode === 404) {
+    if (error instanceof got.HTTPError && error.response.statusCode === 404) {
       return {
         branch,
         redirectUrl: `https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/${branch}/artifacts/0`,
