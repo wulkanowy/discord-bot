@@ -49,7 +49,7 @@ function getBuildLinks(
 }
 
 export default async function pobierz(client: Client, message: Discord.Message): Promise<void> {
-  message.channel.startTyping();
+  void message.channel.startTyping();
 
   try {
     const betaBuild = await appVersion.getBetaBuild();
@@ -64,15 +64,15 @@ export default async function pobierz(client: Client, message: Discord.Message):
       .addField('Strona internetowa', 'https://wulkanowy.github.io/')
       .setColor('F44336')
       .addField('Wersja beta',
-        `Aktualna wersja: **v${betaBuild.version}** opublikowana **${
+        `${`Aktualna wersja: **v${betaBuild.version}** opublikowana **${
           moment(betaBuild.publishedAt)
             .tz('Europe/Warsaw')
             .calendar()
             .toLowerCase()
         }**\n`
         + '[Sklep Play](https://play.google.com/store/apps/details?id=io.github.wulkanowy) | '
-        + `[GitHub](${betaBuild.url}) | `
-        + `[Direct](${betaBuild.directUrl})`);
+        + `[GitHub](${betaBuild.url}) | `}${betaBuild.directUrl === null
+          ? '' : `[Direct](${betaBuild.directUrl})`}`);
 
     if (buildMessageRich.length < 1024) {
       embed.addField('Wersja DEV', buildMessageRich);
@@ -87,7 +87,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
       await message.channel.send({ embed });
     }
   } catch (error) {
-    await message.channel.send(`Błąd: \`${error.message}\``);
+    await message.channel.send(`Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``);
   }
   message.channel.stopTyping();
 }

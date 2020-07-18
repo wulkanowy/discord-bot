@@ -11,8 +11,8 @@ export default async function messageHandler(
 ): Promise<void> {
   if (message.author.bot) return;
 
-  if (commandHandler(client, message)) return;
+  if (await commandHandler(client, message)) return;
   if (await hastebinHandler(client, message)) return;
-  repoHandler(client, message);
-  issueHandler(client, message);
+  await repoHandler(client, message);
+  await issueHandler(client, message);
 }

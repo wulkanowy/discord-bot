@@ -16,7 +16,7 @@ export default async function issueHandler(
   const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
   if (issueMatches.length > 0) {
-    message.channel.startTyping();
+    void message.channel.startTyping();
 
     let repository = 'wulkanowy';
     switch (message.channel.id) {

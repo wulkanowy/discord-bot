@@ -12,7 +12,8 @@ export default async function hastebinHandler(
     if (text.length === 0) return false;
 
     try {
-      message.channel.startTyping();
+      void message.channel.startTyping();
+
       const key = await hastebin.send(text);
       await message.channel.send({
         embed: {
@@ -29,7 +30,7 @@ export default async function hastebinHandler(
       message.channel.stopTyping();
     } catch (error) {
       console.error(error);
-      await message.channel.send(`Błąd: \`${error.message}\``);
+      await message.channel.send(`Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``);
       return false;
     }
 

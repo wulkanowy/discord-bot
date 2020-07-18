@@ -8,14 +8,14 @@ let lastStatusCode = 0;
 async function performCheck(): Promise<void> {
   try {
     statusChannels.forEach((statusChannel: Discord.TextChannel) => {
-      statusChannel.startTyping();
+      void statusChannel.startTyping();
     });
     lastStatusCode = await uonetStatus.sendStatusMessage(statusChannels, 'warszawa', lastStatusCode);
   } catch (error) {
     console.error(error);
-    statusChannels.forEach((statusChannel: Discord.TextChannel) => {
-      statusChannel.send(`Błąd: \`${error.message}\``);
-    });
+    await Promise.all(statusChannels.map((statusChannel: Discord.TextChannel) => statusChannel.send(
+      `Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``,
+    )));
   }
 
   statusChannels.forEach((statusChannel: Discord.TextChannel) => {
@@ -23,35 +23,35 @@ async function performCheck(): Promise<void> {
   });
 }
 
-export default function readyHandler(client: Client): void {
+export default async function readyHandler(client: Client): Promise<void> {
   statusChannels.push(client.channels.cache
     .find((ch: Discord.Channel) => ch.id === '522119365265588224') as Discord.TextChannel);
 
   const statusCheckInterval = client.config.statusInterval * 1000;
 
   setInterval((): void => {
-    performCheck();
+    void performCheck();
   }, statusCheckInterval);
 
-  client.user?.setActivity('od mniej niż minuty', {
+  await client.user?.setActivity('od mniej niż minuty', {
     type: 'WATCHING',
   });
 
   let activeTimeMinutes = 1;
 
-  setInterval(() => {
+  setInterval(async () => {
     if (activeTimeMinutes >= 60 * 48) {
       const activeTimeDays = Math.floor(activeTimeMinutes / 60 / 24);
-      client.user?.setActivity(`od ${activeTimeDays} dni`, {
+      await client.user?.setActivity(`od ${activeTimeDays} dni`, {
         type: 'WATCHING',
       });
     } if (activeTimeMinutes >= 60) {
       const activeTimeHours = Math.floor(activeTimeMinutes / 60);
-      client.user?.setActivity(activeTimeHours === 1 ? 'od godziny' : `od ${activeTimeHours} godzin`, {
+      await client.user?.setActivity(activeTimeHours === 1 ? 'od godziny' : `od ${activeTimeHours} godzin`, {
         type: 'WATCHING',
       });
     } else {
-      client.user?.setActivity(activeTimeMinutes === 1 ? 'od minuty' : `od ${activeTimeMinutes} minut`, {
+      await client.user?.setActivity(activeTimeMinutes === 1 ? 'od minuty' : `od ${activeTimeMinutes} minut`, {
         type: 'WATCHING',
       });
     }

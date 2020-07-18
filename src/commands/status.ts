@@ -7,7 +7,8 @@ export default async function status(
   message: Discord.Message,
   args: string[],
 ): Promise<void> {
-  message.channel.startTyping();
+  void message.channel.startTyping();
+
   let host: string;
   let symbol: string;
   let mobileUrl: string;
@@ -51,7 +52,7 @@ export default async function status(
     );
   } catch (error) {
     console.error(error);
-    message.channel.send(`Błąd: \`${error.message}\``);
+    await message.channel.send(`Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``);
   }
 
   message.channel.stopTyping();

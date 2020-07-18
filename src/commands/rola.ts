@@ -28,7 +28,7 @@ export default async function rola(
         await message.channel.send(`Nadano rolę ${role.name}`);
       } catch (error) {
         console.warn(error);
-        await message.channel.send(`Błąd:\n\`\`\`\n${error.message}\n\`\`\``);
+        await message.channel.send(`Błąd:\n\`\`\`\n${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\n\`\`\``);
       }
     } else if (args[0].toLowerCase() === 'usun' && args[1]) {
       const roleName = client.config.roles.find((e: string) => e === args[1].toLowerCase());
@@ -51,7 +51,7 @@ export default async function rola(
         await message.channel.send(`Odebrano rolę ${role.name}`);
       } catch (error) {
         console.warn(error);
-        await message.channel.send(`Błąd:\n\`\`\`\n${error.message}\n\`\`\``);
+        await message.channel.send(`Błąd:\n\`\`\`\n${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\n\`\`\``);
       }
     } else if (args[0].toLowerCase() === 'lista') {
       const availableRolesString = client.config.roles.map((e: string) => `\`${e}\``).join(', ');

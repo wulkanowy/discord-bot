@@ -49,6 +49,7 @@
       {
         "checksVoidReturn": false
       }
-    ]
+    ],
+    "no-void": "off"
   }
 }
