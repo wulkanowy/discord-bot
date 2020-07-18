@@ -1,13 +1,14 @@
-import request from 'request-promise-native';
+import got from 'got';
 
 export async function send(text: string): Promise<string> {
-  const options = {
-    method: 'POST',
-    uri: 'https://hastebin.cf/documents',
+  const url = 'https://hastebin.cf/documents';
+
+  const response = await got.post<{
+    key: string;
+  }>(url, {
+    responseType: 'json',
     body: text,
-  };
+  });
 
-  const response = JSON.parse(await request(options));
-
-  return response.key;
+  return response.body.key;
 }
