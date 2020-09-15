@@ -39,6 +39,11 @@ export default async function status(
     symbol = args[0] || 'lublin';
     mobileUrl = 'https://uonetplus-komunikacja.edu.lublin.eu';
     expectedTitle = 'Logowanie do systemu';
+  } else if (message.member.roles.cache.some((role: Discord.Role) => role.name === 'eduportal.koszalin.pl')) {
+    host = 'eduportal.koszalin.pl';
+    symbol = args[0] || 'koszalin';
+    mobileUrl = 'https://uonetplus-komunikacja.eduportal.koszalin.pl';
+    expectedTitle = 'Logowanie do systemu e-Szkoła';
   } else {
     host = 'vulcan.net.pl';
     symbol = args[0] || 'warszawa';
