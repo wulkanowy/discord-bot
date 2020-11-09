@@ -2,9 +2,7 @@ import got from 'got';
 import { BetaBuild } from '.';
 
 export default async function getBetaBuild(): Promise<BetaBuild> {
-  const url = `https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest${
-    process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
-  }`;
+  const url = 'https://api.github.com/repos/wulkanowy/wulkanowy/releases/latest';
 
   const response = await got<{
     html_url: string;
@@ -16,6 +14,7 @@ export default async function getBetaBuild(): Promise<BetaBuild> {
   }>(url, {
     headers: {
       'User-Agent': 'Mozilla/5.0',
+      Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
     },
     responseType: 'json',
   });

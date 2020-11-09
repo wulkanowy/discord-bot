@@ -2,9 +2,7 @@ import got from 'got';
 import { DevBuild, DevBuildRedirect, getDevBuildBranch } from '.';
 
 export default async function getPrBuilds(): Promise<Array<DevBuild | DevBuildRedirect>> {
-  const url = `https://api.github.com/repos/wulkanowy/wulkanowy/pulls${
-    process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
-  }`;
+  const url = 'https://api.github.com/repos/wulkanowy/wulkanowy/pulls';
 
   const response = await got<{
     head: {
@@ -13,6 +11,7 @@ export default async function getPrBuilds(): Promise<Array<DevBuild | DevBuildRe
   }[]>(url, {
     headers: {
       'User-Agent': 'Mozilla/5.0',
+      Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
     },
     responseType: 'json',
   });
