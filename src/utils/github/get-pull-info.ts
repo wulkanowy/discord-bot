@@ -6,9 +6,7 @@ export default async function getPullInfo(
   repo: string,
   number: number,
 ): Promise<PullInfo | null> {
-  const url = `https://api.github.com/repos/${owner}/${repo}/pulls/${number}${
-    process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
-  }`;
+  const url = `https://api.github.com/repos/${owner}/${repo}/pulls/${number}`;
 
   try {
     const response = await got<{
@@ -26,6 +24,7 @@ export default async function getPullInfo(
     }>(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0',
+        Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
       },
       responseType: 'json',
     });

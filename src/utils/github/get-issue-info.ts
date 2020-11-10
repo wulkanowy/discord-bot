@@ -6,9 +6,7 @@ export default async function getIssueInfo(
   repo: string,
   number: number,
 ): Promise<IssueInfo | PullInfo | null> {
-  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${number}${
-    process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
-  }`;
+  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${number}`;
 
   try {
     const response = await got<{
@@ -27,6 +25,7 @@ export default async function getIssueInfo(
     }>(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0',
+        Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
       },
       responseType: 'json',
     });

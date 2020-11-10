@@ -2,9 +2,7 @@ import got from 'got';
 import { RepoInfo } from '.';
 
 export default async function getRepoInfo(owner: string, repo: string): Promise<RepoInfo | null> {
-  const url = `https://api.github.com/repos/${owner}/${repo}${
-    process.env.GITHUB_API_TOKEN ? `?access_token=${process.env.GITHUB_API_TOKEN}` : ''
-  }`;
+  const url = `https://api.github.com/repos/${owner}/${repo}`;
 
   try {
     const response = await got<{
@@ -19,6 +17,7 @@ export default async function getRepoInfo(owner: string, repo: string): Promise<
     }>(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0',
+        Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
       },
       responseType: 'json',
     });
