@@ -38,6 +38,7 @@ export default async function issueHandler(
       case '558345520045621268': { repository = 'timetable-parser-js'; break; }
       case '698499304465104906': { repository = 'symbols-generator'; break; }
       case '786967003247673395': { repository = 'wulkanowy-web'; break; }
+      case '798530776655855617': { repository = 'bridge'; break; }
       default: { repository = 'wulkanowy'; break; }
     }
 
