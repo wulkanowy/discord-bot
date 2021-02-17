@@ -39,6 +39,7 @@ export default async function issueHandler(
       case '698499304465104906': { repository = 'symbols-generator'; break; }
       case '786967003247673395': { repository = 'wulkanowy-web'; break; }
       case '798530776655855617': { repository = 'bridge'; break; }
+      case '772196118150905916': { repository = 'wulkanowy-ios'; break; }
       default: { repository = 'wulkanowy'; break; }
     }
 
