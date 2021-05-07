@@ -29,7 +29,7 @@
     "fuzzyset.js": "^1.0.5",
     "got": "^11.5.1",
     "jjg-ping": "^1.0.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment-timezone": "^0.5.31",
     "ping": "^0.2.3",
     "ts-node": "^8.10.2",
