@@ -83,7 +83,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
     } else if (buildMessagePlain.length < 2048) {
       await message.channel.send(buildMessagePlain, { embed });
     } else {
-      embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stroną domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
+      embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stronę domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
       await message.channel.send({ embed });
     }
   } catch (error) {
