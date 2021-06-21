@@ -74,13 +74,13 @@ export default async function pobierz(client: Client, message: Discord.Message):
         + `[GitHub](${betaBuild.url}) | `}${betaBuild.directUrl === null
           ? '' : `[Direct](${betaBuild.directUrl})`}`);
 
-    if (buildMessageRich.length < 1024) {
+    if (buildMessageRich.length < 1000) {
       embed.addField('Wersja DEV', buildMessageRich);
       await message.channel.send({ embed });
-    } else if (buildMessagePlain.length < 1024) {
+    } else if (buildMessagePlain.length < 1000) {
       embed.addField('Wersja DEV', buildMessagePlain);
       await message.channel.send({ embed });
-    } else if (buildMessagePlain.length < 2048) {
+    } else if (buildMessagePlain.length < 2000) {
       await message.channel.send(buildMessagePlain, { embed });
     } else {
       embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stronę domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
