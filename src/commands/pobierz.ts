@@ -60,7 +60,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
     const buildMessagePlain = getBuildLinks(devDevelopBuild, devPrBuilds, false);
 
     const embed = new Discord.MessageEmbed()
-      .setAuthor('Pobierz Wulkanowy!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
+      .setAuthor('Pobierz Wulkanowego!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
       .addField('Strona internetowa', 'https://wulkanowy.github.io/')
       .setColor('F44336')
       .addField('Wersja beta',
