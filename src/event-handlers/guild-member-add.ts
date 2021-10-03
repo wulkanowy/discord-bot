@@ -11,7 +11,7 @@ export default async function guildMemberAddHandler(
   const { id } = member.user;
   const embedDM = new Discord.MessageEmbed()
     .setTitle('Witaj na serwerze Wulkanowego!')
-    .setDescription('Używamy tutaj specjalnych ról, by móc oznaczyć osoby korzystające z danej wersji e-dziennika (np. `vulcan.net.pl`, `eszkola.opolskie.pl`).\nUłatwia to rozwiązywanie problemów i testowanie nowych funkcji.\n\n**UWAGA**: Wszystkie komendy wpisuje się na kanale `#bot`\n\n - By wyświetlić listę wszystkich ról, wpisz ```!rola lista```\n - By przydzielić sobie odpowienią rolę, na kanale #bot wpisz ```!rola dodaj <nazwa_roli>```Na przykład\n```!rola dodaj vulcan.net.pl```\n - By wyświetlić listę wszystkich komend obsługiwanych przez naszego bota, wpisz ```!pomoc```\n\n**Dziękujemy za wybranie naszej aplikacji!**')
+    .setDescription('Używamy tutaj specjalnych ról, by móc oznaczyć osoby korzystające z danej wersji e-dziennika (np. `vulcan.net.pl`, `eszkola.opolskie.pl`).\nUłatwia to rozwiązywanie problemów i testowanie nowych funkcji.\n\nBy wyświetlić listę wszystkich ról, przejdź na kanał #choose-role\n - By przydzielić sobie odpowienią rolę, kliknij w odpowiednią reakcję.\n\n**Dziękujemy za wybranie naszej aplikacji!**')
     .setColor('F44336');
   await member.send({ embed: embedDM });
 
