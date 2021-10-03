@@ -27,7 +27,7 @@ export default async function commandHandler(
     } else {
       const commandsFuzzySet = FuzzySet(Array.from(commands.keys()));
       const match = commandsFuzzySet.get(commandName, null, 0.5);
-      await message.channel.send(`Nie ma takiej komendy \`${client.config.prefix}${commandName}\`\n${match ? `Czy chodziło ci o \`${client.config.prefix}${match[0][1]}\`?\n` : ''}W celu uzyskania pomocy wpisz \`${client.config.prefix}pomoc\``);
+      await message.channel.send(`Nie ma takiej komendy \`${client.config.prefix}${commandName.replace(/(\*|_|`|~|\\)/g, '\\$1')}\`\n${match ? `Czy chodziło ci o \`${client.config.prefix}${match[0][1]}\`?\n` : ''}W celu uzyskania pomocy wpisz \`${client.config.prefix}pomoc\``);
     }
 
     return true;
