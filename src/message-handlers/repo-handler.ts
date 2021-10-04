@@ -57,7 +57,7 @@ export default async function repoHandler(
       if (repo.homepage) {
         embed.addField('Strona domowa', repo.homepage);
       }
-      embed.addField('Gwiazdki', String(repo.stars));
+      embed.addField('Gwiazdki', repo.stars.toString());
 
       await message.channel.send({ embeds: [embed] });
     }));
