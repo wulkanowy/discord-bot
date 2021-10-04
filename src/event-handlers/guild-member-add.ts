@@ -16,7 +16,7 @@ export default async function guildMemberAddHandler(
   await member.send({ embeds: [embedDM] });
 
   const channel = member.guild.channels.cache.find(
-    (ch: Discord.GuildChannel | Discord.ThreadChannel) => ch.name === client.config.channels.greetings,
+    (ch) => ch.name === client.config.channels.greetings,
   );
   if (!channel || !(channel instanceof Discord.TextChannel)) return;
   const embedPublic = new Discord.MessageEmbed()
