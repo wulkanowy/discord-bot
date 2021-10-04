@@ -8,7 +8,6 @@ export default class Client extends Discord.Client {
     super({
       intents: [
         Discord.Intents.FLAGS.GUILDS,
-        Discord.Intents.FLAGS.GUILD_MEMBERS,
         Discord.Intents.FLAGS.GUILD_MESSAGES,
       ],
     });
