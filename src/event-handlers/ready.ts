@@ -19,7 +19,7 @@ async function performCheck(): Promise<void> {
   }
 }
 
-export default (client: Client): void => {
+export default function readyHandler(client: Client): void {
   statusChannels.push(client.channels.cache
     .find((ch: Discord.Channel) => ch.id === '522119365265588224') as Discord.TextChannel);
 
@@ -55,4 +55,4 @@ export default (client: Client): void => {
   }, 60000);
 
   console.log('Uruchomiono bota :)');
-};
+}
