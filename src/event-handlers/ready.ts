@@ -19,7 +19,7 @@ async function performCheck(): Promise<void> {
   }
 }
 
-export default async function readyHandler(client: Client): Promise<void> {
+export default (client: Client): void => {
   statusChannels.push(client.channels.cache
     .find((ch: Discord.Channel) => ch.id === '522119365265588224') as Discord.TextChannel);
 
@@ -29,25 +29,25 @@ export default async function readyHandler(client: Client): Promise<void> {
     void performCheck();
   }, statusCheckInterval);
 
-  await client.user?.setActivity('od mniej niż minuty', {
+  void client.user?.setActivity('od mniej niż minuty', {
     type: 'WATCHING',
   });
 
   let activeTimeMinutes = 1;
 
-  setInterval(async () => {
+  setInterval(() => {
     if (activeTimeMinutes >= 60 * 48) {
       const activeTimeDays = Math.floor(activeTimeMinutes / 60 / 24);
-      await client.user?.setActivity(`od ${activeTimeDays} dni`, {
+      void client.user?.setActivity(`od ${activeTimeDays} dni`, {
         type: 'WATCHING',
       });
     } if (activeTimeMinutes >= 60) {
       const activeTimeHours = Math.floor(activeTimeMinutes / 60);
-      await client.user?.setActivity(activeTimeHours === 1 ? 'od godziny' : `od ${activeTimeHours} godzin`, {
+      void client.user?.setActivity(activeTimeHours === 1 ? 'od godziny' : `od ${activeTimeHours} godzin`, {
         type: 'WATCHING',
       });
     } else {
-      await client.user?.setActivity(activeTimeMinutes === 1 ? 'od minuty' : `od ${activeTimeMinutes} minut`, {
+      void client.user?.setActivity(activeTimeMinutes === 1 ? 'od minuty' : `od ${activeTimeMinutes} minut`, {
         type: 'WATCHING',
       });
     }
@@ -55,4 +55,4 @@ export default async function readyHandler(client: Client): Promise<void> {
   }, 60000);
 
   console.log('Uruchomiono bota :)');
-}
+};

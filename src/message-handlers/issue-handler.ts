@@ -54,7 +54,7 @@ export default async function issueHandler(
 
     const issues = (await Promise.all(
       issueNames.map(async (
-        { owner, repo, issue }: { owner: string; repo: string; issue: number},
+        { owner, repo, issue }: { owner: string; repo: string; issue: number },
       ) => {
         try {
           const info = await GitHub.getIssueInfo(owner, repo, issue);

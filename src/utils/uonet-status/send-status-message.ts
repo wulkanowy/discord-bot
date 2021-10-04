@@ -3,7 +3,7 @@ import Discord, {
   NewsChannel,
   PartialDMChannel,
   TextChannel,
-  ThreadChannel
+  ThreadChannel,
 } from 'discord.js';
 import { checkService, interpretCodeMessage, StatusCode } from '.';
 

@@ -31,7 +31,7 @@ export default async function getIssueInfo(
     });
 
     if ('pull_request' in response.body) {
-      return getPullInfo(owner, repo, number);
+      return await getPullInfo(owner, repo, number);
     }
 
     return {

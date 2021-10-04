@@ -81,7 +81,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
       embed.addField('Wersja DEV', buildMessagePlain);
       await message.channel.send({ embeds: [embed] });
     } else if (buildMessagePlain.length < 2000) {
-      await message.channel.send({content: buildMessagePlain, embeds: [embed] });
+      await message.channel.send({ content: buildMessagePlain, embeds: [embed] });
     } else {
       embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stronę domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
       await message.channel.send({ embeds: [embed] });
