@@ -1,8 +1,14 @@
-import Discord from 'discord.js';
+import Discord, {
+  DMChannel,
+  NewsChannel,
+  PartialDMChannel,
+  TextChannel,
+  ThreadChannel,
+} from 'discord.js';
 import { checkService, interpretCodeMessage, StatusCode } from '.';
 
 export default async function sendStatusMessage(
-  channels: Array<Discord.TextChannel | Discord.DMChannel | Discord.NewsChannel>,
+  channels: (PartialDMChannel | DMChannel | TextChannel | NewsChannel | ThreadChannel)[],
   symbol: string,
   lastStatusCode: number | undefined = undefined,
   host: string | undefined = 'vulcan.net.pl',
@@ -25,7 +31,7 @@ export default async function sendStatusMessage(
       studentNewStatus?.code || 0,
       studentOldStatus?.code || 0,
       mobileApiStatus?.code || 0,
-    ) === StatusCode.Working ? '2ecc71' : 'f1c40f';
+    ) === StatusCode.Working ? '#2ecc71' : '#f1c40f';
 
     const embed = new Discord.MessageEmbed()
       .setTitle(`Status dzienniczka ${host} (dla symbolu *${symbol}*)`)
@@ -43,7 +49,7 @@ export default async function sendStatusMessage(
     }
 
     await Promise.all(channels.map(
-      (statusChannel) => statusChannel.send({ embed }),
+      (statusChannel) => statusChannel.send({ embeds: [embed] }),
     ));
   }
 

@@ -9,6 +9,6 @@ export default async function ping(client: Client, message: Discord.Message): Pr
       `${`Udało mi się odpowiedzieć w **${Math.round(testmessage.createdTimestamp - message.createdTimestamp)}ms`}\n**`
       + `${`Opóźnienie API Discord wynosi **${Math.round(client.ws.ping)}ms**`}`,
     )
-    .setColor('F44336');
-  await testmessage.edit({ content: '', embed });
+    .setColor('#F44336');
+  await testmessage.edit({ content: '', embeds: [embed] });
 }

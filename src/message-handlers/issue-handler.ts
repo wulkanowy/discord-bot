@@ -16,7 +16,7 @@ export default async function issueHandler(
   const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
   if (issueMatches.length > 0) {
-    void message.channel.startTyping();
+    // await message.channel.sendTyping();
 
     let repository = 'wulkanowy';
     switch (message.channel.id) {
@@ -54,7 +54,7 @@ export default async function issueHandler(
 
     const issues = (await Promise.all(
       issueNames.map(async (
-        { owner, repo, issue }: { owner: string; repo: string; issue: number},
+        { owner, repo, issue }: { owner: string; repo: string; issue: number },
       ) => {
         try {
           const info = await GitHub.getIssueInfo(owner, repo, issue);
@@ -99,9 +99,7 @@ export default async function issueHandler(
       else if (issue.open) embed.setColor('#2cbe4e');
       else embed.setColor('#cb2431');
 
-      await message.channel.send(embed);
+      await message.channel.send({ embeds: [embed] });
     }));
-
-    message.channel.stopTyping();
   }
 }

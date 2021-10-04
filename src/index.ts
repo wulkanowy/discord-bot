@@ -16,7 +16,7 @@ fs.promises.readFile(path.join(__dirname, '../config.json'), 'utf8')
     client = new Client(JSON.parse(data));
 
     client.on('guildMemberAdd', guildMemberAddHandler.bind(null, client));
-    client.on('message', messageHandler.bind(null, client));
+    client.on('messageCreate', messageHandler.bind(null, client));
     client.on('ready', readyHandler.bind(null, client));
 
     try {

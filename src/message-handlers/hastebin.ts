@@ -12,22 +12,21 @@ export default async function hastebinHandler(
     if (text.length === 0) return false;
 
     try {
-      void message.channel.startTyping();
+      // await message.channel.sendTyping();
 
       const key = await hastebin.send(text);
       await message.channel.send({
-        embed: {
+        embeds: [{
           color: 11062,
           author: {
             name: message.author.username,
-            icon_url: message.author.avatarURL(),
+            icon_url: message.author.avatarURL()?.trim(),
           },
           title: `hastebin.cf/${key}`,
           url: `https://hastebin.cf/${key}`,
-        },
+        }],
       });
       await message.delete();
-      message.channel.stopTyping();
     } catch (error) {
       console.error(error);
       await message.channel.send(`Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``);

@@ -49,7 +49,7 @@ function getBuildLinks(
 }
 
 export default async function pobierz(client: Client, message: Discord.Message): Promise<void> {
-  void message.channel.startTyping();
+  // await message.channel.sendTyping();
 
   try {
     const betaBuild = await appVersion.getBetaBuild();
@@ -62,7 +62,7 @@ export default async function pobierz(client: Client, message: Discord.Message):
     const embed = new Discord.MessageEmbed()
       .setAuthor('Pobierz Wulkanowego!', 'https://cdn.discordapp.com/attachments/523847362632744975/546459616188563477/nr_logo_wulkanowy2.png')
       .addField('Strona internetowa', 'https://wulkanowy.github.io/')
-      .setColor('F44336')
+      .setColor('#F44336')
       .addField('Wersja beta',
         `${`Aktualna wersja: **v${betaBuild.version}** opublikowana **${
           moment(betaBuild.publishedAt)
@@ -76,18 +76,17 @@ export default async function pobierz(client: Client, message: Discord.Message):
 
     if (buildMessageRich.length < 1000) {
       embed.addField('Wersja DEV', buildMessageRich);
-      await message.channel.send({ embed });
+      await message.channel.send({ embeds: [embed] });
     } else if (buildMessagePlain.length < 1000) {
       embed.addField('Wersja DEV', buildMessagePlain);
-      await message.channel.send({ embed });
+      await message.channel.send({ embeds: [embed] });
     } else if (buildMessagePlain.length < 2000) {
-      await message.channel.send(buildMessagePlain, { embed });
+      await message.channel.send({ content: buildMessagePlain, embeds: [embed] });
     } else {
       embed.addField('Wersja DEV', 'Zbyt dużo buildów. Odwiedź [naszą stronę domową](https://wulkanowy.github.io/#download) by pobrać któregoś z nich');
-      await message.channel.send({ embed });
+      await message.channel.send({ embeds: [embed] });
     }
   } catch (error) {
     await message.channel.send(`Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``);
   }
-  message.channel.stopTyping();
 }

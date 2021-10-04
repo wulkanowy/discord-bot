@@ -5,7 +5,13 @@ export default class Client extends Discord.Client {
   public readonly config: BotConfig;
 
   constructor(config: BotConfig) {
-    super();
+    super({
+      intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_MEMBERS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES,
+      ],
+    });
     this.config = config;
   }
 }
