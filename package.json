@@ -17,6 +17,9 @@
     "mklkj"
   ],
   "license": "MIT",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@types/cheerio": "^0.22.30",
     "@types/fuzzyset.js": "0.0.2",
