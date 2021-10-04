@@ -7,7 +7,7 @@ import Discord, {
 } from 'discord.js';
 import { checkService, interpretCodeMessage, StatusCode } from '.';
 
-export async function sendStatusMessage(
+export default async function sendStatusMessage(
   channels: (PartialDMChannel | DMChannel | TextChannel | NewsChannel | ThreadChannel)[],
   symbol: string,
   lastStatusCode: number | undefined = undefined,
