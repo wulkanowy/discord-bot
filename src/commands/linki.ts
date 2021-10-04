@@ -11,6 +11,6 @@ export default async function linki(client: Client, message: Discord.Message): P
     .addField('Trello', 'https://trello.com/b/A97NUM1s/wulkanowy/')
     .addField('PayPal', 'https://www.paypal.me/wulkanowy')
     .addField('Pomoc w tłumaczeniu', 'https://crowdin.com/project/wulkanowy2')
-    .setColor('F44336');
-  await message.channel.send({ embed });
+    .setColor('#F44336');
+  await message.channel.send({ embeds: [embed] });
 }

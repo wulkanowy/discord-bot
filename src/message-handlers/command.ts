@@ -10,7 +10,7 @@ export default async function commandHandler(
   if (message.content.startsWith(client.config.prefix)) {
     if (
       message.channel instanceof Discord.DMChannel
-      || message.channel.name !== client.config.channels.bot
+      || !(message.channel.partial) && message.channel.name !== client.config.channels.bot
     ) {
       return false;
     }

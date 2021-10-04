@@ -16,7 +16,7 @@ export default async function issueHandler(
   const issueMatches = Array.from(message.content.matchAll(issueRegex));
 
   if (issueMatches.length > 0) {
-    void message.channel.startTyping();
+    void message.channel.sendTyping();
 
     let repository = 'wulkanowy';
     switch (message.channel.id) {
@@ -99,9 +99,7 @@ export default async function issueHandler(
       else if (issue.open) embed.setColor('#2cbe4e');
       else embed.setColor('#cb2431');
 
-      await message.channel.send(embed);
+      await message.channel.send({ embeds: [embed] });
     }));
-
-    message.channel.stopTyping();
   }
 }

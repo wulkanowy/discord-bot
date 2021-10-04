@@ -15,7 +15,7 @@ export default async function repoHandler(
   const repoMatches = Array.from(message.content.matchAll(repoRegex));
 
   if (repoMatches.length > 0) {
-    void message.channel.startTyping();
+    void message.channel.sendTyping();
 
     const repoNames = _.uniqWith(
       repoMatches.map((repoMatch: RegExpMatchArray) => ({
@@ -46,7 +46,7 @@ export default async function repoHandler(
           'GitHub',
           'https://i.imgur.com/LGyvq8p.png',
         )
-        .setColor('ffeb3b');
+        .setColor('#ffeb3b');
 
       if (repo.description) {
         embed.setDescription(repo.description);
@@ -57,11 +57,9 @@ export default async function repoHandler(
       if (repo.homepage) {
         embed.addField('Strona domowa', repo.homepage);
       }
-      embed.addField('Gwiazdki', repo.stars);
+      embed.addField('Gwiazdki', String(repo.stars));
 
-      await message.channel.send(embed);
+      await message.channel.send({ embeds: [embed] });
     }));
-
-    message.channel.stopTyping();
   }
 }

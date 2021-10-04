@@ -8,7 +8,7 @@ let lastStatusCode = 0;
 async function performCheck(): Promise<void> {
   try {
     statusChannels.forEach((statusChannel: Discord.TextChannel) => {
-      void statusChannel.startTyping();
+      void statusChannel.sendTyping();
     });
     lastStatusCode = await uonetStatus.sendStatusMessage(statusChannels, 'warszawa', lastStatusCode);
   } catch (error) {
@@ -17,10 +17,6 @@ async function performCheck(): Promise<void> {
       `Błąd: \`${error instanceof Error ? error.message : 'Bardzo nietypowy błąd :confused:'}\``,
     )));
   }
-
-  statusChannels.forEach((statusChannel: Discord.TextChannel) => {
-    statusChannel.stopTyping();
-  });
 }
 
 export default async function readyHandler(client: Client): Promise<void> {
