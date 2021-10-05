@@ -7,7 +7,7 @@ export default async function status(
   message: Discord.Message,
   args: string[],
 ): Promise<void> {
-  // await message.channel.sendTyping();
+  await message.channel.sendTyping();
 
   let host: string;
   let symbol: string;

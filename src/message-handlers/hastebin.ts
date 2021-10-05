@@ -12,7 +12,7 @@ export default async function hastebinHandler(
     if (text.length === 0) return false;
 
     try {
-      // await message.channel.sendTyping();
+      await message.channel.sendTyping();
 
       const key = await hastebin.send(text);
       await message.channel.send({

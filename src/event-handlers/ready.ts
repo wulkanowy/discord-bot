@@ -7,9 +7,9 @@ let lastStatusCode = 0;
 
 async function performCheck(): Promise<void> {
   try {
-    // await Promise.all(statusChannels.map(
-    //   (statusChannel: Discord.TextChannel) => statusChannel.sendTyping(),
-    // ));
+    await Promise.all(statusChannels.map(
+      (statusChannel: Discord.TextChannel) => statusChannel.sendTyping(),
+    ));
     lastStatusCode = await uonetStatus.sendStatusMessage(statusChannels, 'warszawa', lastStatusCode);
   } catch (error) {
     console.error(error);

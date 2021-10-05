@@ -15,7 +15,7 @@ export default async function repoHandler(
   const repoMatches = Array.from(message.content.matchAll(repoRegex));
 
   if (repoMatches.length > 0) {
-    // await message.channel.sendTyping();
+    await message.channel.sendTyping();
 
     const repoNames = _.uniqWith(
       repoMatches.map((repoMatch: RegExpMatchArray) => ({
