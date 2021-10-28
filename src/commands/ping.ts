@@ -10,5 +10,5 @@ export default async function ping(client: Client, message: Discord.Message): Pr
       + `${`Opóźnienie API Discord wynosi **${Math.round(client.ws.ping)}ms**`}`,
     )
     .setColor('#F44336');
-  await testmessage.edit({ content: '', embeds: [embed] });
+  await testmessage.edit({ content: null, embeds: [embed] });
 }
