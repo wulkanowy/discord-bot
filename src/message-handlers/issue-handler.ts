@@ -40,6 +40,7 @@ export default async function issueHandler(
       case '786967003247673395': { repository = 'wulkanowy-web'; break; }
       case '798530776655855617': { repository = 'bridge'; break; }
       case '772196118150905916': { repository = 'wulkanowy-ios'; break; }
+      case '927216572160954398': { repository = 'awesome-school-projects-poland'; break; }
       default: { repository = 'wulkanowy'; break; }
     }
 
