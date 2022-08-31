@@ -34,7 +34,7 @@
     "got": "^11.8.2",
     "jjg-ping": "^1.0.3",
     "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.33",
+    "moment-timezone": "^0.5.35",
     "ping": "^0.4.1",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
