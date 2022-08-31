@@ -13,9 +13,10 @@ export default async function sendStatusMessage(
   lastStatusCode: number | undefined = undefined,
   host: string | undefined = 'vulcan.net.pl',
   mobileUrl: string | undefined = 'https://lekcjaplus.vulcan.net.pl',
+  expectedTitle: string | undefined = 'Uczeń',
 ): Promise<number> {
   const [studentNewStatus, messagesStatus, mobileApiStatus] = await Promise.all([
-    checkService(`https://uonetplus-uczen.${host}/${symbol}`, 'Uczeń'),
+    checkService(`https://uonetplus-uczen.${host}/${symbol}`, expectedTitle),
     checkService(`https://uonetplus-wiadomosciplus.${host}/${symbol}`, 'Wiadomości Plus'),
     checkService(`${mobileUrl}/${symbol}`, 'UONET+ dla urządzeń mobilnych'),
   ]);
