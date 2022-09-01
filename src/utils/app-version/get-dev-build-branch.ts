@@ -11,7 +11,7 @@ export default async function getDevBuildBranch(
       data: {
         build_number: number;
         build_slug: string;
-        artifact_url: string;
+        artifact_slug: string;
         finished_at: string;
       }
     }>(url, {
@@ -20,7 +20,7 @@ export default async function getDevBuildBranch(
 
     return {
       branch,
-      url: `https://manager.wulkanowy.net.pl/v1/download/app/daeff1893f3c8128/build/${response.body.data.build_slug}/artifact/${response.body.data.artifact_url}`,
+      url: `https://manager.wulkanowy.net.pl/v1/download/app/daeff1893f3c8128/build/${response.body.data.build_slug}/artifact/${response.body.data.artifact_slug}`,
       version: response.body.data.build_number,
       publishedAt: response.body.data.finished_at,
       redirect: false,
