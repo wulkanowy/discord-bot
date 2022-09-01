@@ -1,5 +1,5 @@
 import got from 'got';
-import {DevBuild, DevBuildRedirect} from '.';
+import { DevBuild, DevBuildRedirect } from '.';
 
 export default async function getDevBuildBranch(
   branch: string,
@@ -17,6 +17,14 @@ export default async function getDevBuildBranch(
     }>(url, {
       responseType: 'json',
     });
+
+    if (!response.body.data) {
+      return {
+        branch,
+        redirectUrl: `https://manager.wulkanowy.net.pl/v1/download/app/daeff1893f3c8128/branch/${branch}`,
+        redirect: true,
+      };
+    }
 
     return {
       branch,
