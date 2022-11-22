@@ -24,7 +24,7 @@ export default async function getPullInfo(
     }>(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0',
-        Authorization: process.env.GITHUB_API_TOKEN ? `token ${process.env.GITHUB_API_TOKEN}` : undefined,
+        Authorization: process.env.API_GITHUB_TOKEN ? `token ${process.env.API_GITHUB_TOKEN}` : undefined,
       },
       responseType: 'json',
     });
