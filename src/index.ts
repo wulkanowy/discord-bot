@@ -11,11 +11,12 @@ dotenv.config();
 if (!process.env.DISCORD_TOKEN) {
   throw new Error('Token not provided');
 }
-
+console.log('Starting bot...');
 let client: Client;
 
 fs.promises.readFile(path.join(__dirname, '../config.json'), 'utf8')
   .then(async (data: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     client = new Client(JSON.parse(data));
 
     client.on('guildMemberAdd', guildMemberAddHandler.bind(null, client));

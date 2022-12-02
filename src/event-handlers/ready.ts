@@ -28,31 +28,6 @@ export default function readyHandler(client: Client): void {
   setInterval((): void => {
     void performCheck();
   }, statusCheckInterval);
-
-  void client.user?.setActivity('od mniej niż minuty', {
-    type: 'WATCHING',
-  });
-
-  let activeTimeMinutes = 1;
-
-  setInterval(() => {
-    if (activeTimeMinutes >= 60 * 48) {
-      const activeTimeDays = Math.floor(activeTimeMinutes / 60 / 24);
-      void client.user?.setActivity(`od ${activeTimeDays} dni`, {
-        type: 'WATCHING',
-      });
-    } if (activeTimeMinutes >= 60) {
-      const activeTimeHours = Math.floor(activeTimeMinutes / 60);
-      void client.user?.setActivity(activeTimeHours === 1 ? 'od godziny' : `od ${activeTimeHours} godzin`, {
-        type: 'WATCHING',
-      });
-    } else {
-      void client.user?.setActivity(activeTimeMinutes === 1 ? 'od minuty' : `od ${activeTimeMinutes} minut`, {
-        type: 'WATCHING',
-      });
-    }
-    activeTimeMinutes += 1;
-  }, 60000);
-
+  
   console.log('Uruchomiono bota :)');
 }

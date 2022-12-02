@@ -37,15 +37,13 @@ export default async function repoHandler(
     ))
       .filter(notEmpty);
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     await Promise.all(repos.map(async (repo: GitHub.RepoInfo) => {
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setTitle(`${repo.name}`)
         .setURL(repo.url)
         .setThumbnail(repo.avatar)
-        .setFooter(
-          'GitHub',
-          'https://i.imgur.com/LGyvq8p.png',
-        )
+        .setFooter({ text: 'GitHub', iconURL: 'https://i.imgur.com/LGyvq8p.png' })
         .setColor('#ffeb3b');
 
       if (repo.description) {
@@ -53,13 +51,14 @@ export default async function repoHandler(
       } else {
         embed.setDescription('Brak opisu');
       }
-
       if (repo.homepage) {
-        embed.addField('Strona domowa', repo.homepage);
+        embed.addFields({ name: 'Strona domowa', value: repo.homepage });
       }
-      embed.addField('Gwiazdki', repo.stars.toString());
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // embed.addFields({ name: 'Gwiazdki', value: repo.stars.number });
 
       await message.channel.send({ embeds: [embed] });
+      
     }));
   }
 }
